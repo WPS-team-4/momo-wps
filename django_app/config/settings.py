@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'storages',
 
     'member',
+    'pin',
 ]
 
 MIDDLEWARE = [
