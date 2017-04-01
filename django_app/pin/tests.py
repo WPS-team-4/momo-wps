@@ -3,7 +3,7 @@ import random
 from django.test import TestCase
 
 from member.models import MomoUser
-from .models import Map, Pin, Place, HashTag, PinHashTag
+from .models import Map, Pin, Place, HashTag
 
 TEST_NAME = '피카츄', '라이츄', '파이리', '꼬부기', '버터플', '야도란', '피존투', '또가스'
 TEST_PLACE_NAME = '맛집', '주유소', '카페', '호텔', '도서관', 'PC방', '은행', '우체국'
@@ -83,3 +83,34 @@ class MapModelTest(TestCase):
         )
         map = Map.objects.get(author=user)
         self.assertEqual(map.name, name)
+
+
+class PinModelTest(TestCase):
+    def test_users_create_each_pins_with_same_place(self):
+        users = make_dummy_users(5)
+        place = Place.objects.create(
+            name='test bucks',
+            address='Seoul',
+            location='123.123',
+            google_place_id='111'
+        )
+        maps = []
+        for i in range(5):
+            map = Map.objects.create(
+                author=users[i],
+                name='test_map{}'.format(i + 1),
+                description='I_am_test_map{}, Hello world!'.format(i + 1)
+            )
+            maps.append(map)
+
+        pins = []
+        for i in range(5):
+            pin = Pin.objects.create(
+                author=users[i],
+                place=place,
+                map=maps[i],
+                name='test 0331'
+            )
+            pins.append(pin)
+
+        self.assertEqual(Pin.objects.filter(place=place).count(), 5)
