@@ -94,6 +94,7 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'storages',
+    'django_extensions',
 
     'member',
     'pin',
