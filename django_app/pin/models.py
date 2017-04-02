@@ -1,16 +1,7 @@
 from django.db import models
 
 from member.models import MomoUser
-
-
-class Place(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    location = models.CharField(max_length=20)
-    google_place_id = models.CharField(max_length=100, blank=True)
-
-    def __str__(self):
-        return self.pk
+from place.models import Places
 
 
 class Map(models.Model):
@@ -27,7 +18,7 @@ class Map(models.Model):
 
 class Pin(models.Model):
     author = models.ForeignKey(MomoUser)
-    place = models.ForeignKey(Place)
+    place = models.ForeignKey(Places)
     map = models.ForeignKey(Map)
     name = models.CharField(max_length=100)
     pin_color = models.CharField(max_length=10, default='0,0,0')
