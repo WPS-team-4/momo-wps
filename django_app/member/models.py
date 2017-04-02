@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 
@@ -14,7 +15,7 @@ class MomoUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, password):
+    def create_superuser(self, username, email, password):
         user = MomoUser(username=username, password=password)
         user.set_password(password)
         user.is_staff = True
@@ -26,10 +27,10 @@ class MomoUserManager(BaseUserManager):
         return user
 
 
-class MomoUser(AbstractBaseUser):
+class MomoUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, unique=True)
 
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     password = models.CharField(max_length=100)
     profile_img = models.ImageField(blank=True, upload_to='member')
     facebook_id = models.CharField(max_length=100, blank=True)
