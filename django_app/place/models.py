@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Places(models.Model):
+class Place(models.Model):
     place_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
