@@ -20,7 +20,7 @@ class MomoUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, password):
+    def create_superuser(self, username, email, password):
         user = MomoUser(username=username, password=password)
         user.set_password(password)
         user.is_staff = True
