@@ -4,20 +4,10 @@ from django.db import models
 
 
 class MomoUserManager(BaseUserManager):
-    # def create_userhash(self, user):
-    #     hashed_email = pbkdf2_sha512.using(rounds=8000, salt_size=20).hash(user.email)[:40]
-    #     UserHash.objects.create(user=user,
-    #                             hashed_email=hashed_email + settings.SECRET_KEY)
-    #
-    #     send_auth_mail.send_activation_mail(user_email=user.email,
-    #                                         hashed_email=hashed_email)
-
     def create_user(self, username, profile_img=None, password=None):
         user = MomoUser(username=username, password=password)
         user.set_password(password)
         user.save()
-
-        # self.create_userhash(user)
 
         return user
 
