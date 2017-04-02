@@ -9,6 +9,9 @@ class Place(models.Model):
     location = models.CharField(max_length=20)
     google_place_id = models.CharField(max_length=100, blank=True)
 
+    def __str__(self):
+        return self.pk
+
 
 class Map(models.Model):
     author = models.ForeignKey(MomoUser)
@@ -17,6 +20,9 @@ class Map(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.pk
 
 
 class Pin(models.Model):
@@ -40,6 +46,10 @@ class Pin(models.Model):
             author=user,
             photo=photo
         )
+
+    def __str__(self):
+        return 'user({}) place({}) map({}) pin_name({})'.format(
+            self.author_id, self.place_id, self.map_id, self.name)
 
 
 class HashTag(models.Model):

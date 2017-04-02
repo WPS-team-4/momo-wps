@@ -106,7 +106,7 @@ class PinModelTest(TestCase):
         pins = []
         for i in range(5):
             pin = Pin.objects.create(
-                author=users[i],
+                author=users[1],
                 place=place,
                 map=maps[i],
                 name='test 0331'
@@ -114,6 +114,7 @@ class PinModelTest(TestCase):
             pins.append(pin)
 
         self.assertEqual(Pin.objects.filter(place=place).count(), 5)
+        print(Pin.objects.filter(place=place))
 
 
 class HashTagModelTest(TestCase):
