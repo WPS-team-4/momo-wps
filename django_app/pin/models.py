@@ -1,7 +1,7 @@
 from django.db import models
 
 from member.models import MomoUser
-from place.models import Places
+from place.models import Place
 
 
 class Map(models.Model):
@@ -18,7 +18,7 @@ class Map(models.Model):
 
 class Pin(models.Model):
     author = models.ForeignKey(MomoUser)
-    place = models.ForeignKey(Places)
+    place = models.ForeignKey(Place)
     map = models.ForeignKey(Map)
     name = models.CharField(max_length=100)
     pin_color = models.CharField(max_length=10, default='0,0,0')

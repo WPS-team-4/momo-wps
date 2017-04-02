@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from place.models import Places
+from place.models import Place
 
-admin.site.register(Places)
+admin.site.register(Place)
