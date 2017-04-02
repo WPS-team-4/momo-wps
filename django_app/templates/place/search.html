@@ -1,0 +1,20 @@
+{% block content %}
+<div>
+    <form action="{% url 'place:search' %}">
+        {{ form }}
+        <button type="submit">SEARCH</button>
+    </form>
+
+    <div>
+        {% for place in places %}
+        <h3>{{ place.name }}</h3>
+        <h4>{{ place.address }} | {{ place.location }} | {{ place.place_id }}</h4>
+            {% if place.is_exist %}
+            <button type="submit">Pin it!</button>
+            {% else %}
+            <button type="submit">Remove</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
