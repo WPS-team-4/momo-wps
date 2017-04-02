@@ -5,7 +5,7 @@ from django.shortcuts import render
 from config.settings import config
 from pin.models import Pin
 from place.forms import SearchPlaceForm
-from place.models import Places
+from place.models import Place
 
 
 def search_from_google_place(keyword):
@@ -94,13 +94,17 @@ def pin_this_place(request):
             'lat': lat,
             'lng': lng
         }
-        place, _ = Places.objects.get_or_create(
+        place, _ = Place.objects.get_or_create(
             defaults=defaults,
             place_id=place_id,
         )
-        # request.user.pin_set(place=place)
-        request.user.pin_set(
-            palce=place,
+
+        Pin.objects.create(
+            author=request.user,
+            place=place
         )
+        # request.user.pin_set.create(
+        #     palce=place,
+        # )
 
     return render(prev_path)
