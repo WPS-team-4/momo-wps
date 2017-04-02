@@ -22,7 +22,7 @@ from . import views
 
 api_urlpatterns = [
     url(r'^member/', include(member_apis_urls)),
-    url(r'^pin/', include(pin_apis_urls)),
+    # url(r'^pin/', include(pin_apis_urls)),
 ]
 
 urlpatterns = [
