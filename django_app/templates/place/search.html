@@ -12,7 +12,7 @@
         {% for place in places %}
         <h3>{{ place.name }}</h3>
         <h4>{{ place.address }} | {{ place.lat }},{{ place.lng }} | {{ place.place_id }} | {{ place.is_exist }}</h4>
-        <form action="{% url 'place:pin-place' %}" method="POST">{% csrf_token %}
+        <form action="{% url 'place:create-place' %}" method="POST">{% csrf_token %}
             <input type="hidden" name="place_id" value="{{ place.place_id }}">
             <input type="hidden" name="name" value="{{ place.name }}">
             <input type="hidden" name="address" value="{{ place.address }}">
