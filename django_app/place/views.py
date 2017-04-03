@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from config.settings import config
-from pin.models import Pin
+from pin.models import Pin, Map
 from place.forms import SearchPlaceForm
 from place.models import Place
 
@@ -99,12 +99,14 @@ def pin_this_place(request):
             place_id=place_id,
         )
 
-        Pin.objects.create(
-            author=request.user,
-            place=place
-        )
+
+        # Pin.objects.create(
+        #     author=request.user,
+        #     place=place
+        # )
+
         # request.user.pin_set.create(
         #     palce=place,
         # )
 
-    return render(prev_path)
+    return render(request, 'pin/pin.html')
