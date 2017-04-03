@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'rest_framework',
+    'rest_auth',
     'django_extensions',
 
     'member',
@@ -196,3 +197,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+REST_USE_JWT = True
