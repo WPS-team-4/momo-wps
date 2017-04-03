@@ -1,9 +1,9 @@
 {% block content %}
 <div>
-    <form action="{% url 'pin:add-pin' %}">
+    <form action="{% url 'pin:add-pin' %}" method="POST">{% csrf_token %}
         {{ form }}
         <input type="hidden" name="place_id" value="{{ place.place_id }}">
-        <input type="hidden" name="prev_path" value="{{ request.get_full_path }}">
+        {{ place.place_id }}
         <button type="submit">Add pin</button>
     </form>
 </div>
