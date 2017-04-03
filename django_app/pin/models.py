@@ -13,7 +13,10 @@ class Map(models.Model):
     is_visible = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.pk
+        name = self.name
+        pk = self.pk
+
+        return '{} : {}'.format(name, pk)
 
 
 class Pin(models.Model):

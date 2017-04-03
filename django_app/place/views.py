@@ -74,6 +74,8 @@ def create_place(request):
         lng = request.POST['lng']
         # prev_path = request.POST['prev_path']
 
+
+
         defaults = {
             'place_id': place_id,
             'name': name,
@@ -85,7 +87,9 @@ def create_place(request):
             defaults=defaults,
             place_id=place_id,
         )
+
     form = CreateMapForm()
+
     context = {
         'form': form,
         'place': place
