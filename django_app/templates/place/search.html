@@ -18,7 +18,7 @@
             <input type="hidden" name="address" value="{{ place.address }}">
             <input type="hidden" name="lat" value="{{ place.lat }}">
             <input type="hidden" name="lng" value="{{ place.lng }}">
-            <input type="hidden" name="prev_path" value="{{ request.get_full_path }}">
+
 
             {% if place.is_exist %}
                 <button type="submit">Remove</button>

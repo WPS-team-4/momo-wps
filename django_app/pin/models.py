@@ -21,7 +21,7 @@ class Pin(models.Model):
     place = models.ForeignKey(Place)
     map = models.ForeignKey(Map)
     name = models.CharField(max_length=100)
-    pin_color = models.CharField(max_length=10, default='0,0,0')
+    pin_color = models.CharField(max_length=10, default='0,0,0', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
