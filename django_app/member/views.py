@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.serializers import JSONWebTokenSerializer, VerifyJSONWebTokenSerializer
+from rest_framework_jwt.serializers import JSONWebTokenSerializer, VerifyJSONWebTokenSerializer, jwt_decode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
@@ -57,3 +57,21 @@ class LoginAPI(JSONWebTokenAPIView):
                 "error": ""
             }
         return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutAPI(JSONWebTokenAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+    serializer_class = JSONWebTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        if user:
+            request.auth = jwt_decode_handler(request.auth)
+
+            request.auth.clear()
+            return Response(request.auth, status=status.HTTP_200_OK)
+            error = {
+                "error": ""
+            }
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
