@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'profile_img',
             'email',
-            'data_joined',
+            'date_joined',
             'facebook_id',
             'is_facebook',
             'is_superuser',
