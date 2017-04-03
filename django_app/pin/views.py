@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def add_pin(request):
+    return render(request, 'pin/pin.html')

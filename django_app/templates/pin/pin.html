@@ -1,0 +1,8 @@
+{% block content %}
+<div>
+    <form action="{% url 'pin:add-pin' %}">
+        {{ form }}
+        <button type="submit">Add pin</button>
+    </form>
+</div>
+{% endblock %}
