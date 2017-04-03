@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from config.settings import config
-from pin.models import Pin, Map
+from pin.forms import CreateMapForm
+from pin.models import Pin
 from place.forms import SearchPlaceForm
 from place.models import Place
 
@@ -64,28 +65,14 @@ def search(request):
 
 
 @login_required
-def pin_this_place(request):
-    # def get_or_create_pin():
-    #     default = {
-    #         'place_id': place_id,
-    #         'name': name,
-    #         'address': address,
-    #         'lat': lat,
-    #         'lng': lng
-    #     }
-    #     place, _ = Pin.objects.get_or_create(
-    #         default=default,
-    #         place_id=place_id,
-    #     )
-    #     request.user.pin_set(place=place)
-
+def create_place(request):
     if request.method == 'POST':
         place_id = request.POST['place_id']
         name = request.POST['name']
         address = request.POST['address']
         lat = request.POST['lat']
         lng = request.POST['lng']
-        prev_path = request.POST['prev_path']
+        # prev_path = request.POST['prev_path']
 
         defaults = {
             'place_id': place_id,
@@ -98,15 +85,9 @@ def pin_this_place(request):
             defaults=defaults,
             place_id=place_id,
         )
-
-
-        # Pin.objects.create(
-        #     author=request.user,
-        #     place=place
-        # )
-
-        # request.user.pin_set.create(
-        #     palce=place,
-        # )
-
-    return render(request, 'pin/pin.html')
+    form = CreateMapForm()
+    context = {
+        'form': form,
+        'place': place
+    }
+    return render(request, 'pin/pin.html', context)

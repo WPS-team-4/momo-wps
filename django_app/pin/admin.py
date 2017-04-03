@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from pin.models import Pin, Map
+
+admin.site.register(Pin)
+admin.site.register(Map)
