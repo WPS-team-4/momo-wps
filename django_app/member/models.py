@@ -8,7 +8,7 @@ class MomoUserManager(BaseUserManager):
     암호화 부분 구현할 것
     """
 
-    def create_user(self, username, password, profile_img=None):
+    def create_user(self, username, profile_img=None, password=None):
         user = MomoUser(username=username, password=password)
         user.set_password(password)
         user.save()
@@ -45,3 +45,9 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     objects = MomoUserManager()
+
+    def __str__(self):
+        return self.username
+
+    def get_short_name(self):
+        return self.username
