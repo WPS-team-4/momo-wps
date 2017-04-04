@@ -1,12 +1,15 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from map.serializers import MapSerializer
 from member.models import MomoUser
 
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    map_list = MapSerializer(many=True, read_only=True, source='map_set')
+
     class Meta:
         model = User
         fields = (
@@ -21,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
             'is_superuser',
             'is_staff',
             'is_active',
+            'map_list',
         )
 
         # def update(self, instance, validated_data):
