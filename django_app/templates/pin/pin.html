@@ -2,9 +2,11 @@
 <div>
     <form action="{% url 'pin:add-pin' %}" method="POST">{% csrf_token %}
         {{ form }}
+
         <input type="hidden" name="place_id" value="{{ place.place_id }}">
-        {{ place.place_id }}
-        <button type="submit">Add pin</button>
+        <button type="submit">Add</button>
     </form>
 </div>
 {% endblock %}
+
+
