@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from member.models import MomoUser
+
 User = get_user_model()
 
 
@@ -21,6 +23,12 @@ class UserSerializer(serializers.ModelSerializer):
             'is_active',
         )
 
+        # def update(self, instance, validated_data):
+        #     instance.profile_img = validated_data.get('profile_img', instance.profile_img)
+        #     instance.email = validated_data.get('email', instance.email)
+        #     instance.save()
+        #     return instance
+
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,3 +37,19 @@ class LoginSerializer(serializers.ModelSerializer):
             'username',
             'password',
         )
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'username', 'password')
+        # extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = MomoUser.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
