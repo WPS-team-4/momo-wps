@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'pin'
 urlpatterns = [
-    url(r'^$', views.add_pin, name='add-pin'),
+    url(r'^$', views.create_pin, name='create-pin'),
 ]

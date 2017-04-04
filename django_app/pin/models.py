@@ -1,22 +1,8 @@
 from django.db import models
 
+from map.models import Map
 from member.models import MomoUser
 from place.models import Place
-
-
-class Map(models.Model):
-    author = models.ForeignKey(MomoUser)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    is_private = models.BooleanField(default=False)
-    is_visible = models.BooleanField(default=True)
-
-    def __str__(self):
-        name = self.name
-        pk = self.pk
-
-        return '{} : {}'.format(name, pk)
 
 
 class Pin(models.Model):
