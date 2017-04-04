@@ -3,32 +3,52 @@ import datetime
 from django.contrib.auth import authenticate
 from rest_framework import permissions
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.serializers import JSONWebTokenSerializer, VerifyJSONWebTokenSerializer, jwt_decode_handler
+from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_decode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
-from member.serializers import UserSerializer, LoginSerializer
+from member.models import MomoUser
+from member.serializers import UserSerializer, LoginSerializer, CreateUserSerializer
 
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 
 
-class UserProfileViewAPI(JSONWebTokenAPIView):
+class SignUpAPI(CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+    serializer_class = CreateUserSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(data=self.request.data)
+
+
+class UserProfileViewAPI(RetrieveUpdateAPIView):
+    queryset = MomoUser.objects.all()
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication,)
-    serializer_class = VerifyJSONWebTokenSerializer
+    serializer_class = UserSerializer
 
-    def get(self, request, format=None):
+    def retirieve(self, request, *args, **kwargs):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+    def partial_update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = request.user
+        serializer = UserSerializer(instance, data=request.data, partial=partial)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
 
 class LoginAPI(JSONWebTokenAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
     authentication_classes = (authentication.JSONWebTokenAuthentication,)
     serializer_class = JSONWebTokenSerializer
 
