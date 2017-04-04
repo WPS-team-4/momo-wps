@@ -10,6 +10,7 @@ class Map(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
+    is_favorite = models.BooleanField(default=False)
 
     def __str__(self):
         return self.pk
