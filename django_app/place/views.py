@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from config.settings import config
-from pin.forms import CreateMapForm
+from pin.forms import MapCreateForm
 from pin.models import Pin
 from place.forms import SearchPlaceForm
 from place.models import Place
@@ -72,9 +72,6 @@ def create_place(request):
         address = request.POST['address']
         lat = request.POST['lat']
         lng = request.POST['lng']
-        # prev_path = request.POST['prev_path']
-
-
 
         defaults = {
             'place_id': place_id,
@@ -88,10 +85,9 @@ def create_place(request):
             place_id=place_id,
         )
 
-    form = CreateMapForm()
-
-    context = {
-        'form': form,
-        'place': place
-    }
-    return render(request, 'pin/pin.html', context)
+        form = MapCreateForm()
+        context = {
+            'form': form,
+            'place': place,
+        }
+        return render(request, 'pin/pin.html', context)
