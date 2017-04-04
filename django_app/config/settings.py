@@ -101,6 +101,7 @@ INSTALLED_APPS = [
 
     'member',
     'pin',
+    'map',
 ]
 
 MIDDLEWARE = [
@@ -202,7 +203,7 @@ REST_FRAMEWORK = {
 REST_USE_JWT = True
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
