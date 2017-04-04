@@ -11,7 +11,7 @@ __all__ = (
 
 
 class PinList(generics.ListCreateAPIView):
-    queryset = Pin.obejcts.all()
+    queryset = Pin.objects.all()
     serializer_class = PinSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
