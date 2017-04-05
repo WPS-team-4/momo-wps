@@ -3,49 +3,52 @@ import datetime
 from django.contrib.auth import authenticate
 from rest_framework import permissions
 from rest_framework import status
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt import authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.serializers import JSONWebTokenSerializer, VerifyJSONWebTokenSerializer
+from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_decode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
-from member.serializers import UserSerializer, LoginSerializer
+from member.models import MomoUser
+from member.serializers import UserSerializer, LoginSerializer, CreateUserSerializer
 
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 
 
-class ProfileViewAPI(JSONWebTokenAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+class SignUpAPI(CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     authentication_classes = (JSONWebTokenAuthentication,)
-    serializer_class = VerifyJSONWebTokenSerializer
+    serializer_class = CreateUserSerializer
 
-    # def get_serializer(self, *args, **kwargs):
-    #     serializer_class = self.get_serializer_class()
-    #     kwargs['token'] = self.get_serializer_context()
-    #     return serializer_class(*args, **kwargs)
+    def perform_create(self, serializer):
+        serializer.save(data=self.request.data)
 
-    def get(self, request, *args, **kwargs):
-        # serializer = self.get_serializer(data=request.data)
-        # user = request.user
-        data = request.data('Authentication')
-        serializer = VerifyJSONWebTokenSerializer(data)
+
+class UserProfileViewAPI(RetrieveUpdateAPIView):
+    queryset = MomoUser.objects.all()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+    serializer_class = UserSerializer
+
+    def retirieve(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = request.user
+        serializer = UserSerializer(instance, data=request.data, partial=partial)
         if serializer.is_valid():
-            user = request.user
-
-            # toke = serializer.object.get('token')
-            # response_data = jwt_response_payload_handler(token, user, request)
-            # response = Response(response_data)
-
-            # verify_jwt_token
-            user_serializer = UserSerializer(user)
-            return Response(user_serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
+            return Response(serializer.data)
 
 
 class LoginAPI(JSONWebTokenAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
     authentication_classes = (authentication.JSONWebTokenAuthentication,)
     serializer_class = JSONWebTokenSerializer
 
@@ -75,21 +78,20 @@ class LoginAPI(JSONWebTokenAPIView):
             }
         return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
-        # def post(self, request, *args, **kwargs):
-        #     serializer = self.get_serializer(data=request.data)
-        #
-        #     if serializer.is_valid():
-        #         user = serializer.object.get('user') or request.user
-        #         token = serializer.object.get('token')
-        #         response_data = jwt_response_payload_handler(token, user, request)
-        #         response = Response(response_data)
-        #         if api_settings.JWT_AUTH_COOKIE:
-        #             expiration = (datetime.utcnow() +
-        #                           api_settings.JWT_EXPIRATION_DELTA)
-        #             response.set_cookie(api_settings.JWT_AUTH_COOKIE,
-        #                                 response.data['token'],
-        #                                 expires=expiration,
-        #                                 httponly=True)
-        #         return response
-        #
-        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class LogoutAPI(JSONWebTokenAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+    serializer_class = JSONWebTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        if user:
+            request.auth = jwt_decode_handler(request.auth)
+
+            request.auth.clear()
+            return Response(request.auth, status=status.HTTP_200_OK)
+            error = {
+                "error": ""
+            }
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
