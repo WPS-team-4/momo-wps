@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
+import datetime
 import json
 import os
 
@@ -83,6 +84,13 @@ SECRET_KEY = config['django']['secret_key']
 ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+
+    ),
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -95,10 +103,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'rest_framework',
+    'rest_auth',
     'django_extensions',
 
     'member',
     'pin',
+    'map',
+    'place',
 ]
 
 MIDDLEWARE = [
@@ -196,3 +207,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+REST_USE_JWT = True
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
