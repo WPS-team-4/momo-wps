@@ -1,28 +1,8 @@
 from django.db import models
 
+from map.models import Map
 from member.models import MomoUser
-
-
-class Place(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    location = models.CharField(max_length=20)
-    google_place_id = models.CharField(max_length=100, blank=True)
-
-    def __str__(self):
-        return self.pk
-
-
-class Map(models.Model):
-    author = models.ForeignKey(MomoUser)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    is_private = models.BooleanField(default=False)
-    is_visible = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.pk
+from place.models import Place
 
 
 class Pin(models.Model):
@@ -30,7 +10,7 @@ class Pin(models.Model):
     place = models.ForeignKey(Place)
     map = models.ForeignKey(Map)
     name = models.CharField(max_length=100)
-    pin_color = models.CharField(max_length=10, default='0,0,0')
+    pin_color = models.CharField(max_length=10, default='0,0,0', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)

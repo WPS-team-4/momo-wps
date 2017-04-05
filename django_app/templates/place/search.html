@@ -1,0 +1,33 @@
+{% block content %}
+<div>
+    <form action="{% url 'place:search' %}">
+        {{ form }}
+        <button type="submit">SEARCH</button>
+    </form>
+    <div>
+        <h3>{{ user.username }}</h3>
+    </div>
+
+    <div>
+        {% for place in places %}
+        <h3>{{ place.name }}</h3>
+        <h4>{{ place.address }} | {{ place.lat }},{{ place.lng }} | {{ place.place_id }} | {{ place.is_exist }}</h4>
+        <form action="{% url 'place:create-place' %}" method="POST">{% csrf_token %}
+            <input type="hidden" name="place_id" value="{{ place.place_id }}">
+            <input type="hidden" name="name" value="{{ place.name }}">
+            <input type="hidden" name="address" value="{{ place.address }}">
+            <input type="hidden" name="lat" value="{{ place.lat }}">
+            <input type="hidden" name="lng" value="{{ place.lng }}">
+
+
+            {% if place.is_exist %}
+                <button type="submit">Remove</button>
+            {% else %}
+                <button type="submit">Pin it!</button>
+            {% endif %}
+        </form>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
