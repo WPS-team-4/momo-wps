@@ -2,12 +2,13 @@ from rest_framework import serializers
 
 from map.models import Map
 
-
-# from member.serializers import UserSerializer
+__all__ = (
+    'MapSerializer',
+)
 
 
 class MapSerializer(serializers.ModelSerializer):
-    # author = serializers.PrimaryKeyRelatedField(read_only=True)
+    # author = UserSerializer(read_only=True)
 
     class Meta:
         model = Map
@@ -15,7 +16,7 @@ class MapSerializer(serializers.ModelSerializer):
             'pk',
             'name',
             'description',
+        )
+        read_only_fields = (
             'created_date',
-            'is_private',
-            'is_visible'
         )

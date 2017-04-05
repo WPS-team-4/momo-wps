@@ -84,6 +84,13 @@ SECRET_KEY = config['django']['secret_key']
 ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+
+    ),
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -102,6 +109,7 @@ INSTALLED_APPS = [
     'member',
     'pin',
     'map',
+    'place',
 ]
 
 MIDDLEWARE = [

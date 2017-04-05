@@ -1,17 +1,14 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from map.serializers import MapSerializer
 from member.models import MomoUser
-
-User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
     map_list = MapSerializer(many=True, read_only=True, source='map_set')
 
     class Meta:
-        model = User
+        model = MomoUser
         fields = (
             'pk',
             'username',
@@ -36,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = MomoUser
         fields = (
             'username',
             'password',
@@ -45,7 +42,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = MomoUser
         fields = ('email', 'username', 'password')
         # extra_kwargs = {'password': {'write_only': True}}
 
