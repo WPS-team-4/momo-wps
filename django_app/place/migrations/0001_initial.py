@@ -14,14 +14,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Map',
+            name='Place',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('place_id', models.CharField(max_length=100, unique=True)),
                 ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('is_private', models.BooleanField(default=False)),
-                ('is_visible', models.BooleanField(default=True)),
+                ('address', models.CharField(max_length=100)),
+                ('lat', models.DecimalField(decimal_places=3, max_digits=14)),
+                ('lng', models.DecimalField(decimal_places=3, max_digits=14)),
             ],
         ),
     ]

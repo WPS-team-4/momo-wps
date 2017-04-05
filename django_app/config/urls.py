@@ -13,23 +13,27 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from config import settings
-from member import urls as member_apis_urls
-from pin import urls as pin_apis_urls
-from . import views
+from map.urls import apis as map_apis_urls
+from member.urls import apis as member_apis_urls
+from pin.urls import apis as pin_apis_urls
+from place.urls import apis as place_apis_urls
+from place.urls import views as place_views_urls
 
 api_urlpatterns = [
     url(r'^member/', include(member_apis_urls)),
-    # url(r'^pin/', include(pin_apis_urls)),
+    url(r'^map/', include(map_apis_urls)),
+    url(r'^place/', include(place_apis_urls)),
+    url(r'^pin/', include(pin_apis_urls)),
 ]
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index'),
+    url(r'^search/', include(place_views_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api'))
 ]
 urlpatterns += static(
