@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from pin.serializers import PinSerializer
 from map.models import Map
 
 __all__ = (
@@ -9,6 +10,7 @@ __all__ = (
 
 class MapSerializer(serializers.ModelSerializer):
     # author = UserSerializer(read_only=True)
+    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
@@ -16,7 +18,10 @@ class MapSerializer(serializers.ModelSerializer):
             'pk',
             'name',
             'description',
+            'pin_list',
         )
         read_only_fields = (
             'created_date',
+            'is_private',
+            'is_visible',
         )
