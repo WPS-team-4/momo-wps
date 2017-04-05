@@ -1,2 +1,2 @@
-from .profile import *
 from .auth import *
+from .profile import *
