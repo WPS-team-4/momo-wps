@@ -1,20 +1,19 @@
 from rest_framework import serializers
 
-from member.serializers import UserSerializer
 from pin.models import Pin
 
 __all__ = (
-    'PinSerializer'
+    'PinSerializer',
 )
 
 
 class PinSerializer(serializers.ModelSerializer):
-    author = UserSerializer(read_only=True)
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
 
     # place = serializers.PrimaryKeyRelatedField(queryset=Place.objects.all(),
-    #                                            source='place.name')
+    #                                           source='place.name')
     # map = serializers.PrimaryKeyRelatedField(queryset=Map.objects.all(),
-    #                                          source='map.name')
+    #                                         source='map.name')
 
     class Meta:
         model = Pin

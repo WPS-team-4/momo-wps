@@ -1,2 +1,2 @@
-# from .pin import *
+from .pin import *
 
