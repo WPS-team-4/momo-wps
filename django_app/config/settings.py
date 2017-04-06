@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     'pin',
     'map',
     'place',
+    'post',
 ]
 
 MIDDLEWARE = [
