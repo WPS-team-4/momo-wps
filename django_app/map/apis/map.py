@@ -3,6 +3,7 @@ from rest_framework import permissions
 
 from map.models import Map
 from map.serializers import MapSerializer
+from map.serializers.map import MapDetailSerializer
 
 __all__ = (
     'MapList',
@@ -21,6 +22,6 @@ class MapList(generics.ListCreateAPIView):
 
 class MapDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Map.objects.all()
-    serializer_class = MapSerializer
+    serializer_class = MapDetailSerializer
 
 
