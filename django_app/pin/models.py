@@ -55,17 +55,3 @@ class Label(models.Model):
     pin = models.ForeignKey(Pin)
     color = models.CharField(max_length=10)
     name = models.CharField(max_length=10)
-
-
-class PinComment(models.Model):
-    author = models.ForeignKey(MomoUser)
-    pin = models.ForeignKey(Pin)
-    content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-
-
-class PinPhoto(models.Model):
-    author = models.ForeignKey(MomoUser)
-    pin = models.ForeignKey(Pin)
-    photo = models.ImageField(upload_to='pin')
-    created_date = models.DateTimeField(auto_now_add=True)
