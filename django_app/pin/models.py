@@ -12,8 +12,6 @@ class Pin(models.Model):
     name = models.CharField(max_length=100)
     pin_color = models.CharField(max_length=10, default='0,0,0', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    is_private = models.BooleanField(default=False)
-    is_visible = models.BooleanField(default=True)
 
     def add_comment(self, user, content):
         return self.pincomment_set.create(
