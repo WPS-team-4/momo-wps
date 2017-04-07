@@ -19,11 +19,13 @@ class MapSerializer(serializers.ModelSerializer):
             'pk',
             'name',
             'description',
+            'is_private',
             'author',
+
         )
         read_only_fields = (
             'created_date',
-            'is_private',
+
         )
 
 
