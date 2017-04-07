@@ -19,6 +19,7 @@ class PostPhoto(models.Model):
 
 
 class Post(models.Model):
+    author = models.ForeignKey(MomoUser)
     pin = models.ForeignKey(Pin)
     comment = models.ForeignKey(PostComment, blank=True)
     photo = models.ForeignKey(PostPhoto, blank=True)
