@@ -8,6 +8,7 @@ class Place(models.Model):
     lat = models.DecimalField(max_digits=14, decimal_places=3)
     lng = models.DecimalField(max_digits=14, decimal_places=3)
 
+
     def __str__(self):
         name = self.name
         place_id = self.place_id
