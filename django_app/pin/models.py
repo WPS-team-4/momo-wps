@@ -15,21 +15,25 @@ class Pin(models.Model):
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
 
-    def add_comment(self, user, content):
-        return self.pincomment_set.create(
-            author=user,
-            contnet=content
-        )
+    # def add_comment(self, user, content):
+    #     return self.postcomment_set.create(
+    #         author=user,
+    #         contnet=content
+    #     )
+    #
+    # def add_photo(self, user, photo):
+    #     return self.postphoto_set.create(
+    #         author=user,
+    #         photo=photo
+    #     )
 
-    def add_photo(self, user, photo):
-        return self.pinphoto_set.create(
-            author=user,
-            photo=photo
-        )
-
+    # def __str__(self):
+    #     return 'user({}) place({}) map({}) pin_name({})'.format(
+    #         self.author_id, self.place_id, self.map_id, self.name)
     def __str__(self):
-        return 'user({}) place({}) map({}) pin_name({})'.format(
-            self.author_id, self.place_id, self.map_id, self.name)
+        return 'pin: {}'.format(
+            self.pk
+        )
 
 
 class HashTag(models.Model):
