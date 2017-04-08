@@ -12,6 +12,11 @@ class PostPhotoSerializer(serializers.ModelSerializer):
         model = PostPhoto
         fields = (
             'pk',
-            'post',
             'photo',
+            'post',
         )
+
+    def to_representation(self, instance):
+        ret = super(PostPhotoSerializer, self).to_representation(instance)
+        ret.pop('post')
+        return ret

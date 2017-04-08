@@ -16,3 +16,8 @@ class PostCommentSerializer(serializers.ModelSerializer):
             'contents',
             'author',
         )
+
+    def to_representation(self, instance):
+        ret = super(PostCommentSerializer, self).to_representation(instance)
+        ret.pop('post')
+        return ret
