@@ -12,6 +12,7 @@ class PostCommentSerializer(serializers.ModelSerializer):
         model = PostComment
         fields = (
             'pk',
+            'post',
             'contents',
-            'created_date',
+            'author',
         )
