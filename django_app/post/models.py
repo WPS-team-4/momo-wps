@@ -8,33 +8,14 @@ from pin.models import Pin
 class Post(models.Model):
     pin = models.ForeignKey(Pin)
     author = models.ForeignKey(MomoUser)
+    photo = models.ImageField(upload_to='post', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    is_visible = models.BooleanField(default=True)
 
     def __str__(self):
         return '{}'.format(
             self.pk
         )
-
-        # def add_comment(self, user, content):
-        #     return self.postcomment_set.create(
-        #         author=user,
-        #         contnet=content
-        #     )
-        #
-        # def add_photo(self, user, photo):
-        #     return self.postphoto_set.create(
-        #         author=user,
-        #         photo=photo
-        #     )
-
-
-class PostPhoto(models.Model):
-    post = models.ForeignKey(Post)
-    photo = models.ImageField(upload_to='post')
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        order_with_respect_to = 'post'
 
     def to_dict(self):
         ret = {
