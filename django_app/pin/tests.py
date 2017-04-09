@@ -8,19 +8,6 @@ from utils.tests.testcase import TEST_NAME, make_dummy_hash_tags, TEST_PLACE_NAM
 from .models import Map, Pin, Place, PinHashTag
 
 
-class MapModelTest(TestCase):
-    def test_create_new_map(self):
-        user = make_dummy_users(1)[0]
-        name = random.choice(TEST_NAME)
-        Map.objects.create(
-            author=user,
-            name=name,
-            description='lasdjlfjskldjfl',
-        )
-        map = Map.objects.get(author=user)
-        self.assertEqual(map.name, name)
-
-
 class PinModelTest(TestCase):
     def test_users_create_each_pins_with_same_place(self):
         users = make_dummy_users(5)
