@@ -1,21 +1,26 @@
 import datetime
+from pprint import pprint
 
+import requests
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_decode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
+from config import settings
 from member.serializers import LoginSerializer, CreateUserSerializer
 
 __all__ = (
     'SignUpAPI',
     'LoginAPI',
     'LogoutAPI',
+    'FacebookLoginAPI',
 )
 
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
@@ -78,3 +83,31 @@ class LogoutAPI(JSONWebTokenAPIView):
             "error": "",
         }
         return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FacebookLoginAPI(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        APP_ID = settings.config['facebook']['app_id']
+        SECRET_CODE = settings.config['facebook']['secret_code']
+        # REDIRECT_URI = 'http://localhost:8000/member/login/facebook/'
+        APP_ACCESS_TOKEN = '{app_id}|{secret_code}'.format(
+            app_id=APP_ID,
+            secret_code=SECRET_CODE
+        )
+
+        USER_ACCESS_TOKEN = request.data.get('access_token')
+        print('ACCESS TOKEN : %s' % USER_ACCESS_TOKEN)
+
+        url_debug_token = 'https://graph.facebook.com/debug_token'
+        params = {
+            'input_token': USER_ACCESS_TOKEN,
+            'access_token': APP_ACCESS_TOKEN,
+        }
+
+        r = requests.get(url_debug_token, params=params)
+        dict_debug_token = r.json()
+        pprint(dict_debug_token)
+
+        return Response(dict_debug_token)
