@@ -9,11 +9,13 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_decode_handler
+from rest_framework_jwt.serializers import JSONWebTokenSerializer, jwt_decode_handler, jwt_payload_handler, \
+    jwt_encode_handler
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
 from config import settings
+from member.models import MomoUser
 from member.serializers import LoginSerializer, CreateUserSerializer
 
 __all__ = (
@@ -102,6 +104,7 @@ class FacebookLoginAPI(APIView):
 
         url_debug_token = 'https://graph.facebook.com/debug_token'
         params = {
+            'scopes': 'public_profile, email',
             'input_token': USER_ACCESS_TOKEN,
             'access_token': APP_ACCESS_TOKEN,
         }
@@ -110,4 +113,48 @@ class FacebookLoginAPI(APIView):
         dict_debug_token = r.json()
         pprint(dict_debug_token)
 
-        return Response(dict_debug_token)
+        # facebook_id = dict_debug_token['data']['user_id']
+        # fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
+
+        # return Response(fb_user_info)
+        if dict_debug_token['data']['is_valid']:
+            facebook_id = dict_debug_token['data']['user_id']
+            fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
+            user, _ = MomoUser.objects.get_or_create(
+                facebook_id=facebook_id,
+                password=facebook_id,
+                username=facebook_id,
+            )
+            user.is_facebook = True
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            response = Response({"token": token}, status=status.HTTP_200_OK)
+            return response
+        else:
+            return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_fb_user_info(self, facebook_id, access_token):
+        USER_ID = facebook_id
+        print('USER ID: %s' % USER_ID)
+
+        # 해당 USER_ID 로 graph API에 유저정보를 요청
+        url_api_user = 'https://graph.facebook.com/{user_id}'.format(
+            user_id=USER_ID
+        )
+        fields = [
+            'id',
+            'first_name',
+            'last_name',
+            'gender',
+            'picture',
+            'email',
+        ]
+        params = {
+            'fields': ','.join(fields),
+            'access_token': access_token
+        }
+        r = requests.get(url_api_user, params)
+        dict_user_info = r.json()
+        pprint(dict_user_info)
+
+        return dict_user_info
