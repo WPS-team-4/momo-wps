@@ -44,3 +44,18 @@ class MomoUserModelTest(TransactionTestCase):
 
         self.assertEqual(users[0].following.count(), 1)
         self.assertEqual(users[1].follower_set.count(), 1)
+
+    def test_unfollow(self):
+        users = make_dummy_users(5)
+        users[0].follow(users[1])
+        users[0].follow(users[2])
+        users[0].follow(users[3])
+
+        users[0].unfollow(users[1])
+        self.assertEqual(users[0].following.count(), 2)
+
+        users[0].unfollow(users[2])
+        self.assertEqual(users[0].following.count(), 1)
+
+        users[0].unfollow(users[3])
+        self.assertEqual(users[0].following.count(), 0)
