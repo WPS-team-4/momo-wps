@@ -8,12 +8,10 @@ __all__ = (
 
 
 class PinSerializer(serializers.ModelSerializer):
-    author = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    # place = serializers.PrimaryKeyRelatedField(queryset=Place.objects.all(),
-    #                                           source='place.name')
-    # map = serializers.PrimaryKeyRelatedField(queryset=Map.objects.all(),
-    #                                         source='map.name')
+    author = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
 
     class Meta:
         model = Pin
@@ -24,9 +22,5 @@ class PinSerializer(serializers.ModelSerializer):
             'place',
             'map',
             'pin_color',
-            'is_private',
-        )
-        read_only_fields = (
             'created_date',
-            'is_visible',
         )

@@ -21,11 +21,7 @@ class MapSerializer(serializers.ModelSerializer):
             'description',
             'is_private',
             'author',
-
-        )
-        read_only_fields = (
             'created_date',
-
         )
 
 
@@ -41,8 +37,6 @@ class MapDetailSerializer(serializers.ModelSerializer):
             'description',
             'author',
             'pin_list',
-        )
-        read_only_fields = (
             'created_date',
             'is_private',
         )
