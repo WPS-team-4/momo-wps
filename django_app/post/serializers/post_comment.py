@@ -8,6 +8,11 @@ __all__ = (
 
 
 class PostCommentSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+
     class Meta:
         model = PostComment
         fields = (
