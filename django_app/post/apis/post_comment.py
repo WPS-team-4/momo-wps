@@ -8,6 +8,12 @@ class PostCommentCreate(generics.CreateAPIView):
     queryset = PostComment.objects.all()
     serializer_class = PostCommentSerializer
 
+    # def get_queryset(self):
+    #     queryset = PostComment.objects.all()
+    #     post = self.kwargs['post_id']
+    #     queryset = queryset.filter(postcomment__post=post)
+    #     return queryset
+
     def perform_create(self, serializer):
         serializer.save(
             author=self.request.user,
