@@ -27,7 +27,7 @@ class Post(models.Model):
 
 class PostComment(models.Model):
     post = models.ForeignKey(Post)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(MomoUser)
     contents = models.TextField(max_length=200)
     created_date = models.DateTimeField(auto_now_add=True)
 
