@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TransactionTestCase
 
 from utils.tests import make_dummy_users
@@ -32,3 +33,14 @@ class MomoUserModelTest(TransactionTestCase):
         self.assertIn(users[1], users[2].follower_set.all())
 
         self.assertIn(users[0], users[1].follower_set.all())
+
+    def test_following_duplicate(self):
+        users = make_dummy_users(5)
+
+        users[0].follow(users[1])
+
+        with self.assertRaises(IntegrityError):
+            users[0].follow(users[1])
+
+        self.assertEqual(users[0].following.count(), 1)
+        self.assertEqual(users[1].follower_set.count(), 1)
