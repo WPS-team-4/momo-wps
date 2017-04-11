@@ -1,15 +1,30 @@
 from rest_framework import serializers
 
 from map.serializers import MapSerializer
-from member.models import MomoUser
+from member.models import MomoUser, RelationShip
 
 __all__ = (
+    'RelationShipSerializer',
     'UserSerializer',
 )
 
 
+class RelationShipSerializer(serializers.ModelSerializer):
+    to_user = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    from_user = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = RelationShip
+        fields = (
+            'to_user',
+            'from_user',
+            'created_date',
+        )
+
+
 class UserSerializer(serializers.ModelSerializer):
     map_list = MapSerializer(many=True, read_only=True, source='map_set')
+    # follower = RelationShipSerializer(many=True, read_only=True, source='follower_set')
 
     class Meta:
         model = MomoUser
@@ -19,6 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'profile_img',
             'email',
+            'following',
             'date_joined',
             'facebook_id',
             'is_facebook',
@@ -30,6 +46,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         # def update(self, instance, validated_data):
         #     instance.profile_img = validated_data.get('profile_img', instance.profile_img)
-        #     instance.email = validated_data.get('email', instance.email)
         #     instance.save()
         #     return instance
+        #     instance.email = validated_data.get('email', instance.email)
