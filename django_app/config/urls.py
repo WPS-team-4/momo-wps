@@ -18,6 +18,8 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+from . import views
+
 from map.urls import apis as map_apis_urls
 from member.urls import apis as member_apis_urls
 from pin.urls import apis as pin_apis_urls
@@ -36,6 +38,7 @@ api_urlpatterns = [
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$/', views.index),
     url(r'^search/', include(place_views_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api'))
 ]
