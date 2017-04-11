@@ -84,6 +84,8 @@ ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'utils.exceptions.handler.custom_exception_handler',
+
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
