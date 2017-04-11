@@ -7,7 +7,7 @@ from pin.models import Pin
 
 class Post(models.Model):
     pin = models.ForeignKey(Pin)
-    author = models.ForeignKey(MomoUser)
+    # author = models.ForeignKey(MomoUser)
     photo = models.ImageField(upload_to='post', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_visible = models.BooleanField(default=True)
