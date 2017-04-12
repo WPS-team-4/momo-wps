@@ -1,4 +1,4 @@
-# member profile
+# member profile view
 
 > user 정보와 user가 소유한 지도, 핀을 리턴합니다
 
@@ -18,6 +18,12 @@
 
 ```
 
+```
+
+header
+
+```
+Authorization : token {token_value}
 ```
 
 
@@ -255,23 +261,45 @@
 
 **Error Response**
 
-- Code: 400
+- Code: 404
 
-  - Reason: @@@
-  - Content:
+  - Reason: Not found
+  - Content: 해당 user가 없음
 
-  ` `
+  ```json
+  {
+    "detail": "찾을 수 없습니다.",
+    "exception": "No MomoUser matches the given query.",
+    "status_code": "404 - Not Found"
+  }
+  ```
+
+  ​
 
 - Code: 401
 
   - Reason: Unauthorized
-  - Content:
+  - Content:token 없음
 
   ```json
   {
-    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다."
+    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+    "exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+    "status_code": "401 - Unauthorized"
   }
   ```
+
+  * Content: token 만료
+
+  ```json
+  {
+    "detail": "토큰이 유효하지 않습니다.",
+    "exception": "토큰이 유효하지 않습니다.",
+    "status_code": "401 - Unauthorized"
+  }
+  ```
+
+  ​
 
   ​
 
@@ -287,4 +315,36 @@ $.ajax({
   }
 });
 ```
+
+
+
+## member profile update
+
+### method
+
+`patch`
+
+
+
+### params
+
+email (optional)
+
+profile_img (optional)
+
+
+
+### success
+
+200
+
+유저 정보를 반환
+
+
+
+### failed
+
+500
+
+파일 형식이 이미지가 아님
 
