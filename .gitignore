@@ -210,5 +210,6 @@ _Dockerfile*
 # CSS Files
 django_app/static/css/
 
+
 # Bower components
 bower_components/
