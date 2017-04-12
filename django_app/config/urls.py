@@ -38,7 +38,7 @@ api_urlpatterns = [
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$/', views.index),
+    url(r'^$', views.index),
     url(r'^search/', include(place_views_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api'))
 ]
