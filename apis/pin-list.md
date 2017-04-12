@@ -32,10 +32,6 @@ GET
 
 ## Pin 생성
 
-### 1. keyword 검색을 통한 Pin 생성
-
-### 2. 지도 마킹을 통한 Pin 생성
-
 ### 요청 주소
 
 `/api/pin/`
@@ -45,6 +41,10 @@ GET
 POST
 
 ### body
+- name
+- place
+- map
+- pin_color
 
 ```
 {

@@ -36,6 +36,12 @@ GET
 PATCH
 
 ### body
+다음 중 하나 이상의 값을 받습니다  
+
+- name
+- place
+- map
+- pin_color
 
 ```
 {
