@@ -11,6 +11,24 @@ Resource | GET | POST | PATCH | DELETE |
 GET
 
 ### 반환
+```
+[
+  {
+    "pk": 1,
+    "pin": 1,
+    "photo": "https://wps-momo-bucket.s3.amazonaws.com/media/post/b.png",
+    "created_date": "2017-04-12T17:16:27.177118Z",
+    "comment_list": [
+      {
+        "pk": 1,
+        "contents": "여기 다시 와볼만함",
+        "author": "anohk"
+      }
+    ]
+  },
+  ...
+]
+```
 
 
 ## Post 생성
@@ -21,16 +39,12 @@ GET
 POST
 
 ### body
-- name
-- place
-- map
-- pin_color
+- pin
+
 
 ```
 {
-	"name": "루카루",
-	"place": "1",
-	"map": "2"
+	"pin": "1",
 }
 ```
 
@@ -40,14 +54,8 @@ POST
 ```
 {
   "pk": 1,
-  "author": "anohk",
-  "name": "루카루",
-  "place": 1,
-  "map": 2,
-  "pin_color": "0,0,0",
+  "pin": 1,
   "created_date": "2017-04-12T17:07:54.108414Z",
-  "post_list": []
+  "comment_list": []
 }
 ```
-
-> 반환 시 post_list 는 표현되지 않게 수정해야함
