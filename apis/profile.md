@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # member profile
+=======
+# member profile view
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 > user 정보와 user가 소유한 지도, 핀을 리턴합니다
 
@@ -20,6 +24,15 @@
 
 ```
 
+<<<<<<< HEAD
+=======
+header
+
+```
+Authorization : token {token_value}
+```
+
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 
 **Success Response**
@@ -255,16 +268,34 @@
 
 **Error Response**
 
+<<<<<<< HEAD
 - Code: 400
 
   - Reason: @@@
   - Content:
 
   ` `
+=======
+- Code: 404
+
+  - Reason: Not found
+  - Content: 해당 user가 없음
+
+  ```json
+  {
+    "detail": "찾을 수 없습니다.",
+    "exception": "No MomoUser matches the given query.",
+    "status_code": "404 - Not Found"
+  }
+  ```
+
+  ​
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 - Code: 401
 
   - Reason: Unauthorized
+<<<<<<< HEAD
   - Content:
 
   ```json
@@ -273,6 +304,30 @@
   }
   ```
 
+=======
+  - Content:token 없음
+
+  ```json
+  {
+    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+    "exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+    "status_code": "401 - Unauthorized"
+  }
+  ```
+
+  * Content: token 만료
+
+  ```json
+  {
+    "detail": "토큰이 유효하지 않습니다.",
+    "exception": "토큰이 유효하지 않습니다.",
+    "status_code": "401 - Unauthorized"
+  }
+  ```
+
+  ​
+
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
   ​
 
 **Sample Call**
@@ -288,3 +343,38 @@ $.ajax({
 });
 ```
 
+<<<<<<< HEAD
+=======
+
+
+## member profile update
+
+### method
+
+`patch`
+
+
+
+### params
+
+email (optional)
+
+profile_img (optional)
+
+
+
+### success
+
+200
+
+유저 정보를 반환
+
+
+
+### failed
+
+500
+
+파일 형식이 이미지가 아님
+
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34

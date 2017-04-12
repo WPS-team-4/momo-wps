@@ -55,11 +55,14 @@ GET
 PATCH
 
 ### body
+<<<<<<< HEAD
 다음 중 하나 이상의 값을 받습니다  
 
 - name
 - description
 - is_private
+=======
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 ```
 {

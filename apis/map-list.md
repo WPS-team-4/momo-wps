@@ -48,9 +48,12 @@ map list 반환
 POST
 
 ### body
+<<<<<<< HEAD
 - name
 - description
 - is_private
+=======
+>>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 ```
 {
