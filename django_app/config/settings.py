@@ -13,6 +13,7 @@ import json
 import os
 
 DEBUG = os.environ.get('MODE') == 'DEBUG'
+# DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS'
 
