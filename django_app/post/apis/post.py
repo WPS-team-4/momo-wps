@@ -22,7 +22,7 @@ class PostList(generics.ListCreateAPIView):
         serializer = PostCreateSerializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'성공'}, status=status.HTTP_201_CREATED)
+            return Response({'post created'}, status=status.HTTP_201_CREATED)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
