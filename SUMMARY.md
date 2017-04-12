@@ -4,19 +4,20 @@
 * [APIs](apis.md)
   * Member
     * [sign up](apis/sign-up.md)
-    * login
-    * logout
-    * facebook login
+    * [login](apis/login.md)
+    * [logout](apis/logout.md)
+    * [facebook login](apis/facebook-login.md)
     * [profile](apis/profile.md)
-    * follow
+    * [follow](apis/follow.md)
   * Map
-    * map list
-    * map detail
+    * [map list](apis/map-list.md)
+    * [map detail](apis/map-detail.md)
   * Pin
-    * pin list
-    * pin detail
+    * [pin list](apis/pin-list.md)
+    * [pin detail](apis/pin-detail.md)
   * Post
-    * post list
-    * post detail
+    * [post list](apis/post-list.md)
+    * [post detail](apis/post-detail.md)
   * Place
+    * search
 
