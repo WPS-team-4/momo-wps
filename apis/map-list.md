@@ -48,6 +48,9 @@ map list 반환
 POST
 
 ### body
+- name
+- description
+- is_private
 
 ```
 {
