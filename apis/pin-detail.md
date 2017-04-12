@@ -16,14 +16,32 @@ GET
 
 ```
 {
-    "pk": "3",
-    "author": "kay",
-    "name": "패캠 카페",
-    "place": 2,
-    "map": 4,
-    "pin_color": "0,0,0"
+  "pk": 1,
+  "author": "anohk",
+  "name": "루카루",
+  "place": 1,
+  "map": 2,
+  "pin_color": "0,0,0",
+  "created_date": "2017-04-12T17:07:54.108414Z",
+  "post_list": [
+    {
+      "pk": 1,
+      "pin": 1,
+      "photo": "https://wps-momo-bucket.s3.amazonaws.com/media/post/b.png",
+      "created_date": "2017-04-12T17:16:27.177118Z",
+      "comment_list": [
+        {
+          "pk": 1,
+          "contents": "또와야지",
+          "author": "anohk"
+        }
+      ]
+    }
+  ]
 }
 ```
+
+> `name`은 `pin_name`으로 변경될 예정입니다.
 
 ## Pin 세부정보 수정
 
@@ -41,7 +59,7 @@ PATCH
 
 ```
 {
-    "name": "바실",
+    "name": "스터디카페",
 }
 ```
 
@@ -49,12 +67,28 @@ PATCH
 
 ```
 {
-    "pk": "3",
-    "author": "kay",
-    "name": "바실",
-    "place": 2,
-    "map": 4,
-    "pin_color": "0,0,0"
+  "pk": 1,
+  "author": "anohk",
+  "name": "스터디카페",
+  "place": 1,
+  "map": 2,
+  "pin_color": "0,0,0",
+  "created_date": "2017-04-12T17:07:54.108414Z",
+  "post_list": [
+    {
+      "pk": 1,
+      "pin": 1,
+      "photo": "https://wps-momo-bucket.s3.amazonaws.com/media/post/b.png",
+      "created_date": "2017-04-12T17:16:27.177118Z",
+      "comment_list": [
+        {
+          "pk": 1,
+          "contents": "또와야지",
+          "author": "anohk"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -63,5 +97,3 @@ PATCH
 ### method
 
 DELETE
-
-> `name`은 `pin_name`으로 변경될 예정입니다.
