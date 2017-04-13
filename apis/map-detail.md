@@ -1,16 +1,14 @@
 | Resource     | GET        | POST | PATCH       | DELETE   |
 | ------------ | ---------- | ---- | ----------- | -------- |
-| /map/{mapId} | 해당 지도 세부정보 |      | 해당 지도 정보 수정 | 해당 지도 삭제 |
+| /api/map/{mapId} | 해당 지도 세부정보 |      | 해당 지도 정보 수정 | 해당 지도 삭제 |
 
-
-
-
-
-## Map 세부정보 조회
 
 ### 요청 주소
 
 `/api/map/{mapID}`
+
+
+## Map 세부정보 조회
 
 ### method
 
@@ -21,7 +19,7 @@ GET
 ```
 {
     "pk": "1",
-    "name": "카페지도",
+    "map_name": "카페지도",
     "description": "조명이 좋은 카페 리스트",
     "is_private": "false",
     "author": {
@@ -33,7 +31,7 @@ GET
       {
       "pk": 1,
       "author": "kay",
-      "name": "신사 스터디 카페",
+      "pin_name": "신사 스터디 카페",
       "place": 1,
       "map": 1,
       "pin_color": "0,0,0",
@@ -46,23 +44,17 @@ GET
 
 ## Map 수정
 
-### 요청 주소
-
-`/api/map/{mapId}`
-
 ### method
 
 PATCH
 
 ### body
-<<<<<<< HEAD
+
 다음 중 하나 이상의 값을 받습니다  
 
 - name
 - description
 - is_private
-=======
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 ```
 {
@@ -77,7 +69,7 @@ PATCH
 ```
 {
     "pk": "1",
-    "name": "카페지도",
+    "map_name": "카페지도",
     "description": "조명이 좋은 카페 리스트",
     "is_private": "true",
     "author": {
@@ -89,7 +81,7 @@ PATCH
       {
       "pk": 1,
       "author": "kay",
-      "name": "신사 스터디 카페",
+      "pin_name": "신사 스터디 카페",
       "place": 1,
       "map": 1,
       "pin_color": "0,0,0",
@@ -101,10 +93,6 @@ PATCH
 ```
 
 ## Map 삭제
-
-### 요청 주소
-
-`/api/map/{mapId}`
 
 ### method
 

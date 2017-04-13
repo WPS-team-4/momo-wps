@@ -1,6 +1,6 @@
 | Resource | GET    | POST  | PATCH | DELETE |
 | -------- | ------ | ----- | ----- | ------ |
-| /map/    | 지도 리스트 | 지도 생성 |       |        |
+| /api/map/    | 지도 리스트 | 지도 생성 |       |        |
 
 ## Map 리스트 조회
 
@@ -20,7 +20,7 @@ map list 반환
 [
     {
         "pk": "1",
-        "name": "카페지도",
+        "map_name": "카페지도",
         "description": "조명이 좋은 카페 리스트",
         "is_private": "false"
         "author": {
@@ -48,16 +48,14 @@ map list 반환
 POST
 
 ### body
-<<<<<<< HEAD
+
 - name
 - description
 - is_private
-=======
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 ```
 {
-    "name": "카페지도",
+    "map_name": "카페지도",
     "description": "조명이 좋은 카페 리스트",
     "is_private": "false",  
 }
@@ -71,7 +69,7 @@ POST
 ```
 {
     "pk": "1",
-    "name": "카페지도",
+    "map_name": "카페지도",
     "description": "조명이 좋은 카페 리스트",
     "is_private": "false",
     "author": {
