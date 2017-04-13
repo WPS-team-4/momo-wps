@@ -5,8 +5,8 @@ User = get_user_model()
 
 
 class APITestCaseAuthMixin(object):
-    test_username = 'test_username'
-    test_password = 'test_password'
+    test_username = 'username1'
+    test_password = 'password1'
 
     def create_user(self):
         user = User.objects.create_user(
@@ -20,7 +20,7 @@ class APITestCaseAuthMixin(object):
         client.login(username=self.test_username, password=self.test_password)
         return user
 
-    def create_map(self, num=1):
+    def create_map(self, num):
         # Map을 생성하는 API주소를 reverse
         url = reverse('api:map-list')
         user = self.create_user_and_login(self.client)
