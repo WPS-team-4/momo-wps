@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [APIs](apis.md)
-  * Member
+  * [Member](apis/member.md)
     * [sign up](apis/sign-up.md)
     * [login](apis/login.md)
     * [logout](apis/logout.md)
