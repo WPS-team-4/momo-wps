@@ -10,8 +10,15 @@ decorator==4.0.11
 Django==1.10.6
 django-cors-headers==2.0.2
 django-extensions==1.7.8
+<<<<<<< HEAD
+django-rest-auth==0.9.1
 django-storages==1.5.2
 djangorestframework==3.6.2
+djangorestframework-jwt==1.10.0
+=======
+django-storages==1.5.2
+djangorestframework==3.6.2
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 docker-py==1.7.2
 dockerpty==0.4.1
 docopt==0.6.2

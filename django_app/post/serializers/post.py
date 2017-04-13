@@ -5,15 +5,16 @@ from post.serializers.post_comment import PostCommentSerializer
 
 __all__ = (
     'PostSerializer',
-    'PostCreateSerializer',
+    # 'PostCreateSerializer',
 )
 
 
 class PostSerializer(serializers.ModelSerializer):
-    # author = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='username'
-    # )
+    author = serializers.SlugRelatedField(
+        source='pin.map.author',
+        slug_field='username',
+        read_only=True
+    )
 
     comment_list = PostCommentSerializer(read_only=True, many=True, source='postcomment_set')
 
@@ -22,30 +23,12 @@ class PostSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'pin',
-            # 'author',
+            'author',
             'photo',
             'created_date',
             'comment_list',
         )
-
-
-class PostCreateSerializer(serializers.ModelSerializer):
-    # author = UserSerializer(queryset=MomoUser.objects.all())
-
-    class Meta:
-        model = Post
-        fields = (
-            'pin',
-            # 'author',
-            'photo',
+        read_only_fields = (
+            'author',
         )
 
-    def create(self, validated_data):
-        post = Post.objects.create(
-            pin=validated_data['pin'],
-            # author=validated_data['author'],
-            photo=validated_data['photo'],
-        )
-
-        post.save()
-        return post

@@ -53,7 +53,7 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     objects = MomoUserManager()
 
     def __str__(self):
-        return self.username
+        return str(self.pk)
 
     def get_short_name(self):
         return self.username
