@@ -10,32 +10,38 @@ __all__ = (
 
 
 class MapSerializer(serializers.ModelSerializer):
-    # author = UserSerializer(read_only=True)
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True
+    )
 
     class Meta:
         model = Map
         fields = (
             'pk',
-            'name',
+            'map_name',
             'description',
             'is_private',
-            # 'author',
+            'author',
             'created_date',
         )
 
 
 class MapDetailSerializer(serializers.ModelSerializer):
-    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True
+    )
 
-    # author = UserSerializer(read_only=True)
+    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
         fields = (
             'pk',
-            'name',
+            'map_name',
             'description',
-            # 'author',
+            'author',
             'pin_list',
             'created_date',
             'is_private',
