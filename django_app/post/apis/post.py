@@ -16,8 +16,7 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
-        print('perform_create')
-        serializer.save(author=self.request.user)
+        serializer.save()
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
