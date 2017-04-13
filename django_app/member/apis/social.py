@@ -15,13 +15,22 @@ class FollowAPI(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        serializer = RelationShipSerializer
         from_user_pk = self.kwargs['pk']
         print(from_user_pk)
-        request.data['from_user'] = MomoUser.objects.get(id=from_user_pk)
-        request.data['to_user'] = self.request.user
-        serial_data = serializer(data=request.data)
-        if serial_data.is_valid():
-            serial_data.save()
+        # self.request.data['from_user'] = self.request.user
+        # self.request.data['to_user'] = MomoUser.objects.get(id=from_user_pk)
+        # from_user = MomoUser.objects.get(id=from_user_pk)
+        # to_user = self.request.user
+        # print(self.request.data.get('from_user'))
+        # print(self.request.data.get('to_user'))
+        # print(self.request.data)
+        data = {
+            'from_user': MomoUser.objects.get(id=from_user_pk),
+            'to_user': self.request.user
+        }
+        serializer = RelationShipSerializer(data=data)
+        # serial_data = serializer(to_user=self.request.user, from_user=MomoUser.objects.get(id=from_user_pk))
+        if serializer.is_valid():
+            serializer.save()
 
-        return Response(serial_data)
+        return Response(serializer.data)
