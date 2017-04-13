@@ -18,7 +18,7 @@ class PinList(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save()
 
 
 class PinDetail(generics.RetrieveUpdateDestroyAPIView):
