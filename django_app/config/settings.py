@@ -14,6 +14,7 @@ import json
 import os
 
 DEBUG = os.environ.get('MODE') == 'DEBUG'
+# DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS'
 
@@ -85,10 +86,22 @@ ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
 REST_FRAMEWORK = {
+<<<<<<< HEAD
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
 
+=======
+    'EXCEPTION_HANDLER': 'utils.exceptions.handler.custom_exception_handler',
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
     ),
 }
 
@@ -103,7 +116,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'rest_framework',
+<<<<<<< HEAD
     'rest_auth',
+=======
+    'rest_framework.authtoken',
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
     'django_extensions',
 
     'member',
@@ -198,6 +215,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+<<<<<<< HEAD
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -216,5 +234,15 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
+=======
+
+# REST_USE_JWT = True
+
+# JWT_AUTH = {
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
+#     'JWT_ALLOW_REFRESH': True,
+#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+# }
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 
 # DATA_UPLOAD_MAX_NUMBER_FIELDS = None

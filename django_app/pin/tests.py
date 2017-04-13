@@ -3,6 +3,7 @@ import random
 from django.test import TestCase
 
 from member.models import MomoUser
+<<<<<<< HEAD
 from .models import Map, Pin, Place, HashTag, PinHashTag
 
 TEST_NAME = '피카츄', '라이츄', '파이리', '꼬부기', '버터플', '야도란', '피존투', '또가스'
@@ -83,6 +84,11 @@ class MapModelTest(TestCase):
         )
         map = Map.objects.get(author=user)
         self.assertEqual(map.name, name)
+=======
+from utils.tests import make_dummy_users
+from utils.tests.testcase import TEST_NAME, make_dummy_hash_tags, TEST_PLACE_NAME
+from .models import Map, Pin, Place, PinHashTag
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 
 
 class PinModelTest(TestCase):

@@ -18,8 +18,15 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+from map.urls import apis as map_apis_urls
+from member.urls import apis as member_apis_urls
+from pin.urls import apis as pin_apis_urls
+from place.urls import apis as place_apis_urls
+from place.urls import views as place_views_urls
+from post.urls import apis as post_apis_urls
 from . import views
 
+<<<<<<< HEAD
 from map.urls import apis as map_apis_urls
 from member.urls import apis as member_apis_urls
 from pin.urls import apis as pin_apis_urls
@@ -28,6 +35,8 @@ from post.urls import apis as post_apis_urls
 
 from place.urls import views as place_views_urls
 
+=======
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 api_urlpatterns = [
     url(r'^member/', include(member_apis_urls)),
     url(r'^map/', include(map_apis_urls)),
@@ -38,7 +47,11 @@ api_urlpatterns = [
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
     url(r'^$/', views.index),
+=======
+    url(r'^$', views.index),
+>>>>>>> bc95b67aef65e6f984d661d45e80409205842039
     url(r'^search/', include(place_views_urls)),
     url(r'^api/', include(api_urlpatterns, namespace='api'))
 ]
