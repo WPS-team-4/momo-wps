@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.test import TestCase
-
-# Create your tests here.
-=======
 import random
 
 from django.test import TestCase
@@ -22,4 +17,3 @@ class MapModelTest(TestCase):
         )
         map = Map.objects.get(author=user)
         self.assertEqual(map.name, name)
->>>>>>> bc95b67aef65e6f984d661d45e80409205842039

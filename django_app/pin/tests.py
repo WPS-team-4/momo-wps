@@ -3,7 +3,6 @@ import random
 from django.test import TestCase
 
 from member.models import MomoUser
-<<<<<<< HEAD
 from .models import Map, Pin, Place, HashTag, PinHashTag
 
 TEST_NAME = '피카츄', '라이츄', '파이리', '꼬부기', '버터플', '야도란', '피존투', '또가스'
@@ -22,7 +21,7 @@ def make_dummy_users(num):
     return users
 
 
-def make_dummy_plces(num):
+def make_dummy_places(num):
     places = []
     for i in range(num):
         place = Place.objects.create(
@@ -59,7 +58,7 @@ def make_dummy_maps(num):
 
 def make_pins(num_place, num_map, num_user, num_pin):
     pins = []
-    places = make_dummy_plces(num_place)
+    places = make_dummy_places(num_place)
     maps = make_dummy_maps(num_map)
     users = make_dummy_users(num_user)
     for i in range(num_pin):
@@ -84,11 +83,6 @@ class MapModelTest(TestCase):
         )
         map = Map.objects.get(author=user)
         self.assertEqual(map.name, name)
-=======
-from utils.tests import make_dummy_users
-from utils.tests.testcase import TEST_NAME, make_dummy_hash_tags, TEST_PLACE_NAME
-from .models import Map, Pin, Place, PinHashTag
->>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 
 
 class PinModelTest(TestCase):
