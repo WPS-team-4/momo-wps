@@ -36,15 +36,12 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     facebook_id = models.CharField(max_length=100, blank=True)
     is_facebook = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-<<<<<<< HEAD
-=======
     following = models.ManyToManyField(
         'self',
         symmetrical=False,
         related_name='follower_set',
         through='RelationShip',
     )
->>>>>>> bc95b67aef65e6f984d661d45e80409205842039
 
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -60,8 +57,6 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.username
-<<<<<<< HEAD
-=======
 
     def follow(self, user):
         self.following_relations.create(
@@ -87,4 +82,3 @@ class RelationShip(models.Model):
     def __str__(self):
         return 'Relation from({}) to({})'.format(
             self.from_user.username, self.to_user.username)
->>>>>>> bc95b67aef65e6f984d661d45e80409205842039
