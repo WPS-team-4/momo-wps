@@ -1,4 +1,4 @@
-# facebook login \(수정중\)
+# facebook login 
 
 > facebook user access token을 받아 새로운 user를 가져오거나 생성해서 user의 token을 반환합니다.
 
