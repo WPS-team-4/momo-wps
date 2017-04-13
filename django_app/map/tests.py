@@ -1,3 +1,5 @@
+import random
+
 from django.urls import NoReverseMatch
 from django.urls import resolve
 from django.urls import reverse
@@ -41,13 +43,18 @@ class MapModelTest(APITestCaseAuthMixin, APILiveServerTestCase):
         # 인증되지 않은 사용자가 map을 create 할 수 있는지 확인
         url = reverse('api:post-list')
         response = self.client.post(url)
-        print(response.data)
+        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(Map.objects.exists(), False)
 
     def test_map_list(self):
         # map list 확인
-        pass
+        self.create_user_and_login(self.client)
+        num = random.randrange(1, 10)
+        self.create_map(self, num)
+        url = reverse('api:map-list')
+        response = self.client.get(url)
+        print(response)
 
     def test_map_update_partial(self):
         pass
