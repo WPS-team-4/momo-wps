@@ -10,16 +10,6 @@ __all__ = (
 )
 
 
-class RelationShipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RelationShip
-        fields = (
-            'to_user',
-            'from_user',
-            'created_date',
-        )
-
-
 class UserSerializer(serializers.ModelSerializer):
     # map_list = MapSerializer(many=True, read_only=True, source='map_set')
 
@@ -57,3 +47,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
         #     instance.save()
         #     return instance
         #     instance.email = validated_data.get('email', instance.email)
+
+
+class RelationShipSerializer(serializers.ModelSerializer):
+    to_user = UserSerializer(read_only=True)
+    from_user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = RelationShip
+        fields = (
+            'to_user',
+            'from_user',
+            'created_date',
+        )
