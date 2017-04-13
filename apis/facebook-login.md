@@ -1,26 +1,24 @@
-# facebook login
+# facebook login \(수정중\)
 
 > facebook user access token을 받아 새로운 user를 가져오거나 생성해서 user의 token을 반환합니다.
 
-**URL**
+**URL**  
 `/api/member/fb/`
 
-**Method**
+**Method**  
 `POST`
 
 **Data Params**
 
-| name         | value                      | type | process                                  |
-| ------------ | -------------------------- | ---- | ---------------------------------------- |
-| access_token | facebook user access token |      | facebook debug token을 요청하고 user 가입처리를 한 뒤에 token을 반환 |
-
-
+| name | value | type | process |
+| --- | --- | --- | --- |
+| access\_token | facebook user access token |  | facebook debug token을 요청하고 user 가입처리를 한 뒤에 token을 반환 |
 
 **Success Response**
 
-- Code: 200
+* Code: 200
 
-- Content:
+* Content:
 
   ```json
   {
@@ -249,17 +247,17 @@
 
 **Error Response**
 
-- Code: 400
+* Code: 400
 
-  - Reason: @@@
-  - Content:
+  * Reason: @@@
+  * Content:
 
   ` `
 
-- Code: 401
+* Code: 401
 
-  - Reason: Unauthorized
-  - Content:
+  * Reason: Unauthorized
+  * Content:
 
   ```json
   {
@@ -281,4 +279,6 @@ $.ajax({
   }
 });
 ```
+
+
 
