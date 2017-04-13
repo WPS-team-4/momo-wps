@@ -1,6 +1,5 @@
 from django.db import models
 
-from config import settings
 from member.models import MomoUser
 from pin.models import Pin
 
