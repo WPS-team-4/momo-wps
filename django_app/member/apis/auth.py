@@ -1,4 +1,4 @@
-from pprint import pprint
+# from pprint import pprint
 
 import requests
 from django.contrib.auth import authenticate
@@ -108,7 +108,7 @@ class FacebookLoginAPI(APIView):
 
         r = requests.get(url_debug_token, params=params)
         dict_debug_token = r.json()
-        pprint(dict_debug_token)
+        # pprint(dict_debug_token)
 
         # facebook_id = dict_debug_token['data']['user_id']
         # fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
@@ -152,6 +152,6 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
-        pprint(dict_user_info)
+        # pprint(dict_user_info)
 
         return dict_user_info
