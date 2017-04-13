@@ -6,7 +6,7 @@
 
 `/api/post/{postId}/`
 
-## Post 세부정보 조회 \(수정중\)
+## Post 세부정보 조회
 
 ### method
 
@@ -28,7 +28,7 @@ GET
 
 > `pin` 은 `pin_name` 으로 pk값이 아닌 pin 이름을 보여주도록 변경될 예정입니다.
 
-## Post 세부정보 수정 \(수정중\)
+## Post 세부정보 수정
 
 ### method
 
@@ -40,7 +40,7 @@ PATCH
 
 * photo
 
-## Post 삭제 \(수정중\)
+## Post 삭제
 
 ### method
 
