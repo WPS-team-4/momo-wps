@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import json
 import os
 
-# DEBUG = os.environ.get('MODE') == 'DEBUG'
-DEBUG = True
+DEBUG = os.environ.get('MODE') == 'DEBUG'
+# DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS'
 
@@ -85,16 +85,19 @@ ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.exceptions.handler.custom_exception_handler',
 
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+
     ),
+
+    'EXCEPTION_HANDLER': 'utils.exceptions.handler.custom_exception_handler',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+
 }
 
 INSTALLED_APPS = [
@@ -109,6 +112,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'rest_framework.authtoken',
+
     'django_extensions',
 
     'member',
@@ -159,10 +163,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-# if DEBUG and DB_RDS:
-#     config_db = config['db_rds']
-# else:
-config_db = config['db']
+if DEBUG and DB_RDS:
+    config_db = config['db_rds']
+else:
+    config_db = config['db']
 # print(config_db)
 DATABASES = {
     'default': {
@@ -209,14 +213,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-
-# REST_USE_JWT = True
-
-# JWT_AUTH = {
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
-#     'JWT_ALLOW_REFRESH': True,
-#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-# }
-
-# DATA_UPLOAD_MAX_NUMBER_FIELDS = None

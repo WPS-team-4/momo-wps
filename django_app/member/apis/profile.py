@@ -18,7 +18,7 @@ class UserProfileViewAPI(RetrieveUpdateAPIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = UserProfileSerializer
 
-    def retirieve(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)

@@ -22,9 +22,6 @@ __all__ = (
 )
 
 
-# jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
-
-
 class SignUpAPI(CreateAPIView):
     permission_classes = (AllowAny,)
     authentication_classes = (TokenAuthentication,)
@@ -37,13 +34,9 @@ class SignUpAPI(CreateAPIView):
 class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
-    # authentication_classes = (TokenAuthentication,)
-
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(request.data)
         user = authenticate(username=serializer.data['username'], password=serializer.data['password'])
-        # jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        # jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         if user is not None:
             token = Token.objects.get_or_create(user=user)[0]
             # payload = jwt_payload_handler(user)

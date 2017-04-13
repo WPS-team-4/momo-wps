@@ -21,10 +21,6 @@ class RelationShipSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # map_list = MapSerializer(many=True, read_only=True, source='map_set')
-
-    # follower = RelationShipSerializer(many=True, read_only=True, source='follower_set')
-
     class Meta:
         model = MomoUser
         fields = (
@@ -51,9 +47,3 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_staff',
             'map_list',
         )
-
-        # def update(self, instance, validated_data):
-        #     instance.profile_img = validated_data.get('profile_img', instance.profile_img)
-        #     instance.save()
-        #     return instance
-        #     instance.email = validated_data.get('email', instance.email)

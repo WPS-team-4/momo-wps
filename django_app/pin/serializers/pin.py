@@ -10,8 +10,9 @@ __all__ = (
 
 class PinSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='username'
+        source='map.author',
+        slug_field='username',
+        read_only=True
     )
     post_list = PostSerializer(read_only=True, many=True, source='post_set')
 
@@ -20,10 +21,13 @@ class PinSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'author',
-            'name',
-            'place',
             'map',
+            'pin_name',
+            'place',
             'pin_color',
             'created_date',
             'post_list',
+        )
+        read_only_fields = (
+            'author',
         )
