@@ -10,10 +10,12 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
-    # author = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='username'
-    # )
+    author = serializers.SlugRelatedField(
+        source='pin.map.author',
+        slug_field='username',
+        read_only=True
+    )
+
     comment_list = PostCommentSerializer(read_only=True, many=True, source='postcomment_set')
 
     class Meta:
@@ -21,12 +23,12 @@ class PostSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'pin',
-            # 'author',
+            'author',
             'photo',
             'created_date',
             'comment_list',
         )
-        # read_only_fields = (
-        #     'author',
-        # )
+        read_only_fields = (
+            'author',
+        )
 
