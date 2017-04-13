@@ -49,14 +49,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
         #     instance.email = validated_data.get('email', instance.email)
 
 
-class RelationShipSerializer(serializers.ModelSerializer):
-    to_user = UserSerializer(read_only=True)
-    from_user = UserSerializer(read_only=True)
-
-    class Meta:
-        model = RelationShip
-        fields = (
-            'to_user',
-            'from_user',
-            'created_date',
-        )
+# class RelationShipSerializer(serializers.ModelSerializer):
+#     to_user = UserSerializer(read_only=True)
+#     from_user = UserSerializer(read_only=True)
+#
+#     class Meta:
+#         model = RelationShip
+#         fields = (
+#             'to_user',
+#             'from_user',
+#             'created_date',
+#         )
