@@ -1,13 +1,15 @@
-Resource | GET | POST | PATCH | DELETE | 
---- | --- | --- | --- | --- |
-/post/{postId}/ | 해당 포스트 세부정보 |  |  | 해당 포스트 삭제 |
+| Resource | GET | POST | PATCH | DELETE |
+| --- | --- | --- | --- | --- |
+| /post/{postId}/ | 해당 포스트 세부정보 |  |  | 해당 포스트 삭제 |
 
 ### 요청 주소
+
 `/api/post/{postId}/`
 
-## Post 세부정보 조회
+## Post 세부정보 조회 \(수정중\)
 
 ### method
+
 GET
 
 ### 반환
@@ -23,26 +25,24 @@ GET
   }
 ]
 ```
+
 > `pin` 은 `pin_name` 으로 pk값이 아닌 pin 이름을 보여주도록 변경될 예정입니다.
 
-
-## Post 세부정보 수정
+## Post 세부정보 수정 \(수정중\)
 
 ### method
+
 PATCH
 
 ### body
+
 다음 중 하나 이상의 값을 받습니다
-- photo
 
+* photo
 
-## Post 삭제
+## Post 삭제 \(수정중\)
 
 ### method
 
 DELETE
-
-
-
-
 
