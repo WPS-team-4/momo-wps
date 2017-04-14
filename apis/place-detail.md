@@ -1,9 +1,9 @@
 Resource | GET | POST | PATCH | DELETE | 
 --- | --- | --- | --- | --- |
-/place/{placeId}/ | 해당 장소 세부정보 |  |  | 해당 장소 삭제 |
+/api/place/{placeId}/ | 해당 장소 세부정보 |  |  | 해당 장소 삭제 |
 
 ### 요청 주소
-`/place/{placeId}/`
+`/api/place/{placeId}/`
 
 
 ## Place 세부정보 조회
