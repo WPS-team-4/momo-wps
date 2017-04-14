@@ -80,5 +80,5 @@ class RelationShip(models.Model):
         )
 
     def __str__(self):
-        return 'Relation from({}) to({})'.format(
-            self.from_user.username, self.to_user.username)
+        return 'Relation from({},{}) to({},{})'.format(
+            self.from_user.username, self.from_user.pk, self.to_user.username, self.to_user.pk)
