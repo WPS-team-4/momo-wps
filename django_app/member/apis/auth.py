@@ -29,8 +29,6 @@ class SignUpAPI(CreateAPIView):
 class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
-    # serializer_class = LoginSerialize
-
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(request.data)
 
@@ -38,10 +36,9 @@ class LoginAPI(APIView):
                             password=serializer.data['password'])
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"user": {
-                "pk": user.pk,
-                "token": token.key}
-            }, status=status.HTTP_200_OK)
+            response = Response({"token": token.key,
+                                 "user_pk": token.user_id,
+                                 "created": token.created}, status=status.HTTP_200_OK)
             return response
         else:
             error = {
