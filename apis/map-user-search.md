@@ -13,11 +13,11 @@
 GET
 
 ### params
-- key
+- keyword
 
 ```
 {
-	"key": "조용한"
+	"keyword": "조용한"
 }
 ```
 
@@ -32,23 +32,32 @@ User | username |
 
 ```
 {
-	"map": [
-		{
-        "pk": "1",
-        "map_name": "카페지도",
-        "description": "조용한 카페 모음",
-        "is_private": "false"
-        "author": {
-            "pk": "5",
-            "username": "kay",
-            "profile_image": "/media/post/provisional_dtP071M.png"
-    		},
-        "created_date": "2017-04-09T06:26:10.279343Z"
-    	},
-    	...
-	],
-	"user": [
-			
-	]
+  "maps": [
+      {
+      "pk": 52,
+      "map_name": "조용한 장소",
+      "description": "주변 소음이 없어 녹음하기 좋은 곳들",
+      "is_private": false,
+      "author": "anny",
+      "created_date": "2017-04-13T09:20:53.583006Z"
+    },
+    {
+      "pk": 3,
+      "map_name": "서울 카페지도",
+      "description": "조용한 카페, 채광이 좋음",
+      "is_private": false,
+      "author": "anohk",
+      "created_date": "2017-04-13T09:20:53.583006Z"
+    },
+    ...
+  ],
+  "users": [
+    {
+      "pk": 2,
+      "username": "조용한",
+      "profile_img": "http://momo-master-eb.ap-northeast-2.elasticbeanstalk.com/media/post/b_3GB3P3y.png",
+    },
+    ...
+  ]
 }
 ```
