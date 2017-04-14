@@ -5,7 +5,7 @@ from django.test import TestCase
 from member.models import MomoUser
 from utils import make_dummy_hash_tags
 from utils import make_dummy_users
-from utils.tests.testcase import TEST_NAME
+from utils.tests.testcase import TEST_NAME, TEST_PLACE_NAME
 from .models import Map, Pin, Place, PinHashTag
 
 
