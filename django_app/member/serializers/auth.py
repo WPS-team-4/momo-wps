@@ -11,6 +11,9 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = MomoUser
         fields = (
+            'pk',
             'username',
             'password',
         )
+
+        read_only_fields = ('pk',)
