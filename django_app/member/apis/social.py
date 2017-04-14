@@ -25,11 +25,11 @@ class FollowAPI(APIView):
             from_user.unfollow(to_user)
             return Response({"from_user": from_user.pk,
                              "to_user": to_user.pk,
-                             "status": 'from_user{} unfollow to_user{}'.format(from_user.pk, to_user.pk)},
+                             "status": "follow"},
                             status=status.HTTP_200_OK)
         else:
             from_user.follow(to_user)
             return Response({"from_user": from_user.pk,
                              "to_user": to_user.pk,
-                             "status": 'from_user{} follow to_user{}'.format(from_user.pk, to_user.pk)},
+                             "status": "follow"},
                             status=status.HTTP_201_CREATED)
