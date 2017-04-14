@@ -120,6 +120,7 @@ INSTALLED_APPS = [
     'map',
     'place',
     'post',
+    'search',
 ]
 
 MIDDLEWARE = [
