@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 from config import settings
 from member.models import MomoUser
-from member.serializers import LoginSerializer, CreateUserSerializer
+from member.serializers import LoginSerializer, UserSerializer
 
 __all__ = (
     'SignUpAPI',
@@ -25,11 +25,13 @@ __all__ = (
 class SignUpAPI(CreateAPIView):
     permission_classes = (AllowAny,)
     authentication_classes = (TokenAuthentication,)
-    serializer_class = CreateUserSerializer
+    serializer_class = UserSerializer
 
     def perform_create(self, serializer):
-        serializer.save(data=self.request.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = self.get_serializer(data=self.request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class LoginAPI(APIView):
@@ -40,21 +42,10 @@ class LoginAPI(APIView):
         user = authenticate(username=serializer.data['username'], password=serializer.data['password'])
         if user is not None:
             token = Token.objects.get_or_create(user=user)[0]
-            # payload = jwt_payload_handler(user)
-            # token = jwt_encode_handler(payload)
-            # token = Token.objects.get_or_create(user=user)[0]
-            # views.obtain_jwt_token
             response = Response({"user": {
                 "pk": user.pk,
                 "token": token.key}
             }, status=status.HTTP_200_OK)
-            # if api_settings.JWT_AUTH_COOKIE:
-            #     expiration = (datetime.utcnow() +
-            #                   api_settings.JWT_EXPIRATION_DELTA)
-            #     response.set_cookie(api_settings.JWT_AUTH_COOKIE,
-            #                         response.data['token'],
-            #                         expires=expiration,
-            #                         httponly=True)
             return response
         else:
             error = {
@@ -84,17 +75,12 @@ class FacebookLoginAPI(APIView):
     def post(self, request, *args, **kwargs):
         APP_ID = settings.config['facebook']['app_id']
         SECRET_CODE = settings.config['facebook']['secret_code']
-        # REDIRECT_URI = 'http://localhost:8000/member/login/facebook/'
         APP_ACCESS_TOKEN = '{app_id}|{secret_code}'.format(
             app_id=APP_ID,
             secret_code=SECRET_CODE
         )
         ASCII_USER_ACCESS_TOKEN = request.data.get('access_token')
-        # serializer = TokenSerializer(data=request.data)
         USER_ACCESS_TOKEN = ASCII_USER_ACCESS_TOKEN.encode('utf-8')
-        # serializer.is_valid()
-        # USER_ACCESS_TOKEN = serializer.data
-        print('ACCESS TOKEN : %s' % USER_ACCESS_TOKEN)
 
         url_debug_token = 'https://graph.facebook.com/debug_token'
         params = {
@@ -105,17 +91,11 @@ class FacebookLoginAPI(APIView):
 
         r = requests.get(url_debug_token, params=params)
         dict_debug_token = r.json()
-        # pprint(dict_debug_token)
 
-        # facebook_id = dict_debug_token['data']['user_id']
-        # fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
-
-        # return Response(fb_user_info)
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
             user, _ = MomoUser.objects.get_or_create(
-                facebook_id=facebook_id,
                 password=facebook_id,
                 username=facebook_id,
             )
@@ -129,9 +109,6 @@ class FacebookLoginAPI(APIView):
 
     def get_fb_user_info(self, facebook_id, access_token):
         USER_ID = facebook_id
-        print('USER ID: %s' % USER_ID)
-
-        # 해당 USER_ID 로 graph API에 유저정보를 요청
         url_api_user = 'https://graph.facebook.com/{user_id}'.format(
             user_id=USER_ID
         )
@@ -149,6 +126,5 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
-        # pprint(dict_user_info)
 
         return dict_user_info
