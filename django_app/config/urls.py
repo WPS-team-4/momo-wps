@@ -24,6 +24,7 @@ from pin.urls import apis as pin_apis_urls
 from place.urls import apis as place_apis_urls
 from place.urls import views as place_views_urls
 from post.urls import apis as post_apis_urls
+from search.urls import apis as search_apis_urls
 from . import views
 
 api_urlpatterns = [
@@ -32,6 +33,7 @@ api_urlpatterns = [
     url(r'^place/', include(place_apis_urls)),
     url(r'^pin/', include(pin_apis_urls)),
     url(r'^post/', include(post_apis_urls)),
+    url(r'^search/', include(search_apis_urls))
 ]
 
 urlpatterns = [
