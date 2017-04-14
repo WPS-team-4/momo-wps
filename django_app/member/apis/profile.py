@@ -15,7 +15,7 @@ __all__ = (
 
 class UserProfileViewAPI(RetrieveUpdateAPIView):
     queryset = MomoUser.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
     serializer_class = UserProfileSerializer
 
@@ -28,6 +28,4 @@ class UserProfileViewAPI(RetrieveUpdateAPIView):
         partial = kwargs.pop('partial', True)
         instance = request.user
         serializer = UserSerializer(instance, data=request.data, partial=partial)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        return Response(serializer.data)
