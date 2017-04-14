@@ -43,16 +43,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    # def create(self, validated_data):
-    #     # user = MomoUser.objects.create_user(**validated_data)
-    #     # user.set_password(validated_data.get('password'))
-    #     # user.save()
-    #     return MomoUser(**validated_data)
-
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)
         info = model_meta.get_field_info(instance)
-        password = validated_data.pop('password', None)
 
         for attr, value in validated_data.items():
             if attr in info.relations and info.relations[attr].to_many:
@@ -60,13 +53,8 @@ class UserSerializer(serializers.ModelSerializer):
             else:
                 setattr(instance, attr, value)
 
-        # instance.profile_img = validated_data.get('profile_img', instance.profile_img)
-        # instance.email = validated_data.get('email', instance.email)
-
-        if password:
-            password = validated_data.get('password')
-            instance.set_password(password)
-
+        password = validated_data['password']
+        instance.set_password(password)
         instance.save()
         return instance
 
