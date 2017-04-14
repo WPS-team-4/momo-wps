@@ -1,23 +1,70 @@
 from rest_framework import serializers
+from rest_framework.compat import set_many
+from rest_framework.serializers import raise_errors_on_nested_writes
+from rest_framework.utils import model_meta
 
 from map.serializers import MapDetailSerializer
 from member.models import MomoUser
+from utils import DynamicFieldsModelSerializer
 
 __all__ = (
-    # 'RelationShipSerializer',
     'UserSerializer',
     'UserProfileSerializer',
 )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(DynamicFieldsModelSerializer):
+    following = serializers.ReadOnlyField(source='momouser.following')
+    followers = serializers.ReadOnlyField(source='momouser.followers')
+
     class Meta:
         model = MomoUser
         fields = (
             'pk',
             'username',
+            'password',
+            'email',
             'profile_img',
+            'following',
+            'followers',
+            'date_joined',
+            'last_login',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+            'is_superuser',
         )
+        extra_kwargs = {'password': {'write_only': True}}
+
+        read_only_fields = (
+            'pk',
+            'following',
+            'followers',
+        )
+
+    def create(self, validated_data):
+        user = MomoUser.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+    def update(self, instance, validated_data):
+        raise_errors_on_nested_writes('update', self, validated_data)
+        info = model_meta.get_field_info(instance)
+
+        for attr, value in validated_data.items():
+            if attr in info.relations and info.relations[attr].to_many:
+                set_many(instance, attr, value)
+            else:
+                setattr(instance, attr, value)
+
+        password = validated_data['password']
+        instance.set_password(password)
+        instance.save()
+        return instance
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -30,6 +77,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'profile_img',
+            'relation',
+            'follower',
             'following',
             'date_joined',
             'is_facebook',
@@ -37,22 +86,3 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_staff',
             'map_list',
         )
-
-
-        # def update(self, instance, validated_data):
-        #     instance.profile_img = validated_data.get('profile_img', instance.profile_img)
-        #     instance.save()
-        #     return instance
-        #     instance.email = validated_data.get('email', instance.email)
-
-# class RelationShipSerializer(serializers.ModelSerializer):
-#     to_user = UserSerializer(read_only=True)
-#     from_user = UserSerializer(read_only=True)
-#
-#     class Meta:
-#         model = RelationShip
-#         fields = (
-#             'to_user',
-#             'from_user',
-#             'created_date',
-#         )
