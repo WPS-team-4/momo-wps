@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MomoUser
         fields = (
-            'id',
+            'pk',
             'username',
             'password',
             'email',
@@ -31,14 +31,23 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
         read_only_fields = (
-            'id',
+            'pk',
         )
 
     def create(self, validated_data):
-        user = MomoUser.objects.create(**validated_data)
-        user.set_password(validated_data.get('password'))
+        user = MomoUser.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
         user.save()
         return user
+
+    # def create(self, validated_data):
+    #     # user = MomoUser.objects.create_user(**validated_data)
+    #     # user.set_password(validated_data.get('password'))
+    #     # user.save()
+    #     return MomoUser(**validated_data)
 
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)
