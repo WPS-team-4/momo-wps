@@ -18,13 +18,12 @@ class UserProfileViewAPI(RetrieveUpdateAPIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = UserSerializer
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     user = request.user
-    #     serializer = UserSerializer(user)
-    #     return Response(serializer.data)
-
-        # def partial_update(self, request, *args, **kwargs):
-        #     partial = kwargs.pop('partial', True)
-        #     instance = request.user
-        #     serializer = UserSerializer(instance, data=request.data, partial=partial)
-        #     return Response(serializer.data)
+    def retrieve(self, request, *args, **kwargs):
+        user = MomoUser.objects.get(pk=kwargs['pk'])
+        fields = request.query_params.get('fields', '')
+        if fields is not '':
+            fields = fields.split(',')
+        else:
+            fields = None
+        serializer = UserSerializer(user, fields=fields)
+        return Response(serializer.data)

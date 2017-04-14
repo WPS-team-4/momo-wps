@@ -5,6 +5,7 @@ from rest_framework.utils import model_meta
 
 from map.serializers import MapDetailSerializer
 from member.models import MomoUser
+from utils import DynamicFieldsModelSerializer
 
 __all__ = (
     'UserSerializer',
@@ -12,7 +13,10 @@ __all__ = (
 )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(DynamicFieldsModelSerializer):
+    following = serializers.ReadOnlyField(source='momouser.following')
+    followers = serializers.ReadOnlyField(source='momouser.followers')
+
     class Meta:
         model = MomoUser
         fields = (
@@ -21,6 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'email',
             'profile_img',
+            'following',
+            'followers',
             'date_joined',
             'last_login',
             'is_facebook',
@@ -32,6 +38,8 @@ class UserSerializer(serializers.ModelSerializer):
 
         read_only_fields = (
             'pk',
+            'following',
+            'followers',
         )
 
     def create(self, validated_data):
