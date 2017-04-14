@@ -32,7 +32,6 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(blank=True)
     password = models.CharField(max_length=100)
     profile_img = models.ImageField(blank=True, upload_to='member')
-    # facebook_id = models.CharField(max_length=100, blank=True)
     is_facebook = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     relation = models.ManyToManyField(
