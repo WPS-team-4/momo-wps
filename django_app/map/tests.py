@@ -12,6 +12,7 @@ from utils.tests.testcase_api import APITestCaseAuthMixin
 
 User = get_user_model()
 
+
 class MapModelTest(APITestCaseAuthMixin, APILiveServerTestCase):
     def test_apis_url_exist(self):
         try:
@@ -42,8 +43,8 @@ class MapModelTest(APITestCaseAuthMixin, APILiveServerTestCase):
         self.assertIn('username', response_auth)
 
         self.assertEqual(Map.objects.count(), 1)
-        map = Map.objects.first()
-        self.assertEqual(map.author.id, user.id)
+        new_map = Map.objects.first()
+        self.assertEqual(new_map.author.id, user.id)
         # print(response_auth)
 
     def test_cannot_map_create__not_authenticated(self):

@@ -4,7 +4,6 @@ from django.shortcuts import render
 
 from config.settings import config
 from pin.forms import MapCreateForm
-from pin.models import Pin
 from place.forms import SearchPlaceForm
 from place.models import Place
 
