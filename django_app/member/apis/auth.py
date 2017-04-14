@@ -1,5 +1,3 @@
-# from pprint import pprint
-
 import requests
 from django.contrib.auth import authenticate
 from rest_framework import status
@@ -12,7 +10,8 @@ from rest_framework.views import APIView
 
 from config import settings
 from member.models import MomoUser
-from member.serializers import LoginSerializer, UserSerializer
+from member.serializers import LoginSerializer
+from member.serializers import UserSerializer
 
 __all__ = (
     'SignUpAPI',
@@ -24,25 +23,21 @@ __all__ = (
 
 class SignUpAPI(CreateAPIView):
     permission_classes = (AllowAny,)
-    authentication_classes = (TokenAuthentication,)
     serializer_class = UserSerializer
-
-    def perform_create(self, serializer):
-        serializer = self.get_serializer(data=self.request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
 
 class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
+    # serializer_class = LoginSerialize
+
     def post(self, request, *args, **kwargs):
-        serializer = LoginSerializer(self.request.data)
-        serializer.is_valid()
-        user = authenticate(serializer.validated_data)
+        serializer = LoginSerializer(request.data)
+
+        user = authenticate(username=serializer.data['username'],
+                            password=serializer.data['password'])
         if user is not None:
-            token = Token.objects.get_or_create(user=user)[0]
+            token, _ = Token.objects.get_or_create(user=user)
             response = Response({"user": {
                 "pk": user.pk,
                 "token": token.key}
