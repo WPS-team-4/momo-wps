@@ -11,9 +11,6 @@ __all__ = (
 
 
 class RelationShipSerializer(serializers.ModelSerializer):
-    to_user = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    from_user = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
     class Meta:
         model = RelationShip
         fields = (
