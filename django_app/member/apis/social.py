@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from member.models import RelationShip, MomoUser
-from member.serializers import RelationShipSerializer
 
 __all__ = (
     'FollowAPI',
@@ -12,15 +11,22 @@ __all__ = (
 
 
 class FollowAPI(APIView):
-    serializer_class = RelationShipSerializer
+    # serializer_class = RelationShipSerializer
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        from_user = MomoUser.objects.get(id=self.kwargs['pk'])
-        relation, is_follow = RelationShip.objects.get_or_create(from_user=from_user, to_user=self.request.user)
+        to_user = MomoUser.objects.get(id=self.kwargs['pk'])
+        from_user = self.request.user
+        relation, is_follow = RelationShip.objects.get_or_create(from_user=from_user, to_user=to_user)
+        print(relation)
         if is_follow:
-            return Response({'follow', relation.to_user.username, relation.from_user.username},
+            return Response({"from_user": from_user.pk,
+                             "to_user": to_user.pk,
+                             "status": 'from_user{} follow to_user{}'.format(from_user.pk, to_user.pk)},
                             status=status.HTTP_201_CREATED)
         else:
             relation.delete()
-            return Response({'{} unfollow {}'.format()}, status=status.HTTP_200_OK)
+            return Response({"from_user": from_user.pk,
+                             "to_user": to_user.pk,
+                             "status": 'from_user{} unfollow to_user{}'.format(from_user.pk, to_user.pk)},
+                            status=status.HTTP_200_OK)
