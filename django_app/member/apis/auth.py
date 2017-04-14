@@ -29,6 +29,7 @@ class SignUpAPI(CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(data=self.request.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class LoginAPI(APIView):
@@ -43,7 +44,10 @@ class LoginAPI(APIView):
             # token = jwt_encode_handler(payload)
             # token = Token.objects.get_or_create(user=user)[0]
             # views.obtain_jwt_token
-            response = Response({"token": token.key}, status=status.HTTP_200_OK)
+            response = Response({"user": {
+                "pk": user.pk,
+                "token": token.key}
+            }, status=status.HTTP_200_OK)
             # if api_settings.JWT_AUTH_COOKIE:
             #     expiration = (datetime.utcnow() +
             #                   api_settings.JWT_EXPIRATION_DELTA)

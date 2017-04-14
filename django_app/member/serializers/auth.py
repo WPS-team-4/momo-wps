@@ -20,8 +20,12 @@ class LoginSerializer(serializers.ModelSerializer):
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MomoUser
-        fields = ('email', 'username', 'password')
+        fields = ('pk', 'email', 'username', 'password')
         # extra_kwargs = {'password': {'write_only': True}}
+
+        read_only_fields = (
+            'pk',
+        )
 
     def create(self, validated_data):
         user = MomoUser.objects.create(
