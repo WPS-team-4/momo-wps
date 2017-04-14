@@ -5,7 +5,6 @@ from post.serializers.post_comment import PostCommentSerializer
 
 __all__ = (
     'PostSerializer',
-    # 'PostCreateSerializer',
 )
 
 
