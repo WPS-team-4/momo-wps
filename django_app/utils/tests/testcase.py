@@ -9,7 +9,7 @@ __all__ = (
     'make_dummy_users',
     'make_dummy_hash_tags',
     'make_dummy_maps',
-    'make_dummy_plces',
+    'make_dummy_places',
     'make_pins',
 )
 
@@ -29,16 +29,18 @@ def make_dummy_users(num):
     return users
 
 
-def make_dummy_plces(num):
+def make_dummy_places(num):
     places = []
     for i in range(num):
         place = Place.objects.create(
             name='{}{}'.format(random.choice(TEST_NAME), random.choice(TEST_PLACE_NAME)),
             address='{}나라 {}번지'.format(random.choice(TEST_NAME), i),
-            location='{}.{}'.format(random.randrange(111, 999), random.randrange(111, 999)),
+            lat='lat: {}'.format(random.randrange(100, 120)),
+            lng='lng: {}'.format(random.randrange(100, 120)),
+            place_id='g_place_id: {}'.format(random.randrange(111, 999))
         )
         places.append(place)
-    return place
+    return places
 
 
 def make_dummy_hash_tags(num):
@@ -66,7 +68,7 @@ def make_dummy_maps(num):
 
 def make_pins(num_place, num_map, num_user, num_pin):
     pins = []
-    places = make_dummy_plces(num_place)
+    places = make_dummy_places(num_place)
     maps = make_dummy_maps(num_map)
     users = make_dummy_users(num_user)
     for i in range(num_pin):
