@@ -4,7 +4,6 @@ from django.shortcuts import render
 
 from config.settings import config
 from pin.forms import MapCreateForm
-from pin.models import Pin
 from place.forms import SearchPlaceForm
 from place.models import Place
 
@@ -40,10 +39,10 @@ def search(request):
             place_id = result['place_id']
 
             # pin을 한 장소인지 판단
-            is_exist = Pin.objects.filter(
-                author=request.user,
-                place__place_id=place_id
-            ).exists()
+            # is_exist = Pin.objects.filter(
+            #     author=request.user,
+            #     place__place_id=place_id
+            # ).exists()
 
             data = {
                 'address': formatted_address,
@@ -51,7 +50,7 @@ def search(request):
                 'lng': lng,
                 'name': name,
                 'place_id': place_id,
-                'is_exist': is_exist
+                # 'is_exist': is_exist
             }
             # print(data)
             places.append(data)
