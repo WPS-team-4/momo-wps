@@ -1,23 +1,13 @@
 from rest_framework import serializers
 
 from map.serializers import MapDetailSerializer
-from member.models import MomoUser, RelationShip
+from member.models import MomoUser
 
 __all__ = (
-    'RelationShipSerializer',
+    # 'RelationShipSerializer',
     'UserSerializer',
     'UserProfileSerializer',
 )
-
-
-class RelationShipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RelationShip
-        fields = (
-            'to_user',
-            'from_user',
-            'created_date',
-        )
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -47,3 +37,22 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_staff',
             'map_list',
         )
+
+
+        # def update(self, instance, validated_data):
+        #     instance.profile_img = validated_data.get('profile_img', instance.profile_img)
+        #     instance.save()
+        #     return instance
+        #     instance.email = validated_data.get('email', instance.email)
+
+# class RelationShipSerializer(serializers.ModelSerializer):
+#     to_user = UserSerializer(read_only=True)
+#     from_user = UserSerializer(read_only=True)
+#
+#     class Meta:
+#         model = RelationShip
+#         fields = (
+#             'to_user',
+#             'from_user',
+#             'created_date',
+#         )
