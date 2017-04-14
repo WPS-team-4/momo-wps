@@ -16,19 +16,22 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MomoUser
         fields = (
-            'pk',
+            'id',
             'username',
+            'password',
             'email',
             'profile_img',
             'date_joined',
+            'last_login',
             'is_facebook',
             'is_active',
             'is_staff',
             'is_superuser',
         )
+        extra_kwargs = {'password': {'write_only': True}}
 
         read_only_fields = (
-            'pk',
+            'id',
         )
 
     def create(self, validated_data):

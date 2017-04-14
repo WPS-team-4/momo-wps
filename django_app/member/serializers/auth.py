@@ -4,7 +4,6 @@ from member.models import MomoUser
 
 __all__ = (
     'LoginSerializer',
-    # 'CreateUserSerializer',
 )
 
 
