@@ -21,7 +21,7 @@ GET
     "pk": 28,
     "pin": 3,
     "author": "anohk",
-    "photo": "http://127.0.0.1:8000/media/post/b_G2uZbLq.png",
+      "photo": "http://momo-master-eb.ap-northeast-2.elasticbeanstalk.com/media/post/b_3GB3P3y.png",
     "created_date": "2017-04-13T09:25:05.357582Z",
     "comment_list": [
       {
