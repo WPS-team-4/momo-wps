@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from member.models import MomoUser
 from member.serializers import UserSerializer
 from member.serializers.profile import UserProfileSerializer
+from utils import IsOwnerOrReadOnly
 
 __all__ = (
     'UserProfileViewAPI',
