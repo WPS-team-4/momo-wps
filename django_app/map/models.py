@@ -2,6 +2,7 @@ from django.db import models
 
 from member.models import MomoUser
 
+# description: blank=True, null=True 설정 필요
 
 class Map(models.Model):
     author = models.ForeignKey(MomoUser)
