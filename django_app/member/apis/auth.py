@@ -1,4 +1,4 @@
-from pprint import pprint
+# from pprint import pprint
 
 import requests
 from django.contrib.auth import authenticate
@@ -85,8 +85,11 @@ class FacebookLoginAPI(APIView):
             app_id=APP_ID,
             secret_code=SECRET_CODE
         )
-
-        USER_ACCESS_TOKEN = request.data.get('access_token')
+        ASCII_USER_ACCESS_TOKEN = request.data.get('access_token')
+        # serializer = TokenSerializer(data=request.data)
+        USER_ACCESS_TOKEN = ASCII_USER_ACCESS_TOKEN.encode('utf-8')
+        # serializer.is_valid()
+        # USER_ACCESS_TOKEN = serializer.data
         print('ACCESS TOKEN : %s' % USER_ACCESS_TOKEN)
 
         url_debug_token = 'https://graph.facebook.com/debug_token'
@@ -98,7 +101,7 @@ class FacebookLoginAPI(APIView):
 
         r = requests.get(url_debug_token, params=params)
         dict_debug_token = r.json()
-        pprint(dict_debug_token)
+        # pprint(dict_debug_token)
 
         # facebook_id = dict_debug_token['data']['user_id']
         # fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
@@ -142,6 +145,6 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
-        pprint(dict_user_info)
+        # pprint(dict_user_info)
 
         return dict_user_info

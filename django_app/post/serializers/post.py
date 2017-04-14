@@ -5,7 +5,6 @@ from post.serializers.post_comment import PostCommentSerializer
 
 __all__ = (
     'PostSerializer',
-    # 'PostCreateSerializer',
 )
 
 
@@ -31,4 +30,3 @@ class PostSerializer(serializers.ModelSerializer):
         read_only_fields = (
             'author',
         )
-
