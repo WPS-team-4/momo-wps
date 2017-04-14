@@ -36,10 +36,10 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     facebook_id = models.CharField(max_length=100, blank=True)
     is_facebook = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    following = models.ManyToManyField(
+    relation = models.ManyToManyField(
         'self',
         symmetrical=False,
-        related_name='follower_set',
+        related_name='relation_user_set',
         through='RelationShip',
     )
 
@@ -59,19 +59,28 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     def follow(self, user):
-        self.following_relations.create(
+        self.relation_from_user.create(
             to_user=user,
         )
 
     def unfollow(self, user):
-        self.following_relations.filter(
+        self.relation_from_user.filter(
             to_user=user
         ).delete()
 
+    @property
+    def following(self):
+        relations = self.relation_from_user.all()
+        return MomoUser.objects.filter(id__in=relations.values('to_user_id'))
+
+    def followers(self):
+        relations = self.relation_to_user.all()
+        return MomoUser.objects.filter(id__in=relations.values('from_user_id'))
+
 
 class RelationShip(models.Model):
-    from_user = models.ForeignKey(MomoUser, related_name='following_relations')
-    to_user = models.ForeignKey(MomoUser, related_name='follower_relations')
+    from_user = models.ForeignKey(MomoUser, related_name='relation_from_user')
+    to_user = models.ForeignKey(MomoUser, related_name='relation_to_user')
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
