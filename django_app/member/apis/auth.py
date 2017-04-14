@@ -31,15 +31,16 @@ class SignUpAPI(CreateAPIView):
         serializer = self.get_serializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
 
 class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        serializer = LoginSerializer(request.data)
-        user = authenticate(username=serializer.data['username'], password=serializer.data['password'])
+        serializer = LoginSerializer(self.request.data)
+        serializer.is_valid()
+        user = authenticate(serializer.validated_data)
         if user is not None:
             token = Token.objects.get_or_create(user=user)[0]
             response = Response({"user": {
