@@ -73,6 +73,7 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
         relations = self.relation_from_user.all()
         return MomoUser.objects.filter(id__in=relations.values('to_user_id'))
 
+    @property
     def followers(self):
         relations = self.relation_to_user.all()
         return MomoUser.objects.filter(id__in=relations.values('from_user_id'))
