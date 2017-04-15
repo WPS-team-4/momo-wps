@@ -13,7 +13,7 @@ import json
 import os
 
 DEBUG = os.environ.get('MODE') == 'DEBUG'
-# DEBUG = True
+DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS'
 
@@ -168,6 +168,10 @@ if DEBUG and DB_RDS:
     config_db = config['db_rds']
 else:
     config_db = config['db']
+
+
+
+
 # print(config_db)
 DATABASES = {
     'default': {
