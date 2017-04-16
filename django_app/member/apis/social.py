@@ -1,9 +1,9 @@
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import NotAcceptable
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from member.models import MomoUser
 
@@ -12,12 +12,14 @@ __all__ = (
 )
 
 
-class FollowAPI(APIView):
+class FollowAPI(UpdateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, *args, **kwargs):
-        to_user = MomoUser.objects.get(id=self.kwargs['pk'])
+    def patch(self, request, *args, **kwargs):
+        print(kwargs)
+        to_user = MomoUser.objects.get(id=kwargs['pk'])
+        print(to_user)
         from_user = self.request.user
         if to_user == from_user:
             raise NotAcceptable(detail="자기 자신은 follow할 수 없습니다")
