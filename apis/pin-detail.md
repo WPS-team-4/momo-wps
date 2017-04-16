@@ -5,7 +5,9 @@
 
 ### 요청 주소
 
-`/api/pin/{pinId}`
+```
+/api/pin/{pinId}
+```
 
 
 ## Pin 세부정보 조회
@@ -69,7 +71,6 @@ PATCH
 
 ```
 {
-<<<<<<< HEAD
   "pk": 1,
   "author": "anohk",
   "pin_name": "스터디카페",

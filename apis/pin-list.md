@@ -26,7 +26,8 @@ GET
     "map": 1,
     "pin_color": "0,0,0",
     "created_date": "2017-04-09T06:30:01.772763Z"
-  }
+  },
+  ...
 ]
 
 ```
@@ -56,18 +57,17 @@ POST
 
 ```
 {
-	"pin" : {
-	   "pin_name": "패캠 카페",
-   		"map": 4,
-    	"pin_color": "0,0,0"
-    },
-    "place" : {
-    	"place_id" : " - ",
-    	"name" : " ",
-    	"address" : " ",
-    	"lat" : " ",
-    	"lng" : " "
-    }
+	"place": {
+		"place_id": "ChIJmc7grvKifDURHm9YxvGM9Rg",
+		"name": "카페비",
+		"formatted_address": "3-7 Jeong-dong, Jung-gu, Seoul, South Korea",
+		"lng": "126.9760823",
+		"lat": "37.5667701"
+	},
+	"pin": {
+		"map": "5",
+		"pin_name": "CafeB"
+	}
 }
 
 ```
@@ -78,9 +78,9 @@ POST
 {
     "pk": "3",
     "author": "kay",
-    "pin_name": "패캠 카페",
+    "pin_name": "CafeB",
     "place": 2,
-    "map": 4,
+    "map": 5,
     "pin_color": "0,0,0"
 }
 ```

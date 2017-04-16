@@ -5,7 +5,9 @@
 
 ### 요청 주소
 
-`/api/map/{mapID}`
+```
+/api/map/{mapID}
+```
 
 
 ## Map 세부정보 조회

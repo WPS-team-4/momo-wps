@@ -4,9 +4,13 @@
 
 ### 요청 주소
 
-`/api/search/`
+```
+/api/search/
+```
 
 ## Map or User 검색
+
+**error: 한글 키워드를 입력하면 500에러. 영어 키워드만 정상 작동**
 
 ### method
 
