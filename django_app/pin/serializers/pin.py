@@ -1,10 +1,12 @@
 from rest_framework import serializers
 
 from pin.models import Pin
+from place.serializers import PlaceSerializer
 from post.serializers import PostSerializer
 
 __all__ = (
     'PinSerializer',
+    'PinCreateSerializer',
 )
 
 
@@ -29,5 +31,13 @@ class PinSerializer(serializers.ModelSerializer):
             'post_list',
         )
         read_only_fields = (
+            # 'pk',
             'author',
+            'post_list',
+            'place',
         )
+
+
+class PinCreateSerializer(serializers.Serializer):
+    pin = PinSerializer()
+    place = PlaceSerializer()

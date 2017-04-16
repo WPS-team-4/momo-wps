@@ -18,3 +18,9 @@ class PlaceSerializer(serializers.ModelSerializer):
             'lat',
             'lng',
         )
+        read_only_fields = (
+            'pk',
+            'place_id',
+            'name',
+            'address',
+        )
