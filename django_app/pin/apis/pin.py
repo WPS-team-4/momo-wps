@@ -1,9 +1,11 @@
+import requests
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 
+from config.settings import config
 from map.models import Map
 from pin.models import Pin
 from pin.serializers.pin import PinSerializer, PinCreateSerializer
@@ -34,20 +36,24 @@ class PinList(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def place_data_to_object(self, data):
-        # place = Place.objects.create(
-        #     place_id=data['place_id'],
-        #     name=data['name'],
-        #     address=data['address'],
-        #     lat=data['lat'],
-        #     lng=data['lng']
-        # )
-        defaults = {
-            'name': data['name'],
-            'address': data['address'],
-            'lat': data['lat'],
-            'lng': data['lng'],
+        lat = data['lat']
+        lng = data['lng']
+        url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+        params = {
+            'key': config['google_geocoding_api']['key'],
+            'latlng': '{},{}'.format(lat, lng)
         }
-        place, _ = Place.objects.get_or_create(place_id=data['place_id'], defaults=defaults)
+        search_result = requests.get(url, params=params).json()
+        reverse_geo_data = search_result['results'][0]
+        place_id = reverse_geo_data['place_id']
+        address = reverse_geo_data['formatted_address']
+        defaults = {
+            'name': 'dkdk',
+            'address': address,
+            'lat': lat,
+            'lng': lng
+        }
+        place, _ = Place.objects.get_or_create(place_id=place_id, defaults=defaults)
         return place
 
     def create_pin_object(self, data, place):
