@@ -4,7 +4,9 @@
 
 ### 요청 주소
 
-`/api/pin/`
+```
+/api/pin/
+```
 
 
 ## Pin 리스트 조회
@@ -34,10 +36,6 @@ GET
 
 ## Pin 생성
 
-### 요청 주소
-
-`/api/pin/`
-
 ### method
 
 POST
@@ -60,7 +58,7 @@ POST
 	"place": {
 		"place_id": "ChIJmc7grvKifDURHm9YxvGM9Rg",
 		"name": "카페비",
-		"formatted_address": "3-7 Jeong-dong, Jung-gu, Seoul, South Korea",
+		"address": "3-7 Jeong-dong, Jung-gu, Seoul, South Korea",
 		"lng": "126.9760823",
 		"lat": "37.5667701"
 	},
