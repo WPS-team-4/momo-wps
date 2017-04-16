@@ -48,7 +48,7 @@ class PinList(generics.ListCreateAPIView):
         place_id = reverse_geo_data['place_id']
         address = reverse_geo_data['formatted_address']
         defaults = {
-            'name': 'dkdk',
+            'name': 'marking',
             'address': address,
             'lat': lat,
             'lng': lng
