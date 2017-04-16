@@ -19,5 +19,8 @@
     * [post list](apis/post-list.md)
     * [post detail](apis/post-detail.md)
   * Place
-    * search
+    * [search](apis/search.md)
+  * [Search](apis/search.md)
+    * [Map and User](apis/map-and-user.md)
+    * [Place](apis/place.md)
 
