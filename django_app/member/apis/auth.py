@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -22,16 +23,17 @@ __all__ = (
 
 
 class SignUpAPI(CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
 
 
 class LoginAPI(APIView):
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(request.data)
-
         user = authenticate(username=serializer.data['username'],
                             password=serializer.data['password'])
         if user is not None:
@@ -41,10 +43,8 @@ class LoginAPI(APIView):
                                  "created": token.created}, status=status.HTTP_200_OK)
             return response
         else:
-            error = {
-                "error": ""
-            }
-        return Response(error, status=status.HTTP_400_BAD_REQUEST)
+            detail = "사용자를 찾을 수 없습니다. username과 password를 다시 확인해주세요."
+            raise ValidationError(detail=detail)
 
 
 class LogoutAPI(APIView):
