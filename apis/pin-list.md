@@ -1,7 +1,3 @@
-<!--| Resource     | GET       | POST | PATCH      | DELETE  |
-| ------------ | --------- | ---- | ---------- | ------- |
-| /api/pin/    | 핀 리스트     | 핀 생성 |         |         |-->
-
 ### 요청 주소
 
 ```
@@ -41,7 +37,32 @@ GET
 POST
 
 ### body
+	
+#### A. 지도에서 장소를 선택해서 핀을 만드는 경우
+- pin  
+	- pin_name
+	- map
+	- pin_color
+- place  
+	- lat
+	- lng
 
+
+```
+{
+	"pin": {
+		"map": "5",
+		"pin_name": "CafeB",
+		"pin_color: "0,0,0"
+	},
+	"place": {
+		"lng": "126.9760823",
+		"lat": "37.5667701"
+	}
+}
+```
+
+#### B. 장소 검색결과에서 장소를 선택하여 핀을 만드는 경우
 - pin  
 	- pin_name
 	- map
@@ -49,25 +70,26 @@ POST
 - place  
 	- place_id
 	- name
+	- address
 	- lat
 	- lng
-	- address
+
 
 ```
 {
+	"pin": {
+		"map": "5",
+		"pin_name": "CafeB",
+		"pin_color: "0,0,0"
+	},
 	"place": {
 		"place_id": "ChIJmc7grvKifDURHm9YxvGM9Rg",
 		"name": "카페비",
 		"address": "3-7 Jeong-dong, Jung-gu, Seoul, South Korea",
 		"lng": "126.9760823",
 		"lat": "37.5667701"
-	},
-	"pin": {
-		"map": "5",
-		"pin_name": "CafeB"
 	}
 }
-
 ```
 
 ### 반환
@@ -79,6 +101,8 @@ POST
     "pin_name": "CafeB",
     "place": 2,
     "map": 5,
-    "pin_color": "0,0,0"
+    "pin_color": "0,0,0",
+    "created_date": "2017-04-16T15:52:26.979675Z",
+    "post_list": []
 }
 ```
