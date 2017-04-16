@@ -43,17 +43,31 @@ POST
 
 ### body
 
-- pin_name
-- place
-- map
-- pin_color
+- pin  
+	- pin_name
+	- map
+	- pin_color
+- place  
+	- place_id
+	- name
+	- lat
+	- lng
+	- address
 
 ```
 {
-    "pin_name": "패캠 카페",
-    "place": 2,
-    "map": 4,
-    "pin_color": "0,0,0"
+	"pin" : {
+	   "pin_name": "패캠 카페",
+   		"map": 4,
+    	"pin_color": "0,0,0"
+    },
+    "place" : {
+    	"place_id" : " - ",
+    	"name" : " ",
+    	"address" : " ",
+    	"lat" : " ",
+    	"lng" : " "
+    }
 }
 
 ```
