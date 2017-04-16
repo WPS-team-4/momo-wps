@@ -8,11 +8,11 @@ from member.serializers import UserSerializer
 from utils import IsOwnerOrReadOnly
 
 __all__ = (
-    'UserProfileViewAPI',
+    'UserDetailAPI',
 )
 
 
-class UserProfileViewAPI(RetrieveUpdateAPIView):
+class UserDetailAPI(RetrieveUpdateAPIView):
     queryset = MomoUser.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
