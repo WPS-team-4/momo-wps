@@ -3,6 +3,7 @@
 * [Introduction](README.md)
 * [APIs](apis.md)
   * [Member](apis/member.md)
+    * [member list](apis/member-list.md)
     * [sign up](apis/sign-up.md)
     * [login](apis/login.md)
     * [logout](apis/logout.md)
