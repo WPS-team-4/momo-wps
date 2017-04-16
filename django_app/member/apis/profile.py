@@ -46,7 +46,11 @@ class UserAPI(RetrieveAPIView):
 
         if options is not '':
             if 'most_follower' in options:
-                queryset = MomoUser.objects.filter()
+                queryset = MomoUser.objects.extra(
+                    select={
+                        'count_followers': 'SELECT COUNT(member_relationship.from_user_id) FROM member_relationship WHERE member_relationship.to_user_id = member_momouser.id'
+                    }
+                ).extra(order_by=['-count_followers'])
             elif 'most_maps' in options:
                 queryset = MomoUser.objects.extra(
                     select={
