@@ -7,15 +7,14 @@ __all__ = (
 
 def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
-
     if response is not None:
-        # response.data = {}
+        response.data = {}
         errors = []
         for field, value in response.data.items():
             errors.append("{} : {}".format(field, " ".join(value)))
 
-        # response.data['errors'] = errors
+        response.data['errors'] = errors
         response.data['status_code'] = '{} - {}'.format(response.status_code, response.status_text)
-        response.data['exception'] = str(exc)
+        response.data['detail'] = str(exc)
 
     return response
