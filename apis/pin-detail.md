@@ -1,6 +1,6 @@
-| Resource     | GET       | POST | PATCH      | DELETE  |
+<!--| Resource     | GET       | POST | PATCH      | DELETE  |
 | ------------ | --------- | ---- | ---------- | ------- |
-| /api/pin/{pinId} | 해당 핀 세부정보 |      | 해당 핀 정보 수정 | 해당 핀 삭제 |
+| /api/pin/{pinId} | 해당 핀 세부정보 |      | 해당 핀 정보 수정 | 해당 핀 삭제 |-->
 
 
 ### 요청 주소

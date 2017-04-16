@@ -1,6 +1,6 @@
-| Resource     | GET       | POST | PATCH      | DELETE  |
+<!--| Resource     | GET       | POST | PATCH      | DELETE  |
 | ------------ | --------- | ---- | ---------- | ------- |
-| /api/pin/    | 핀 리스트     | 핀 생성 |         |         |
+| /api/pin/    | 핀 리스트     | 핀 생성 |         |         |-->
 
 ### 요청 주소
 

@@ -1,6 +1,6 @@
-| Resource | GET | POST | PATCH | DELETE |
+<!--| Resource | GET | POST | PATCH | DELETE |
 | --- | --- | --- | --- | --- |
-| /api/post/{postId}/ | 해당 포스트 세부정보 |  |  | 해당 포스트 삭제 |
+| /api/post/{postId}/ | 해당 포스트 세부정보 |  |  | 해당 포스트 삭제 |-->
 
 ### 요청 주소
 

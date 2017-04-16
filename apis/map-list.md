@@ -1,6 +1,6 @@
-| Resource | GET    | POST  | PATCH | DELETE |
+<!--| Resource | GET    | POST  | PATCH | DELETE |
 | -------- | ------ | ----- | ----- | ------ |
-| /api/map/    | 지도 리스트 | 지도 생성 |       |        |
+| /api/map/    | 지도 리스트 | 지도 생성 |       |        |-->
 
 
 ### 요청 주소

@@ -1,7 +1,7 @@
-| Resource | GET | POST | PATCH | DELETE |
+<!--| Resource | GET | POST | PATCH | DELETE |
 | --- | --- | --- | --- | --- |
 | /api/post/comment/add/| 코멘트 생성 |  |  |  |
-| /api/post/comment/{comment_id}/delete/| |  |  | 코멘트 삭제 |
+| /api/post/comment/{comment_id}/delete/| |  |  | 코멘트 삭제 |-->
 
 
 ## Comment 생성

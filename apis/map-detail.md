@@ -1,6 +1,6 @@
-| Resource     | GET        | POST | PATCH       | DELETE   |
+<!--| Resource     | GET        | POST | PATCH       | DELETE   |
 | ------------ | ---------- | ---- | ----------- | -------- |
-| /api/map/{mapId} | 해당 지도 세부정보 |      | 해당 지도 정보 수정 | 해당 지도 삭제 |
+| /api/map/{mapId} | 해당 지도 세부정보 |      | 해당 지도 정보 수정 | 해당 지도 삭제 |-->
 
 
 ### 요청 주소

@@ -1,7 +1,7 @@
-| Resource | GET | POST | PATCH | DELETE |
+<!--| Resource | GET | POST | PATCH | DELETE |
 | --- | --- | --- | --- | --- |
 | /api/search/ | map 또는 user 검색 |  |  |  |
-
+-->
 ### 요청 주소
 
 ```
