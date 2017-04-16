@@ -14,8 +14,8 @@ __all__ = (
 
 
 class UserSerializer(DynamicFieldsModelSerializer):
-    following = serializers.ReadOnlyField(source='momouser.following')
-    followers = serializers.ReadOnlyField(source='momouser.followers')
+    following = serializers.ReadOnlyField(source='relation_user_set.relation_to_user')
+    followers = serializers.ReadOnlyField(source='relation_user_set.relation_from_user')
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
 
     class Meta:
@@ -26,6 +26,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'password',
             'email',
             'profile_img',
+            'relation_user_set',
             'following',
             'followers',
             'date_joined',
