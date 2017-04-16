@@ -16,6 +16,7 @@ __all__ = (
 class UserSerializer(DynamicFieldsModelSerializer):
     following = serializers.ReadOnlyField(source='momouser.following')
     followers = serializers.ReadOnlyField(source='momouser.followers')
+    map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
 
     class Meta:
         model = MomoUser
@@ -33,6 +34,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'is_active',
             'is_staff',
             'is_superuser',
+            'map_list',
         )
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -40,6 +42,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'pk',
             'following',
             'followers',
+            'map_list',
         )
 
     def create(self, validated_data):
