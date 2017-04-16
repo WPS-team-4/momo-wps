@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework.exceptions import NotAuthenticated
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from map.models import Map
@@ -15,7 +15,7 @@ __all__ = (
 class MapList(generics.ListCreateAPIView):
     queryset = Map.objects.all()
     serializer_class = MapDetailSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
