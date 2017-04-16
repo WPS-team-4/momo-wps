@@ -28,22 +28,22 @@ class UserProfileViewAPI(RetrieveUpdateAPIView):
         serializer = UserSerializer(user, fields=fields)
         return Response(serializer.data)
 
-
-class MainListViewAPI(RetrieveAPIView):
-    queryset = MomoUser.objects.all()
-    permission_classes = (IsOwnerOrReadOnly,)
-    authentication_classes = (TokenAuthentication,)
-    serializer_class = UserSerializer
-
-    def retrieve(self, request, *args, **kwargs):
-        fields = request.query_params.get('fields', '')
-        if fields is not '':
-            fields = fields.split(',')
-            if 'most_follower' in fields:
-                queryset = MomoUser.objects.filter()
-            elif 'most_maps' in fields:
-                queryset = MomoUser.objects.filter()
-        else:
-            fields = None
-                queryset = self.get_queryset()
+#
+# class MainListViewAPI(RetrieveAPIView):
+#     queryset = MomoUser.objects.all()
+#     permission_classes = (IsOwnerOrReadOnly,)
+#     authentication_classes = (TokenAuthentication,)
+#     serializer_class = UserSerializer
+#
+#     def retrieve(self, request, *args, **kwargs):
+#         fields = request.query_params.get('fields', '')
+#         if fields is not '':
+#             fields = fields.split(',')
+#             if 'most_follower' in fields:
+#                 queryset = MomoUser.objects.filter()
+#             elif 'most_maps' in fields:
+#                 queryset = MomoUser.objects.filter()
+#         else:
+#             fields = None
+#                 queryset = self.get_queryset()
 
