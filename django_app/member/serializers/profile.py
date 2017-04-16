@@ -4,18 +4,29 @@ from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.utils import model_meta
 
 from map.serializers import MapDetailSerializer
-from member.models import MomoUser
+from member.models import MomoUser, RelationShip
 from utils import DynamicFieldsModelSerializer
 
 __all__ = (
     'UserSerializer',
     'UserProfileSerializer',
+    'RelationShipSerializer',
 )
 
 
+class RelationShipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RelationShip
+        fields = (
+            'to_user',
+            'from_user',
+            'created_date',
+        )
+
+
 class UserSerializer(DynamicFieldsModelSerializer):
-    following = serializers.ReadOnlyField(source='relation_user_set.relation_to_user')
-    followers = serializers.ReadOnlyField(source='relation_user_set.relation_from_user')
+    # following = RelationShipSerializer(source='relation_user_set.relation_to_user')
+    # followers = RelationShipSerializer(source='relation_user_set.relation_from_user')
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
 
     class Meta:
@@ -27,8 +38,8 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'email',
             'profile_img',
             'relation_user_set',
-            'following',
-            'followers',
+            # 'following',
+            # 'followers',
             'date_joined',
             'last_login',
             'is_facebook',
@@ -65,8 +76,10 @@ class UserSerializer(DynamicFieldsModelSerializer):
             else:
                 setattr(instance, attr, value)
 
-        password = validated_data['password']
-        instance.set_password(password)
+        password = validated_data.get('password')
+        if password:
+            instance.set_password(password)
+
         instance.save()
         return instance
 
