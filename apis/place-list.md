@@ -1,6 +1,6 @@
 Resource | GET | POST | PATCH | DELETE | 
 --- | --- | --- | --- | --- |
-/api/place/ | 장소 리스트 | 장소 생성 |  |  |
+/api/place/ | 장소 리스트 | |  |  |
 /api/place/{placeId}/ | 해당 장소 세부정보 |  | 해당 장소 정보 수정 | 해당 장소 삭제 |
 
 ### 요청 주소
