@@ -169,10 +169,6 @@ if DEBUG and DB_RDS:
 else:
     config_db = config['db']
 
-
-
-
-# print(config_db)
 DATABASES = {
     'default': {
         'ENGINE': config_db['engine'],
