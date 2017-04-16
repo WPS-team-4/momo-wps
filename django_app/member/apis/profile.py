@@ -9,6 +9,7 @@ from utils import IsOwnerOrReadOnly
 
 __all__ = (
     'UserDetailAPI',
+    'UserAPI',
 )
 
 
@@ -33,14 +34,20 @@ class UserAPI(RetrieveAPIView):
     queryset = MomoUser.objects.all()
     permission_classes = (IsOwnerOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
+    serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
         fields = request.query_params.get('fields', '')
+        options = request.query_params.get('opt', '')
         if fields is not '':
             fields = fields.split(',')
-            if 'most_follower' in fields:
+        else:
+            fields = None
+
+        if options is not '':
+            if 'most_follower' in options:
                 queryset = MomoUser.objects.filter()
-            elif 'most_maps' in fields:
+            elif 'most_maps' in options:
                 queryset = MomoUser.objects.extra(
                     select={
                         'count_maps': 'SELECT COUNT(*) FROM map_map WHERE map_map.author_id = member_momouser.id'
@@ -49,5 +56,5 @@ class UserAPI(RetrieveAPIView):
         else:
             queryset = self.get_queryset()
 
-        serializer = UserSerializer(queryset, fields=fields)
+        serializer = self.get_serializer(queryset, fields=fields, many=True)
         return Response(serializer.data)
