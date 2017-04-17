@@ -57,9 +57,10 @@ class SearchPlaceAPI(APIView):
 
     def get(self, request, format='None'):
         url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
-        keyword = self.request.query_params.get('keyword', None).strip()
+        keyword = self.request.query_params.get('keyword', '')
 
         if keyword != '':
+            keyword = keyword.strip()
             params = {
                 'key': config['google_place_api']['key'],
                 'query': keyword
