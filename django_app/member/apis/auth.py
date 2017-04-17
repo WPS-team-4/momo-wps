@@ -72,12 +72,11 @@ class FacebookLoginAPI(APIView):
             app_id=APP_ID,
             secret_code=SECRET_CODE
         )
-        USER_ACCESS_TOKEN = request.data.get('access_token')
+        USER_ACCESS_TOKEN = request.data.get("access_token")
         # USER_ACCESS_TOKEN = ASCII_USER_ACCESS_TOKEN.encode('utf-8')
-
+        print(type(USER_ACCESS_TOKEN))
         url_debug_token = 'https://graph.facebook.com/debug_token'
         params = {
-            'scopes': 'public_profile, email',
             'input_token': USER_ACCESS_TOKEN,
             'access_token': APP_ACCESS_TOKEN,
         }
@@ -88,14 +87,15 @@ class FacebookLoginAPI(APIView):
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
-            user, _ = MomoUser.objects.get_or_create(
+
+            user, is_created = MomoUser.objects.get_or_create(
                 password=facebook_id,
                 username=facebook_id,
             )
             user.is_facebook = True
-
             token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"token": token.key}, status=status.HTTP_200_OK)
+            response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
+                                status=status.HTTP_200_OK)
             return response
         else:
             return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)
@@ -119,5 +119,4 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
-
         return dict_user_info
