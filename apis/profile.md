@@ -1,41 +1,42 @@
-<<<<<<< HEAD
-# member profile
-=======
 # member profile view
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
+> user에서 선택한 필드를 반환합니다. 필드를 선택하지 않으면 모든 정보를 반환합니다.
 
-> user 정보와 user가 소유한 지도, 핀을 리턴합니다
 
-**URL**
+
+### **URL**
+
 `/api/member/{user_id}/`
 
-**Method**
+
+
+### Method
+
 `GET`
 
-**URL Params**
 
-| name    | value   | type     | process |
-| ------- | ------- | -------- | ------- |
-| user_id | User PK | Interger | 해당 User |
 
-**Data Params**
+### Headers
 
+```json
+Authorization : token [token_value]
 ```
 
-```
-
-<<<<<<< HEAD
-=======
-header
-
-```
-Authorization : token {token_value}
-```
-
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
 
 
-**Success Response**
+### **URL Params**
+
+| name   | value    | type | process              |
+| ------ | -------- | ---- | -------------------- |
+| fields | pk       |      | pk 필드를 반환합니다         |
+|        | username |      | username필드를 반환합니다    |
+|        | email    |      |                      |
+|        | map_list |      | 유저가 소유한 지도목록을 반환합니다. |
+|        |          |      |                      |
+|        |          |      |                      |
+
+
+
+### **Success Response**
 
 - Code: 200
 
@@ -266,16 +267,18 @@ Authorization : token {token_value}
   }
   ```
 
-**Error Response**
 
-<<<<<<< HEAD
+
+
+
+### Error Response
+
 - Code: 400
 
   - Reason: @@@
   - Content:
 
-  ` `
-=======
+  ​
 - Code: 404
 
   - Reason: Not found
@@ -289,23 +292,14 @@ Authorization : token {token_value}
   }
   ```
 
-  ​
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
+
 
 - Code: 401
 
   - Reason: Unauthorized
-<<<<<<< HEAD
-  - Content:
 
-  ```json
-  {
-    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다."
-  }
-  ```
 
-=======
-  - Content:token 없음
+  - Content: token 없음
 
   ```json
   {
@@ -327,10 +321,9 @@ Authorization : token {token_value}
 
   ​
 
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
   ​
 
-**Sample Call**
+### **Sample Call**
 
 ```javascript
 $.ajax({
@@ -343,11 +336,12 @@ $.ajax({
 });
 ```
 
-<<<<<<< HEAD
+
+
+
+
+member profile update
 =======
-
-
-## member profile update
 
 ### method
 
@@ -376,5 +370,3 @@ profile_img (optional)
 500
 
 파일 형식이 이미지가 아님
-
->>>>>>> 9549e77e500331f94b7e6ce91784ded3bb8fec34
