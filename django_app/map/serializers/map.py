@@ -37,13 +37,4 @@ class MapDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Map
-        fields = (
-            'pk',
-            'author',
-            'map_name',
-            'description',
-            'pin_list',
-            'is_private',
-            'created_date',
-
-        )
+        exclude = ('is_visible',)
