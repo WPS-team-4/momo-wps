@@ -22,16 +22,26 @@ class SearchResult():
 
 class SearchMapAndUserAPI(APIView):
     def get(self, request, format='None'):
-        keyword = self.request.query_params.get('keyword', None)
-        print('keyword: {}'.format(keyword))
-        map_list = list(Map.objects.all().filter(Q(map_name__icontains=keyword) | Q(description__icontains=keyword)))
-        user_list = list(MomoUser.objects.all().filter(username__icontains=keyword))
+        keyword = self.request.query_params.get('keyword', '')
 
-        result = SearchResult(map_list, user_list)
+        if keyword != '':
+            # keyword를 공백 기준을 split하여 각 값을 대조한다
+            import re
+            keywords = re.split(r'\s+', keyword)
 
-        results = SearchResultSerializer(result).data
+            map_list = []
+            user_list = []
+            for keyword in keywords:
+                maps = list(
+                    Map.objects.all().filter(Q(map_name__icontains=keyword) | Q(description__icontains=keyword)))
+                users = list(MomoUser.objects.all().filter(username__icontains=keyword))
+                map_list.extend(maps)
+                user_list.extend(users)
 
-        return Response(results)
+            result = SearchResult(map_list, user_list)
+            results = SearchResultSerializer(result).data
+
+            return Response(results)
 
 
 class SearchPlaceAPI(APIView):
