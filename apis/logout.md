@@ -1,26 +1,28 @@
 # login
 
-> 
+>
 
-**URL**
-`/api/member/logout/`
+### **URL**
 
-**Method**
+###### `/api/member/logout/`
+
+### **Method**
+
 `POST`
 
-**header**
+### Headers
 
-| name  | value | type   | process |
-| ----- | ----- | ------ | ------- |
-| token |       | string |         |
+```json
+Authorization : token [token_value]
+```
 
 
 
-**Success Response**
+### **Success Response**
 
-- Code: 200
+* Code: 200
 
-- Content:
+* Content:
 
   ```json
   [
@@ -28,12 +30,12 @@
   ]
   ```
 
-**Error Response**
+### **Error Response**
 
-- Code: 401
+* Code: 401
 
-  - Reason: 
-  - Content: 만료된 토큰, 토큰 없음
+  * Reason: 
+  * Content: 만료된 토큰, 토큰 없음
 
   ```
 
@@ -54,4 +56,6 @@ $.ajax({
   }
 });
 ```
+
+
 
