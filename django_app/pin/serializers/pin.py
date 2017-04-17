@@ -31,6 +31,5 @@ class PinSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'author',
-            'place',
             'post_list',
         )
