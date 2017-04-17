@@ -1,10 +1,8 @@
-<!--| Resource | GET | POST | PATCH | DELETE |
-| --- | --- | --- | --- | --- |
-| /api/post/{postId}/ | 해당 포스트 세부정보 |  |  | 해당 포스트 삭제 |-->
-
 ### 요청 주소
 
-`/api/post/{postId}/`
+```
+/api/post/{postId}/
+```
 
 ## Post 세부정보 조회
 

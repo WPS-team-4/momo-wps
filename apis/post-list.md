@@ -1,11 +1,9 @@
-<!--| Resource | GET | POST | PATCH | DELETE |
-| --- | --- | --- | --- | --- |
-| /api/post/ | 포스트 리스트 조회 | 포스트 생성 |  |  |
 
--->
 ### 요청 주소
 
-`/api/post/`
+```
+/api/post/
+```
 
 ## Post 리스트 조회
 
