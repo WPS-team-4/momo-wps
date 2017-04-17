@@ -72,8 +72,8 @@ class FacebookLoginAPI(APIView):
             app_id=APP_ID,
             secret_code=SECRET_CODE
         )
-        ASCII_USER_ACCESS_TOKEN = request.data.get('access_token')
-        USER_ACCESS_TOKEN = ASCII_USER_ACCESS_TOKEN.encode('utf-8')
+        USER_ACCESS_TOKEN = request.data.get('access_token')
+        # USER_ACCESS_TOKEN = ASCII_USER_ACCESS_TOKEN.encode('utf-8')
 
         url_debug_token = 'https://graph.facebook.com/debug_token'
         params = {
