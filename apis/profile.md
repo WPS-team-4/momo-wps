@@ -1,19 +1,14 @@
 # member profile view
+
 > user에서 선택한 필드를 반환합니다. 필드를 선택하지 않으면 모든 정보를 반환합니다.
-
-
 
 ### **URL**
 
 `/api/member/{user_id}/`
 
-
-
 ### Method
 
 `GET`
-
-
 
 ### Headers
 
@@ -21,26 +16,23 @@
 Authorization : token [token_value]
 ```
 
-
-
 ### **URL Params**
 
-| name   | value    | type | process              |
-| ------ | -------- | ---- | -------------------- |
-| fields | pk       |      | pk 필드를 반환합니다         |
-|        | username |      | username필드를 반환합니다    |
-|        | email    |      |                      |
-|        | map_list |      | 유저가 소유한 지도목록을 반환합니다. |
-|        |          |      |                      |
-|        |          |      |                      |
-
-
+| name | value | type | process |
+| --- | --- | --- | --- |
+| fields | pk |  | pk 필드를 반환합니다 |
+|  | username |  | username필드를 반환합니다 |
+|  | email |  |  |
+|  | map\_list |  | 유저가 소유한 지도목록을 반환합니다. |
+|  | profile\_img |  |  |
+|  | date\_joined |  | 가입 |
+|  | last\_login |  | 마지막 로그 |
 
 ### **Success Response**
 
-- Code: 200
+* Code: 200
 
-- Content:
+* Content:
 
   ```json
   {
@@ -267,22 +259,19 @@ Authorization : token [token_value]
   }
   ```
 
-
-
-
-
 ### Error Response
 
-- Code: 400
+* Code: 400
 
-  - Reason: @@@
-  - Content:
+  * Reason: @@@
+  * Content:
 
   ​
-- Code: 404
 
-  - Reason: Not found
-  - Content: 해당 user가 없음
+* Code: 404
+
+  * Reason: Not found
+  * Content: 해당 user가 없음
 
   ```json
   {
@@ -292,30 +281,27 @@ Authorization : token [token_value]
   }
   ```
 
+* Code: 401
 
+  * Reason: Unauthorized
 
-- Code: 401
-
-  - Reason: Unauthorized
-
-
-  - Content: token 없음
+* Content: token 없음
 
   ```json
   {
-    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
-    "exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
-    "status_code": "401 - Unauthorized"
+  "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+  "exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+  "status_code": "401 - Unauthorized"
   }
   ```
 
-  * Content: token 만료
+* Content: token 만료
 
   ```json
   {
-    "detail": "토큰이 유효하지 않습니다.",
-    "exception": "토큰이 유효하지 않습니다.",
-    "status_code": "401 - Unauthorized"
+  "detail": "토큰이 유효하지 않습니다.",
+  "exception": "토큰이 유효하지 않습니다.",
+  "status_code": "401 - Unauthorized"
   }
   ```
 
@@ -336,26 +322,17 @@ $.ajax({
 });
 ```
 
-
-
-
-
-member profile update
-=======
+# member profile update
 
 ### method
 
 `patch`
 
-
-
 ### params
 
-email (optional)
+email \(optional\)
 
-profile_img (optional)
-
-
+profile\_img \(optional\)
 
 ### success
 
@@ -363,10 +340,9 @@ profile_img (optional)
 
 유저 정보를 반환
 
-
-
 ### failed
 
 500
 
 파일 형식이 이미지가 아님
+
