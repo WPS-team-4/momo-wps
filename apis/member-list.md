@@ -1,4 +1,5 @@
 # member-list
+
 > 옵션별로 정렬한 사용자 목록을 반환합니다.
 
 
@@ -41,23 +42,19 @@
 
 ### Success Response
 
-* Code: 200
+- Code: 200
 
-* Content:
+- Content:
 
-* {{host}}/api/member/?fields=pk,username,email?opt=most_followers
+- {{host}}/api/member/?fields=pk,username,email?opt=most_followers
 
   ```json
 
   ```
 
-
-
 ### Error Response
 
-* Code:401
-
-
+- Code:401
 
 
 
