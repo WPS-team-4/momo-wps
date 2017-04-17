@@ -1,5 +1,6 @@
 import requests
 from django.db.models import Q
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -40,8 +41,11 @@ class SearchMapAndUserAPI(APIView):
 
             result = SearchResult(map_list, user_list)
             results = SearchResultSerializer(result).data
+            response = Response(results)
+        else:
+            response = Response(status=status.HTTP_400_BAD_REQUEST)
 
-            return Response(results)
+        return response
 
 
 class SearchPlaceAPI(APIView):
