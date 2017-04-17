@@ -88,13 +88,14 @@ class FacebookLoginAPI(APIView):
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
 
-            user, created = MomoUser.objects.get_or_create(
+            user, is_created = MomoUser.objects.get_or_create(
                 password=facebook_id,
                 username=facebook_id,
             )
             user.is_facebook = True
             token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"token": token.key, "created": created}, status=status.HTTP_200_OK)
+            response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
+                                status=status.HTTP_200_OK)
             return response
         else:
             return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)
