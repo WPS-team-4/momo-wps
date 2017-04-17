@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models import Count
 
 from member.models import MomoUser
+
 
 # description: blank=True, null=True 설정 필요
 
@@ -17,3 +19,7 @@ class Map(models.Model):
         pk = self.pk
 
         return '{} : {}'.format(name, pk)
+
+    # @property
+    # def count_pins(self):
+    #     return Map.objects.get(pk=self.pk).annotate(number_of_pins=Count('pin'))
