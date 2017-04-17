@@ -17,13 +17,9 @@ class MapSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Map
-        fields = (
-            'pk',
-            'author',
-            'map_name',
-            'description',
-            'is_private',
-            'created_date',
+        exclude = (
+            'is_visible',
+            'updated_date',
         )
 
 
