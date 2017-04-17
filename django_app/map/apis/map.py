@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -30,6 +31,9 @@ class MapList(generics.ListCreateAPIView):
             elif 'recent_created' in options:
                 queryset = Map.objects.all().order_by('-created_date')
             elif 'most_pins' in options:
+
+                # queryset = Map.objects.annotate(num_items=Count('map__pin')).orde‌​r_by('-num_items')
+
                 queryset = Map.objects.extra(
                     select={
                         'count_pins': 'SELECT COUNT(*) FROM pin_pin WHERE pin_pin.map_id = map_map.id'
