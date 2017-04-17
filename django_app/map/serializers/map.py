@@ -12,14 +12,18 @@ __all__ = (
 class MapSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field='username',
-        read_only=True
+        read_only=True,
     )
 
     class Meta:
         model = Map
-        exclude = (
-            'is_visible',
-            'updated_date',
+        fields = (
+            'pk',
+            'author',
+            'map_name',
+            'description',
+            'created_date',
+            'is_private',
         )
 
 
