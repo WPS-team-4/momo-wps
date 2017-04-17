@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import json
 import os
 
-os.environ.setdefault('MODE', 'DEBUG')
 DEBUG = os.environ.get('MODE') == 'DEBUG'
 # DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
@@ -26,9 +25,9 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 CONFIG_DIR = os.path.join(ROOT_DIR, '.conf-secret')
 CONFIG_FILE_COMMON = os.path.join(CONFIG_DIR, 'settings_common.json')
 if DEBUG:
-    CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_deploy.json')
-else:
     CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_local.json')
+else:
+    CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_deploy.json')
 
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
@@ -164,10 +163,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-# if DEBUG and DB_RDS:
-#     config_db = config['db_rds']
-# else:
-config_db = config['db']
+if DEBUG and DB_RDS:
+    config_db = config['db_rds']
+else:
+    config_db = config['db']
 # print(config_db)
 DATABASES = {
     'default': {
