@@ -36,26 +36,19 @@
 
 
 
-### Data Params
 
 
 
 ### Success Response
 
 - Code: 200
-
 - Content:
-
 - {{host}}/api/member/?fields=pk,username,email?opt=most_followers
-
-  ```json
-
-  ```
+      
 
 ### Error Response
 
 - Code:401
-
 
 
 
