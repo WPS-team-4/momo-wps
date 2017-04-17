@@ -20,6 +20,6 @@
     * [post list](apis/post-list.md)
     * [post detail](apis/post-detail.md)
   * Search 
-    * [map & user](apis/search(map-user).md)
+    * [map and user](apis/search-map-user.md)
     * [place](apis/search-place.md)
     
