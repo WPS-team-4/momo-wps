@@ -24,7 +24,7 @@ class SearchMapAndUserAPI(APIView):
     def get(self, request, format='None'):
         keyword = self.request.query_params.get('keyword', '')
 
-        if keyword != '':
+        if keyword is not '':
             # keyword를 공백 기준을 split하여 각 값을 대조한다
             import re
             keywords = re.split(r'\s+', keyword)
