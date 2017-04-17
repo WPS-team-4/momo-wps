@@ -1,6 +1,4 @@
-from django.db.models import Count
 from rest_framework import generics
-from rest_framework.exceptions import NotAuthenticated
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
