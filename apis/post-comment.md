@@ -1,11 +1,12 @@
-
-## Comment 생성
-
 ### 요청 주소
 ```
 /api/post/comment/add/
 ```
-
+### Headers
+```
+Authorization : token [token_value]
+```
+## Comment 생성
 
 ### method
 POST

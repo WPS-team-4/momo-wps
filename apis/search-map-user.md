@@ -1,7 +1,10 @@
 ### 요청 주소
-
 ```
 /api/search/
+```
+### Headers
+```
+Authorization : token [token_value]
 ```
 
 ## Map or User 검색

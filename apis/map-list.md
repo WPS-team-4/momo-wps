@@ -3,6 +3,10 @@
 ```
 /api/map/
 ```
+### Headers
+```
+Authorization : token [token_value]
+```
 
 ## Map 리스트 조회
 
@@ -13,20 +17,13 @@
 GET
 
 
-
-### Headers
-
-`Authorization : token [token_value]`
-
-
-
 ### URL Params
 
 | name | value          | process                      |
 | ---- | -------------- | ---------------------------- |
 | opt  | recent_update  | 가장 최근에 수정된 순서대로 지도목록을 반환합니다. |
 |      | recent_created | 가장 최근에 생성된 순서대로 지도목록을 반환합니다. |
-|      | many_pins      | 핀수가 많은 순서대로 지도목록을 반환합니다.     |
+|      | most_pins      | 핀수가 많은 순서대로 지도목록을 반환합니다.     |
 
 ### 반환
 

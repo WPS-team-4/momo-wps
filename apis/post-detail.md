@@ -1,7 +1,10 @@
 ### 요청 주소
-
 ```
 /api/post/{postId}/
+```
+### Headers
+```
+Authorization : token [token_value]
 ```
 
 ## Post 세부정보 조회

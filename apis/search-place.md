@@ -1,7 +1,10 @@
 ### 요청 주소
-
 ```
 /api/search/place/
+```
+### Headers
+```
+Authorization : token [token_value]
 ```
 
 ## 장소 검색
