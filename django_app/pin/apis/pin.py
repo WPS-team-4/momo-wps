@@ -68,7 +68,7 @@ class PinList(generics.ListCreateAPIView):
                 'lat': lat,
                 'lng': lng
             }
-            place, _ = Place.objects.get_or_create(place_id=place_id, defaults=defaults)
+            place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
             return place
 
 
