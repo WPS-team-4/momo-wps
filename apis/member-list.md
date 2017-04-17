@@ -55,7 +55,7 @@
 
 ### Error Response
 
-* Code:
+* Code:401
 
 
 

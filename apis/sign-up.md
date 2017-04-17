@@ -1,6 +1,6 @@
 # sign-up
 
-> 
+> 새로운 유저를 생성합니다.
 
 **URL**
 `/api/member/signup/`
