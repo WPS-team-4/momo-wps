@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from member.models import MomoUser
+from utils import IsOwnerOrReadOnly
 
 __all__ = (
     'FollowAPI',
@@ -14,11 +15,11 @@ __all__ = (
 
 class FollowAPI(UpdateAPIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
 
     def patch(self, request, *args, **kwargs):
-        print(kwargs)
-        to_user = MomoUser.objects.get(id=kwargs['pk'])
+        print(self.kwargs)
+        to_user = MomoUser.objects.get(id=self.kwargs['pk'])
         print(to_user)
         from_user = self.request.user
         if to_user == from_user:
@@ -28,13 +29,16 @@ class FollowAPI(UpdateAPIView):
 
             if is_following:
                 from_user.unfollow(to_user)
-                return Response({"from_user": from_user.pk,
-                                 "to_user": to_user.pk,
-                                 "status": "unfollow"},
-                                status=status.HTTP_200_OK)
+                response = Response({"from_user": from_user.pk,
+                                     "to_user": to_user.pk,
+                                     "status": "unfollow"},
+                                    status=status.HTTP_204_NO_CONTENT)
+
             else:
                 from_user.follow(to_user)
-                return Response({"from_user": from_user.pk,
-                                 "to_user": to_user.pk,
-                                 "status": "follow"},
-                                status=status.HTTP_201_CREATED)
+                response = Response({"from_user": from_user.pk,
+                                     "to_user": to_user.pk,
+                                     "status": "follow"},
+                                    status=status.HTTP_201_CREATED)
+
+        return response
