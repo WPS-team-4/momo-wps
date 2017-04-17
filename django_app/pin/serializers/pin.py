@@ -20,14 +20,16 @@ class PinSerializer(serializers.ModelSerializer):
         model = Pin
         fields = (
             'pk',
-            'author',
             'map',
             'pin_name',
-            'place',
             'pin_color',
             'created_date',
+            'author',
+            'place',
             'post_list',
+
         )
         read_only_fields = (
             'author',
+            'post_list',
         )
