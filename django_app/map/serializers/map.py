@@ -19,10 +19,10 @@ class MapSerializer(serializers.ModelSerializer):
         model = Map
         fields = (
             'pk',
+            'author',
             'map_name',
             'description',
             'is_private',
-            'author',
             'created_date',
         )
 
@@ -39,10 +39,11 @@ class MapDetailSerializer(serializers.ModelSerializer):
         model = Map
         fields = (
             'pk',
+            'author',
             'map_name',
             'description',
-            'author',
             'pin_list',
-            'created_date',
             'is_private',
+            'created_date',
+
         )
