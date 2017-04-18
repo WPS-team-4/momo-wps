@@ -43,7 +43,7 @@ class UserAPI(RetrieveAPIView):
             fields = fields.split(',')
         else:
             fields = None
-
+        print(fields)
         if options is not '':
             if 'most_follower' in options:
                 queryset = MomoUser.objects.extra(
@@ -62,8 +62,8 @@ class UserAPI(RetrieveAPIView):
 
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = self.get_serializer(page, many=True)
+            serializer = self.get_serializer(page, fields=fields, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = self.get_serializer(queryset, fields=fields, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
