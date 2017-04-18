@@ -2,42 +2,50 @@
 
 > 새로운 유저를 생성합니다.
 
-**URL**
+**URL**  
 `/api/member/signup/`
 
-**Method**
+**Method**  
 `POST`
 
 **Data Params**
 
-| name               | value  | type   | process |
-| ------------------ | ------ | ------ | ------- |
-| username(required) | 회원 아이디 | string |         |
-| password(required) |        |        |         |
-| email(required)    |        |        |         |
-
-
+| name | value | type | process |
+| --- | --- | --- | --- |
+| username\(required\) | 회원 아이디 | string |  |
+| password\(required\) |  |  |  |
+| email\(required\) |  |  |  |
 
 **Success Response**
 
-- Code: 201 CREATED
+* Code: 201 CREATED
 
-- Content:
+* Content:
 
   ```json
   {
-      "username":"",
-    	"password":"",
-    	"email":""
+    "pk": 41,
+    "username": "kizmo20",
+    "password": "pbkdf2_sha256$30000$6U1fg7I0Uepe$0CaaLLmxnznQ8K8caJRrMFyTcNKUvhRPgfJRxtTQ2/I=",
+    "email": "superkiz@momo.com",
+    "profile_img": null,
+    "relation_user_set": [],
+    "date_joined": "2017-04-18T09:16:48.082391Z",
+    "last_login": null,
+    "is_facebook": false,
+    "is_active": true,
+    "is_staff": false,
+    "is_superuser": false,
+    "map_list": []
   }
   ```
 
 **Error Response**
 
-- Code: 400 BAD REQUEST
+* Code: 400 BAD REQUEST
 
-  - Reason: BAD REQUEST
-  - Content: username 중복, email 유효하지 않음
+  * Reason: BAD REQUEST
+  * Content: username 중복, email 유효하지 않음
 
   ```json
   {
@@ -54,7 +62,10 @@
 
   ​
 
-- Code: 500
+* Code: 500
 
-  - Reason:
-  - Content: 필수 파라미터 없을때
+  * Reason:
+  * Content: 필수 파라미터 없을때
+
+
+
