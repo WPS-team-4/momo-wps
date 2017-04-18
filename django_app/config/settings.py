@@ -107,12 +107,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_extensions',
+
     'corsheaders',
     'storages',
     'rest_framework',
     'rest_framework.authtoken',
-
-    'django_extensions',
+    'versatileimagefield',
 
     'member',
     'pin',
