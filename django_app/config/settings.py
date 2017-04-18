@@ -102,7 +102,7 @@ REST_FRAMEWORK = {
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'user_headshot': [
         ('full_size', 'url'),
-        ('thumbnail', 'thumbnail__100x100'),
+        ('thumbnail', 'thumbnail__120x120'),
         ('medium_square_crop', 'crop__400x400'),
     ]
 }
