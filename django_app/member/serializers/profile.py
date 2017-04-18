@@ -25,8 +25,9 @@ class RelationShipSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(DynamicFieldsModelSerializer):
-    # following = RelationShipSerializer(source='relation_user_set.relation_to_user')
-    # followers = RelationShipSerializer(source='relation_user_set.relation_from_user')
+    following = serializers.SerializerMethodField(read_only=True)
+    followers = serializers.SerializerMethodField(read_only=True)
+    auth_token = serializers.SerializerMethodField(read_only=True)
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
 
     class Meta:
@@ -35,11 +36,12 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'pk',
             'username',
             'password',
+            'auth_token',
             'email',
             'profile_img',
             'relation_user_set',
-            # 'following',
-            # 'followers',
+            'following',
+            'followers',
             'date_joined',
             'last_login',
             'is_facebook',
@@ -56,6 +58,29 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'followers',
             'map_list',
         )
+
+    @staticmethod
+    def get_auth_token(obj):
+        token = MomoUser.objects.select_related('auth_token')
+        return token.key
+
+    @staticmethod
+    def get_followers(obj):
+        followers = MomoUser.objects.prefetch_related('relation_to_user')
+        follower_list = list(followers)
+        ret = []
+        for follower in follower_list:
+            ret.append(follower.id)
+        return ret
+
+    @staticmethod
+    def get_following(obj):
+        followings = RelationShip.objects.filter(from_user_id=obj.id)
+        following_list = list(followings)
+        ret = []
+        for follower in following_list:
+            ret.append(follower.id)
+        return ret
 
     def create(self, validated_data):
         user = MomoUser.objects.create(
