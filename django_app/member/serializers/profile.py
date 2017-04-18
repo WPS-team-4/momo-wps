@@ -27,7 +27,6 @@ class RelationShipSerializer(serializers.ModelSerializer):
 class UserSerializer(DynamicFieldsModelSerializer):
     following = serializers.SerializerMethodField(read_only=True)
     followers = serializers.SerializerMethodField(read_only=True)
-    auth_token = serializers.SerializerMethodField(read_only=True)
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
 
     class Meta:
@@ -60,17 +59,12 @@ class UserSerializer(DynamicFieldsModelSerializer):
         )
 
     @staticmethod
-    def get_auth_token(obj):
-        token = MomoUser.objects.select_related('auth_token')
-        return token.key
-
-    @staticmethod
     def get_followers(obj):
-        followers = MomoUser.objects.prefetch_related('relation_to_user')
+        followers = RelationShip.objects.filter(to_user_id=obj.id)
         follower_list = list(followers)
         ret = []
         for follower in follower_list:
-            ret.append(follower.id)
+            ret.append(follower.from_user_id)
         return ret
 
     @staticmethod
@@ -78,8 +72,8 @@ class UserSerializer(DynamicFieldsModelSerializer):
         followings = RelationShip.objects.filter(from_user_id=obj.id)
         following_list = list(followings)
         ret = []
-        for follower in following_list:
-            ret.append(follower.id)
+        for following in following_list:
+            ret.append(following.to_user_id)
         return ret
 
     def create(self, validated_data):
