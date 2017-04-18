@@ -42,13 +42,13 @@ POST
 
 ### body
 
-- pin
-- photo
+- pin(post를 작성하려는 pin의 pk값)
+- photo(optional)
 
 ```
 {
     "pin": "1",
-    "photo": "",
+    "photo": "http://127.0.0.1:8000/media/post/b_oFpdvZx.png",
 }
 ```
 

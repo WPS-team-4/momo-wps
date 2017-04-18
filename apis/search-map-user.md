@@ -9,8 +9,6 @@ Authorization : token [token_value]
 
 ## Map or User 검색
 
-**error: 한글 키워드를 입력하면 500에러. 영어 키워드만 정상 작동**
-
 ### method
 
 GET
@@ -25,7 +23,7 @@ GET
 ```
 
 ### 반환
-`key`값은 아래와 같은 필드에서 대소문자 구분없이 포함되는 데이터를 필터링한다.
+`keyword`값은 아래와 같은 필드에서 대소문자 구분없이 포함되는 데이터를 필터링한다.
 
 model | fields |
 --- | --- |

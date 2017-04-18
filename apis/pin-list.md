@@ -10,7 +10,6 @@ Authorization : token [token_value]
 
 ## Pin 리스트 조회
 
-
 ### method
 
 GET
