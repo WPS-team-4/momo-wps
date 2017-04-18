@@ -96,7 +96,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+}
 
+# Django-versatileimagesfield
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'user_headshot': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__100x100'),
+        ('medium_square_crop', 'crop__400x400'),
+    ]
 }
 
 INSTALLED_APPS = [
