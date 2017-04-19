@@ -28,6 +28,4 @@ class PostSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'author',
-            'photo',
-            'description',
         )
