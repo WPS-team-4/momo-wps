@@ -36,10 +36,8 @@ class SignUpAPI(CreateAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             headers = self.get_success_headers(serializer.data)
-            hash = pbkdf2_sha256.encrypt(user.username, rounds=200000, salt_size=16)
-            user.hash_username = hash.replace("$pbkdf2-sha256$", "")
             send_auth_mail(user=user)
-        return Response({"detail": "인증메일이 발송되었습니다."}, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class LoginAPI(APIView):
@@ -139,11 +137,22 @@ class UserActivateAPI(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-    def post(self, request, *args, **kwargs):
-        key = kwargs['key']
+    def get(self, request, *args, **kwargs):
+        key = request.query_params['key']
         try:
-            user = MomoUser.objects.filter(hash_username=key)
+            user = MomoUser.objects.get(hash_username=key)
             user.is_active = True
+            user.save()
         except MomoUser.DoesNotExist:
             raise Http404
-        return Response({"detail": "계정이 활성화되었습니다."}, status=status.HTTP_200_OK)
+        return Response({"user_pk": user.pk,
+                         "detail": "user가 활성화되었습니다."}, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        pk = request.data['pk']
+        try:
+            user = MomoUser.objects.get(pk=pk)
+            send_auth_mail(user=user)
+            return Response({"detail": "인증메일이 발송되었습니다"}, status=status.HTTP_200_OK)
+        except MomoUser.DoesNotExist:
+            raise Http404
