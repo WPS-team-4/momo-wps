@@ -5,6 +5,7 @@ from rest_framework.utils import model_meta
 
 from map.serializers import MapDetailSerializer
 from member.models import MomoUser, RelationShip
+from member.views import send_auth_mail
 from utils import DynamicFieldsModelSerializer
 
 __all__ = (
@@ -55,6 +56,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'following',
             'followers',
             'map_list',
+            'auth_token',
         )
 
     @staticmethod
