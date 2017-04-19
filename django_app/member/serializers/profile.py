@@ -38,7 +38,6 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'auth_token',
             'email',
             'profile_img',
-            'relation_user_set',
             'following',
             'followers',
             'date_joined',
