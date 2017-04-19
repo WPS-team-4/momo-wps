@@ -13,6 +13,7 @@ from config import settings
 from member.models import MomoUser
 from member.serializers import LoginSerializer
 from member.serializers import UserSerializer
+from member.views import send_auth_mail
 
 __all__ = (
     'SignUpAPI',
@@ -26,6 +27,13 @@ class SignUpAPI(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            send_auth_mail(user=user)
+        return Response({"인증메일이 발송되었습니다."}, status=status.HTTP_201_CREATED)
 
 
 class LoginAPI(APIView):
