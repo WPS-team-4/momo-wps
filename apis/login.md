@@ -6,13 +6,9 @@
 
 `/api/member/login/`
 
-
-
 ### **Method**
 
 `POST`
-
-
 
 ### **Data Params**
 
@@ -20,8 +16,6 @@
 | --- | --- | --- | --- |
 | username |  | string |  |
 | password |  | string |  |
-
-
 
 ### **Success Response**
 
@@ -36,8 +30,6 @@
     "token": [token_value]
   }
   ```
-
-
 
 ### **Error Response**
 
@@ -56,6 +48,22 @@
   ```
 
   ​
+
+* Code: 403 Forbidden
+
+* Reason: is\_active=False\(인증 메일로 인증과정을 거쳐야 함\)
+
+* Content:
+
+```json
+{
+  "detail": "인증 메일을 확인해주세요.",
+  "errors": [],
+  "status_code": "403 - Forbidden"
+}
+```
+
+### 
 
 ### **Sample Call**
 
