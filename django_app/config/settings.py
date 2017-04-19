@@ -13,7 +13,7 @@ import json
 import os
 
 DEBUG = os.environ.get('MODE') == 'DEBUG'
-# DEBUG = True
+DEBUG = True
 STORAGE_S3 = os.environ.get('STORAGE') == 'S3' or DEBUG is False
 DB_RDS = os.environ.get('DB') == 'RDS'
 
@@ -25,9 +25,10 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 CONFIG_DIR = os.path.join(ROOT_DIR, '.conf-secret')
 CONFIG_FILE_COMMON = os.path.join(CONFIG_DIR, 'settings_common.json')
 if DEBUG:
-    CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_local.json')
-else:
     CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_deploy.json')
+else:
+    CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_local.json')
+
 
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
