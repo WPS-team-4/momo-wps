@@ -55,7 +55,7 @@ PATCH
 
 - name
 - description
-- is_private
+- is_private(boolean 값)
 
 ```
 {

@@ -31,15 +31,10 @@ GET
       "pk": 1,
       "pin": 1,
       "photo": "https://wps-momo-bucket.s3.amazonaws.com/media/post/b.png",
+      "description": "조용하고 쾌적함",
       "created_date": "2017-04-12T17:16:27.177118Z",
-      "comment_list": [
-        {
-          "pk": 1,
-          "contents": "또와야지",
-          "author": "anohk"
-        }
-      ]
-    }
+    },
+    ...
   ]
 }
 ```
@@ -56,8 +51,7 @@ PATCH
 다음 중 하나 이상의 값을 받습니다  
 
 - name
-- place
-- map
+- map(map의 pk값)
 - pin_color
 
 ```
@@ -82,14 +76,8 @@ PATCH
       "pk": 1,
       "pin": 1,
       "photo": "https://wps-momo-bucket.s3.amazonaws.com/media/post/b.png",
+      "description": "조용하고 쾌적함",
       "created_date": "2017-04-12T17:16:27.177118Z",
-      "comment_list": [
-        {
-          "pk": 1,
-          "contents": "또와야지",
-          "author": "anohk"
-        }
-      ]
     }
   ]
 }

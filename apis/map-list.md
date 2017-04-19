@@ -56,7 +56,7 @@ POST
 
 * name
 * description
-* is\_private
+* is\_private(boolean 값)
 
 ```
 {
