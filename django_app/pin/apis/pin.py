@@ -44,6 +44,7 @@ class PinList(generics.ListCreateAPIView):
                 print(place_data)
                 serializer = PlaceSerializer(data=place_data)
                 serializer.is_valid(raise_exception=True)
+                serializer.save()
                 place = serializer.validated_data
                 print(place)
         else:
