@@ -18,9 +18,3 @@ class PlaceSerializer(serializers.ModelSerializer):
             'lat',
             'lng',
         )
-        read_only_fields = (
-            'pk',
-            'googlepid',
-            'name',
-            'address',
-        )
