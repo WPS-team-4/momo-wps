@@ -1,5 +1,6 @@
 import requests
 from django.contrib.auth import authenticate
+from django.http import Http404
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -126,3 +127,17 @@ class FacebookLoginAPI(APIView):
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
         return dict_user_info
+
+
+class UserActivateAPI(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        key = kwargs['key']
+        try:
+            user = MomoUser.objects.filter(hash_username=key)
+            user.is_active = True
+        except MomoUser.DoesNotExist:
+            raise Http404
+        return Response({"detail": "계정이 활성화되었습니다."}, status=status.HTTP_200_OK)
