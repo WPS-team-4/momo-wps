@@ -33,20 +33,15 @@ class PinList(generics.ListCreateAPIView):
 
             # place_id 를 갖는 객체가 DB에 있으면 가져오고
             if Place.objects.filter(googlepid=googlepid).exists():
-                print('**********************************')
                 place = Place.objects.get(googlepid=googlepid)
-                print(place)
 
             # 없으면 생성한다
             else:
-                print('####################################')
                 place_data['googlepid'] = place_data.pop('place_id')
-                print(place_data)
                 serializer = PlaceSerializer(data=place_data)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
                 place = serializer.validated_data
-                print(place)
         else:
             # place_id 가 place_data에 없으면 place_data_to_object실행
             place = self.latlng_to_object(data=place_data)
