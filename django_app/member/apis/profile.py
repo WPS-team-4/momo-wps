@@ -1,3 +1,5 @@
+from django.db.models import Count
+from django.http import Http404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -20,14 +22,17 @@ class UserDetailAPI(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        user = MomoUser.objects.get(pk=kwargs['pk'])
-        fields = request.query_params.get('fields', '')
-        if fields is not '':
-            fields = fields.split(',')
-        else:
-            fields = None
-        serializer = UserSerializer(user, fields=fields)
-        return Response(serializer.data)
+        try:
+            user = MomoUser.objects.get(pk=kwargs['pk'])
+            fields = request.query_params.get('fields', '')
+            if fields is not '':
+                fields = fields.split(',')
+            else:
+                fields = None
+            serializer = UserSerializer(user, fields=fields)
+            return Response(serializer.data)
+        except MomoUser.DoesNotExist:
+            raise Http404("해당 pk의 user가 존재하지 않습니다.")
 
 
 class UserAPI(RetrieveAPIView):
@@ -43,20 +48,13 @@ class UserAPI(RetrieveAPIView):
             fields = fields.split(',')
         else:
             fields = None
-        print(fields)
+
         if options is not '':
             if 'most_follower' in options:
-                queryset = MomoUser.objects.extra(
-                    select={
-                        'count_followers': 'SELECT COUNT(member_relationship.from_user_id) FROM member_relationship WHERE member_relationship.to_user_id = member_momouser.id'
-                    }
-                ).extra(order_by=['-count_followers'])
+                queryset = MomoUser.objects.annotate(count_follower=Count('relation_to_user')).order_by(
+                    '-count_follower')
             elif 'most_maps' in options:
-                queryset = MomoUser.objects.extra(
-                    select={
-                        'count_maps': 'SELECT COUNT(*) FROM map_map WHERE map_map.author_id = member_momouser.id'
-                    },
-                ).extra(order_by=['-count_maps'])
+                queryset = MomoUser.objects.annotate(count_maps=Count('map')).order_by('-count_maps')
         else:
             queryset = self.get_queryset()
 
