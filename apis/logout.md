@@ -1,6 +1,6 @@
-# login
+# logout
 
->
+> token과 함께 요청을 보내면 token을 삭제하고 로그아웃 처리를 합니다.
 
 ### **URL**
 
@@ -15,8 +15,6 @@
 ```json
 Authorization : token [token_value]
 ```
-
-
 
 ### **Success Response**
 
@@ -34,16 +32,31 @@ Authorization : token [token_value]
 
 * Code: 401
 
-  * Reason: 
-  * Content: 만료된 토큰, 토큰 없음
+  * Reason: token 만료
+  * Content: 
 
+  ```json
+  {
+    "detail": "토큰이 유효하지 않습니다.",
+    "errors": [],
+    "status_code": "401 - Unauthorized"
+  }
   ```
 
+  * Reason: token 없음
+  * Content:
+
+  ```json
+  {
+    "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+    "errors": [],
+    "status_code": "401 - Unauthorized"
+  }​
   ```
 
-  ​
 
-**Sample Call**
+
+### **Sample Call**
 
 ```javascript
 $.ajax({
