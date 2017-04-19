@@ -1,3 +1,5 @@
+import hashlib
+
 from rest_framework import serializers
 from rest_framework.compat import set_many
 from rest_framework.serializers import raise_errors_on_nested_writes
@@ -5,7 +7,6 @@ from rest_framework.utils import model_meta
 
 from map.serializers import MapDetailSerializer
 from member.models import MomoUser, RelationShip
-from member.views import send_auth_mail
 from utils import DynamicFieldsModelSerializer
 
 __all__ = (
@@ -100,6 +101,8 @@ class UserSerializer(DynamicFieldsModelSerializer):
         if password:
             instance.set_password(password)
 
+        hash_username = hashlib.pbkdf2_hmac('sha512', b'hash_username', b'salt', 100000)
+        instance.hash_username(hash_username)
         instance.save()
         return instance
 
