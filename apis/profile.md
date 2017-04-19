@@ -275,9 +275,9 @@ Authorization : token [token_value]
 
   ```json
   {
-    "detail": "찾을 수 없습니다.",
-    "exception": "No MomoUser matches the given query.",
-    "status_code": "404 - Not Found"
+    "status_code": "404 - Not Found",
+    "detail": "해당 pk의 user가 존재하지 않습니다.",
+    "errors": []
   }
   ```
 
