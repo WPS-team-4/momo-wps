@@ -19,7 +19,7 @@
 ### Success Response
 
 * Code: 201 CREATED
-* Content:
+* Content: follow 관계가 생
 
 ```json
 {
@@ -31,15 +31,18 @@
 
 * Code: 204 NO CONTENT
 
-* Content:
+* Content: follow 관계가 삭제 \(unfollow\)
 
+```
 
+```
 
 ### 
 
 ### Error Response
 
 * Code: 406 Not Acceptable
+* Reason: user 자신을 follow
 * Content:
 
 ```json
@@ -49,8 +52,6 @@
   "detail": "자기 자신은 follow할 수 없습니다"
 }
 ```
-
-
 
 
 
