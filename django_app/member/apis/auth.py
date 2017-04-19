@@ -1,6 +1,7 @@
 import requests
 from django.contrib.auth import authenticate
 from django.http import Http404
+from passlib.handlers.pbkdf2 import pbkdf2_sha256
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -32,10 +33,13 @@ class SignUpAPI(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             user = serializer.save()
+            headers = self.get_success_headers(serializer.data)
+            hash = pbkdf2_sha256.encrypt(user.username, rounds=200000, salt_size=16)
+            user.hash_username = hash.replace("$pbkdf2-sha256$", "")
             send_auth_mail(user=user)
-        return Response({"인증메일이 발송되었습니다."}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "인증메일이 발송되었습니다."}, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class LoginAPI(APIView):
@@ -101,6 +105,7 @@ class FacebookLoginAPI(APIView):
                 username=facebook_id,
             )
             user.is_facebook = True
+            user.email = request.data.get("email", "")
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
                                 status=status.HTTP_200_OK)
