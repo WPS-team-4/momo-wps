@@ -1,48 +1,63 @@
 # login
 
-> 
+> username과 password가 일치하면, token값과 token생성일, user\_pk 값을 반환합니다.
 
-**URL**
+### **URL**
+
 `/api/member/login/`
 
-**Method**
+
+
+### **Method**
+
 `POST`
 
-**Data Params**
-
-| name     | value | type   | process |
-| -------- | ----- | ------ | ------- |
-| username |       | string |         |
-| password |       | string |         |
 
 
+### **Data Params**
 
-**Success Response**
+| name | value | type | process |
+| --- | --- | --- | --- |
+| username |  | string |  |
+| password |  | string |  |
 
-- Code: 200
 
-- Content:
+
+### **Success Response**
+
+* Code: 200 OK
+
+* Content:
 
   ```json
   {
-    "token": {token_value}
+    "user_pk": 1,
+    "created": "2017-04-13T17:56:08.106760Z",
+    "token": [token_value]
   }
   ```
 
-**Error Response**
 
-- Code: 400
 
-  - Reason: 비번틀림, username 틀림,
-  - Content:
+### **Error Response**
 
-  ```
+* Code: 400
 
+* Reason: password불일치, username 불일
+
+* Content:
+
+  ```json
+  {
+    "detail": "['사용자를 찾을 수 없습니다. username과 password를 다시 확인해주세요.']",
+    "errors": [],
+    "status_code": "400 - Bad Request"
+  }
   ```
 
   ​
 
-**Sample Call**
+### **Sample Call**
 
 ```javascript
 $.ajax({
@@ -55,4 +70,6 @@ $.ajax({
   }
 });
 ```
+
+
 
