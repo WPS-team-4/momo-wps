@@ -1,4 +1,4 @@
-# member profile view
+# member detail view
 
 > user에서 선택한 필드를 반환합니다. 필드를 선택하지 않으면 모든 정보를 반환합니다.
 
@@ -22,11 +22,11 @@ Authorization : token [token_value]
 | --- | --- | --- | --- |
 | fields | pk |  | pk 필드를 반환합니다 |
 |  | username |  | username필드를 반환합니다 |
-|  | email |  |  |
+|  | email |  | email필드를 반환합니다. |
 |  | map\_list |  | 유저가 소유한 지도목록을 반환합니다. |
-|  | profile\_img |  |  |
-|  | date\_joined |  | 가입 |
-|  | last\_login |  | 마지막 로그 |
+|  | profile\_img |  | profile 이미지 필드를 반환합니다. |
+|  | date\_joined |  | 가입일을 반환합니다. |
+|  | last\_login |  | 마지막 로그인 시각을 반환합니다. |
 
 ### **Success Response**
 
@@ -281,19 +281,17 @@ Authorization : token [token_value]
   }
   ```
 
-* Code: 401
-
-  * Reason: Unauthorized
+* Code: 401 Unauthorized
 
 * Content: token 없음
 
-  ```json
-  {
-  "detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
-  "exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
-  "status_code": "401 - Unauthorized"
-  }
-  ```
+```json
+{
+"detail": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+"exception": "자격 인증데이터(authentication credentials)가 제공되지 않았습니다.",
+"status_code": "401 - Unauthorized"
+}
+```
 
 * Content: token 만료
 
