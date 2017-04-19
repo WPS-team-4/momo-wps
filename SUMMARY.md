@@ -10,6 +10,7 @@
     * [facebook login](apis/facebook-login.md)
     * [profile](apis/profile.md)
     * [follow](apis/follow.md)
+    * [send activate mail](/apis/user-activate-mail.md)
   * Map
     * [map list and create](apis/map-list.md)
     * [map detail](apis/map-detail.md)
@@ -22,4 +23,6 @@
   * Search 
     * [map and user](apis/search-map-user.md)
     * [place](apis/search-place.md)
-    
+
+
+
