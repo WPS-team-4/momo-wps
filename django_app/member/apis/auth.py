@@ -1,11 +1,10 @@
 import requests
 from django.contrib.auth import authenticate
 from django.http import Http404
-from passlib.handlers.pbkdf2 import pbkdf2_sha256
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -48,12 +47,16 @@ class LoginAPI(APIView):
         serializer = LoginSerializer(request.data)
         user = authenticate(username=serializer.data['username'],
                             password=serializer.data['password'])
+        user_not_activate = MomoUser.objects.get(username=serializer.data['username'])
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({"token": token.key,
                                  "user_pk": token.user_id,
                                  "created": token.created}, status=status.HTTP_200_OK)
             return response
+        elif user_not_activate is not None:
+            detail = "인증 메일을 확인해주세요."
+            raise PermissionDenied(detail=detail)
         else:
             detail = "사용자를 찾을 수 없습니다. username과 password를 다시 확인해주세요."
             raise ValidationError(detail=detail)
