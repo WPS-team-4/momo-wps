@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.http import Http404
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -21,14 +22,17 @@ class UserDetailAPI(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        user = MomoUser.objects.get(pk=kwargs['pk'])
-        fields = request.query_params.get('fields', '')
-        if fields is not '':
-            fields = fields.split(',')
-        else:
-            fields = None
-        serializer = UserSerializer(user, fields=fields)
-        return Response(serializer.data)
+        try:
+            user = MomoUser.objects.get(pk=kwargs['pk'])
+            fields = request.query_params.get('fields', '')
+            if fields is not '':
+                fields = fields.split(',')
+            else:
+                fields = None
+            serializer = UserSerializer(user, fields=fields)
+            return Response(serializer.data)
+        except MomoUser.DoesNotExist:
+            raise Http404("해당 pk의 user가 존재하지 않습니다.")
 
 
 class UserAPI(RetrieveAPIView):
