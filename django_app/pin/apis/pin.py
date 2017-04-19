@@ -28,7 +28,22 @@ class PinList(generics.ListCreateAPIView):
         pin_data = data['pin']
         place_data = data['place']
 
-        place = self.place_data_to_object(place_data)
+        if 'place_id' in place_data:
+            googlepid = place_data['place_id']
+            # place_id 를 갖는 객체가 DB에 있으면 가져오고
+            if Place.objects.filter(googlepid=googlepid).exists():
+                place = Place.objects.get(googlepid=googlepid)
+
+            # 없으면 생성한다
+            else:
+                place_data['googlepid'] = place_data.pop('place_id')
+                serializer = PlaceSerializer(data=place_data)
+                serializer.is_valid(raise_exception=True)
+                place = serializer.validated_data
+        else:
+            # place_id 가 place_data에 없으면 place_data_to_object실행
+            place = self.latlng_to_object(data=place_data)
+
         data = {
             'place': place.id,
         }
@@ -40,41 +55,28 @@ class PinList(generics.ListCreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def place_data_to_object(self, data):
-        # data에 place_id가 있으면
-        if 'place_id' in data:
-            # DB에 googlepid와 place_id가 일치하는 장소 객체가 있으면 가져온다
-            if Place.objects.filter(googlepid=data['place_id']):
-                place = Place.objects.get(googlepid=data['place_id'])
-            # 없으면 생성한다
-            else:
-                serializer = PlaceSerializer(data=data)
-                serializer.is_valid()
-                # print(serializer.errors)
-                place = serializer.save()
-            return place
-
+    def latlng_to_object(self, data):
         # data에 latlng만 있는 경우
-        else:
-            lat = data['lat']
-            lng = data['lng']
-            url = 'https://maps.googleapis.com/maps/api/geocode/json?'
-            params = {
-                'key': config['google_geocoding_api']['key'],
-                'latlng': '{},{}'.format(lat, lng)
-            }
-            search_result = requests.get(url, params=params).json()
-            reverse_geo_data = search_result['results'][0]
-            place_id = reverse_geo_data['place_id']
-            address = reverse_geo_data['formatted_address']
-            defaults = {
-                'name': 'marking',
-                'address': address,
-                'lat': lat,
-                'lng': lng
-            }
-            place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
-            return place
+        lat = data['lat']
+        lng = data['lng']
+        url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+        params = {
+            'key': config['google_geocoding_api']['key'],
+            'latlng': '{},{}'.format(lat, lng)
+        }
+        search_result = requests.get(url, params=params).json()
+        reverse_geo_data = search_result['results'][0]
+        place_id = reverse_geo_data['place_id']
+        address = reverse_geo_data['formatted_address']
+        defaults = {
+            'googlepid': place_id,
+            'name': 'marking',
+            'address': address,
+            'lat': lat,
+            'lng': lng,
+        }
+        place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
+        return place
 
 
 class PinDetail(generics.RetrieveUpdateDestroyAPIView):
