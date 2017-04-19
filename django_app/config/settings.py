@@ -29,7 +29,6 @@ if DEBUG:
 else:
     CONFIG_FILE = os.path.join(CONFIG_DIR, 'settings_local.json')
 
-
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
@@ -79,6 +78,15 @@ else:
 # Templates
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+# VersatileImageField
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'user_headshot': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__120x120'),
+        ('medium_square_crop', 'crop__400x400'),
+    ],
+}
+
 # Secret Key
 SECRET_KEY = config['django']['secret_key']
 
@@ -112,6 +120,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'rest_framework.authtoken',
+    'versatileimagefield',
 
     'django_extensions',
 
