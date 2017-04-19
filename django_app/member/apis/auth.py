@@ -21,6 +21,7 @@ __all__ = (
     'LoginAPI',
     'LogoutAPI',
     'FacebookLoginAPI',
+    'UserActivateAPI',
 )
 
 
