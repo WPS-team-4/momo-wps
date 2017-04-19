@@ -7,6 +7,7 @@ from pin.models import Pin
 class Post(models.Model):
     pin = models.ForeignKey(Pin)
     photo = models.ImageField(upload_to='post', blank=True)
+    description = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_visible = models.BooleanField(default=True)
 
@@ -22,14 +23,14 @@ class Post(models.Model):
         }
         return ret
 
-
-class PostComment(models.Model):
-    post = models.ForeignKey(Post)
-    author = models.ForeignKey(MomoUser)
-    contents = models.TextField(max_length=200)
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{}'.format(
-            self.contents
-        )
+#
+# class PostComment(models.Model):
+#     post = models.ForeignKey(Post)
+#     author = models.ForeignKey(MomoUser)
+#     contents = models.TextField(max_length=200)
+#     created_date = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return '{}'.format(
+#             self.contents
+#         )
