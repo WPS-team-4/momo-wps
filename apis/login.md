@@ -2,20 +2,28 @@
 
 > username과 password가 일치하면, token값과 token생성일, user\_pk 값을 반환합니다.
 
+
+
 ### **URL**
 
 `/api/member/login/`
+
+
 
 ### **Method**
 
 `POST`
 
+
+
 ### **Data Params**
 
-| name | value | type | process |
-| --- | --- | --- | --- |
-| username |  | string |  |
-| password |  | string |  |
+| name     | value | type   | process |
+| -------- | ----- | ------ | ------- |
+| username |       | string |         |
+| password |       | string |         |
+
+
 
 ### **Success Response**
 
@@ -30,6 +38,8 @@
     "token": [token_value]
   }
   ```
+
+
 
 ### **Error Response**
 
@@ -55,15 +65,17 @@
 
 * Content:
 
-```json
-{
-  "detail": "인증 메일을 확인해주세요.",
-  "errors": [],
-  "status_code": "403 - Forbidden"
-}
-```
+  ```json
+  {
+    "detail": "인증 메일을 확인해주세요.",
+    "errors": [],
+    "status_code": "403 - Forbidden"
+  }
+  ```
 
-### 
+   
+
+
 
 ### **Sample Call**
 
