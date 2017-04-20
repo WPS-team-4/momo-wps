@@ -12,6 +12,7 @@ __all__ = (
 
 
 class MapUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = MomoUser
         fields = (

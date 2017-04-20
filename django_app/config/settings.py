@@ -79,9 +79,9 @@ else:
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # VersatileImageField
-# VERSATILEIMAGEFIELD_SETTINGS = {
-#     'create_images_on_demand': False,
-# }
+VERSATILEIMAGEFIELD_SETTINGS = {
+    'create_images_on_demand': False,
+}
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     'headshot': [
