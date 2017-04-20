@@ -24,7 +24,7 @@ GET
   "pin_name": "루카루",
   "place": 1,
   "map": 2,
-  "pin_color": "0,0,0",
+  "pin_label": "2",
   "created_date": "2017-04-12T17:07:54.108414Z",
   "post_list": [
     {
@@ -52,7 +52,7 @@ PATCH
 
 - name
 - map(map의 pk값)
-- pin_color
+- pin_label
 
 ```
 {
@@ -69,7 +69,7 @@ PATCH
   "pin_name": "스터디카페",
   "place": 1,
   "map": 2,
-  "pin_color": "0,0,0",
+  "pin_label": "2",
   "created_date": "2017-04-12T17:07:54.108414Z",
   "post_list": [
     {

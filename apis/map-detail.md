@@ -35,7 +35,7 @@ GET
       "pin_name": "신사 스터디 카페",
       "place": 1,
       "map": 1,
-      "pin_color": "0,0,0",
+      "pin_label": "2",
       "created_date": "2017-04-09T06:30:01.772763Z"
       },
     ],
@@ -85,7 +85,7 @@ PATCH
       "pin_name": "신사 스터디 카페",
       "place": 1,
       "map": 1,
-      "pin_color": "0,0,0",
+      "pin_label": "2",
       "created_date": "2017-04-09T06:30:01.772763Z"
       },
     ],
