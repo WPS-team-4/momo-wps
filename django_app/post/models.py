@@ -35,18 +35,8 @@ def warm_post_headshot_images(sender, instance, **kwargs):
     post_img_warmer = VersatileImageFieldWarmer(
         instance_or_queryset=instance,
         rendition_key_set='post',
-        image_attr='post'
+        image_attr='photo',
+        verbose=True
     )
     num_created, failed_to_create = post_img_warmer.warm()
 
-#
-# class PostComment(models.Model):
-#     post = models.ForeignKey(Post)
-#     author = models.ForeignKey(MomoUser)
-#     contents = models.TextField(max_length=200)
-#     created_date = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return '{}'.format(
-#             self.contents
-#         )
