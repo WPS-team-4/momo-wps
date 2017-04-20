@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from map.models import Map
 from member.models import MomoUser
@@ -12,6 +13,8 @@ __all__ = (
 
 
 class MapUserSerializer(serializers.ModelSerializer):
+    profile_img = VersatileImageFieldSerializer(sizes='headshot')
+
     class Meta:
         model = MomoUser
         fields = (
