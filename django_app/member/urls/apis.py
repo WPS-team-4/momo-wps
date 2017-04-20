@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^fb/$', views.FacebookLoginAPI.as_view()),
     url(r'^(?P<pk>[0-9]+)/follow/$', views.FollowAPI.as_view()),
     url(r'^activate/', views.UserActivateAPI.as_view()),
+    url(r'^auth-mail/', views.UserAuthMailAPI.as_view()),
 ]
