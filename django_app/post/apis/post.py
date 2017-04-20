@@ -19,14 +19,16 @@ class PostList(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        if len(data) >= 2:
+        photo = data.get('photo')
+        description = data.get('description')
+        if photo or description:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
             response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            response = Response(status=status.HTTP_400_BAD_REQUEST)
+            response = Response({"photo 나 description 중 한가지는 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
         return response
 
     def perform_create(self, serializer):
@@ -36,4 +38,3 @@ class PostList(generics.ListCreateAPIView):
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
