@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from post.models import Post
 
@@ -14,6 +15,8 @@ class PostSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    photo = VersatileImageFieldSerializer(sizes='post')
+
     class Meta:
         model = Post
         fields = (
@@ -21,8 +24,8 @@ class PostSerializer(serializers.ModelSerializer):
             'pin',
             'author',
             'photo',
-            'created_date',
             'description',
+            'created_date',
         )
         read_only_fields = (
             'author',
