@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from post.models import Post
@@ -26,10 +27,10 @@ class PostList(generics.ListCreateAPIView):
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
         else:
-            response = Response({"photo 나 description 중 한가지는 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-        return response
+            raise ValidationError(detail="photo와 description 중 한가지 값은 꼭 입력해주세요.")
 
     def perform_create(self, serializer):
         serializer.save()
