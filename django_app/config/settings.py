@@ -84,7 +84,7 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 }
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    'user_headshot': [
+    'headshot': [
         ('full_size', 'url'),
         ('thumbnail', 'thumbnail__120x120'),
         ('medium_square_crop', 'crop__400x400'),

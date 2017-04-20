@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.compat import set_many
 from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.utils import model_meta
+from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from map.serializers import MapDetailSerializer
 from member.models import MomoUser, RelationShip
@@ -28,7 +29,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
     following = serializers.SerializerMethodField(read_only=True)
     followers = serializers.SerializerMethodField(read_only=True)
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
-
+    profile_img = VersatileImageFieldSerializer(sizes='momouser_profile_img')
     class Meta:
         model = MomoUser
         fields = (
@@ -105,6 +106,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
+    profile_img = VersatileImageFieldSerializer(sizes='momouser_profile_img')
 
     class Meta:
         model = MomoUser

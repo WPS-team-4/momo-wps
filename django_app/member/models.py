@@ -34,7 +34,7 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=100)
     # profile_img = models.ImageField(blank=True, upload_to='member')
     profile_img = VersatileImageField(
-        'user_headshot',
+        'Headshot',
         upload_to='headshot/',
     )
     is_facebook = models.BooleanField(default=False)
