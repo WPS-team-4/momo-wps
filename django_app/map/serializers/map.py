@@ -3,6 +3,7 @@ from rest_framework import serializers
 from map.models import Map
 from member.models import MomoUser
 from pin.serializers import PinSerializer
+from pin.serializers.pin import PinViewSerializer
 
 __all__ = (
     'MapSerializer',
@@ -22,7 +23,7 @@ class MapUserSerializer(serializers.ModelSerializer):
 
 class MapSerializer(serializers.ModelSerializer):
     author = MapUserSerializer(read_only=True)
-    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
+    pin_list = PinViewSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
@@ -43,7 +44,7 @@ class MapDetailSerializer(serializers.ModelSerializer):
     #     read_only=True
     # )
     author = MapUserSerializer(read_only=True)
-    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
+    pin_list = PinViewSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
