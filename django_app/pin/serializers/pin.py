@@ -22,12 +22,11 @@ class PinSerializer(serializers.ModelSerializer):
             'pk',
             'map',
             'pin_name',
-            'pin_color',
+            'pin_label',
             'created_date',
             'author',
             'place',
             'post_list',
-
         )
         read_only_fields = (
             'author',
