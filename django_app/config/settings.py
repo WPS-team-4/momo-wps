@@ -79,20 +79,18 @@ else:
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # VersatileImageField
-VERSATILEIMAGEFIELD_SETTINGS = {
-    'create_images_on_demand': False,
-}
+# VERSATILEIMAGEFIELD_SETTINGS = {
+#     'create_images_on_demand': False,
+# }
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    'user_headshot': [
+    'headshot': [
         ('full_size', 'url'),
         ('thumbnail', 'thumbnail__120x120'),
-        ('medium_square_crop', 'crop__400x400'),
     ],
-    'post_headshot': [
+    'post': [
         ('full_size', 'url'),
-        ('thumbnail', 'thumbnail__400x400'),
-        ('medium_square_crop', 'crop__800x800'),
+        ('thumbnail', 'thumbnail__600x600'),
     ]
 }
 
