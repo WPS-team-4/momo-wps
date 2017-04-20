@@ -15,7 +15,6 @@ class PostSerializer(serializers.ModelSerializer):
         read_only=True
     )
     photo = VersatileImageFieldSerializer(sizes='post')
-    # comment_list = PostCommentSerializer(read_only=True, many=True, source='postcomment_set')
 
     class Meta:
         model = Post

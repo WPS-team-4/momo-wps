@@ -90,7 +90,8 @@ def warm_User_headshot_images(sender, instance, **kwargs):
     user_img_warmer = VersatileImageFieldWarmer(
         instance_or_queryset=instance,
         rendition_key_set='headshot',
-        image_attr='headshot'
+        image_attr='profile_img',
+        verbose=True
     )
     num_created, failed_to_create = user_img_warmer.warm()
 
