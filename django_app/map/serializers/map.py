@@ -5,9 +5,9 @@ from member.models import MomoUser
 from pin.serializers.pin import PinViewSerializer
 
 __all__ = (
+    'MapUserSerializer',
     'MapSerializer',
     'MapDetailSerializer',
-    'MapUserSerializer',
 )
 
 
@@ -52,7 +52,4 @@ class MapDetailSerializer(serializers.ModelSerializer):
             'created_date',
             'is_private',
             'pin_list'
-        )
-        read_only_field = (
-            'pk',
         )
