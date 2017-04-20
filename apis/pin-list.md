@@ -39,12 +39,24 @@ GET
 POST
 
 ### body
+
+#### pin_label
+ 
+value | label name |
+--- | --- |
+0 | place |
+1 | food |
+2 | cafe |
+3 | shop |
+4 | etc |
+
 	
 #### A. 지도에서 장소를 선택해서 핀을 만드는 경우
+
 - pin  
 	- pin_name
 	- map
-	- pin_color
+	- pin_label
 - place  
 	- lat
 	- lng
@@ -55,7 +67,7 @@ POST
 	"pin": {
 		"map": "5",
 		"pin_name": "CafeB",
-		"pin_color: "0,0,0"
+		"pin_label: "2"
 	},
 	"place": {
 		"lng": "126.9760823",
@@ -68,7 +80,7 @@ POST
 - pin  
 	- pin_name
 	- map
-	- pin_color
+	- pin_label
 - place  
 	- place_id
 	- name
@@ -82,7 +94,7 @@ POST
 	"pin": {
 		"map": "5",
 		"pin_name": "CafeB",
-		"pin_color: "0,0,0"
+		"pin_label: "2"
 	},
 	"place": {
 		"place_id": "ChIJmc7grvKifDURHm9YxvGM9Rg",
@@ -103,7 +115,7 @@ POST
     "pin_name": "CafeB",
     "place": 2,
     "map": 5,
-    "pin_color": "0,0,0",
+    "pin_label": "2",
     "created_date": "2017-04-16T15:52:26.979675Z",
     "post_list": []
 }
