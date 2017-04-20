@@ -1,23 +1,33 @@
-### 요청 주소
+# Map Detail view
 
-```
-/api/map/{mapID}
-```
+> 지도의 세부정보를 반환합니다.
+
+
+
+### URL
+
+`/api/map/{map_pk}`
+
+
+
 ### Headers
-```
-Authorization : token [token_value]
-```
+
+`Authorization : token [token_value]`
 
 
-## Map 세부정보 조회
 
-### method
+### Method
 
-GET
+`GET`
 
-### 반환
 
-```
+
+### Success Response
+
+* Code: 200 OK
+* Content:
+
+```json
 {
     "pk": "1",
     "map_name": "카페지도",
@@ -43,31 +53,54 @@ GET
 }
 ```
 
-## Map 수정
 
-### method
 
-PATCH
+### Error Response
 
-### body
+* Code:
+* Reason:
+* Content:
 
-다음 중 하나 이상의 값을 받습니다  
-
-- name
-- description
-- is_private(boolean 값)
-
-```
+```json
 {
-    "is_private": "true"
+  
 }
 ```
 
-### 반환
 
-수정된 map 반환
 
-```
+___
+
+
+
+# Map Detail update(partial)
+
+> 지도의 세부정보를 업데이트 합니다.
+
+
+
+### Method
+
+`PATCH`
+
+
+
+### Body
+
+| name        | value             | process          |
+| ----------- | ----------------- | ---------------- |
+| name        | 지도 이름             | 지도 이름을 업데이트 합니다. |
+| description | 지도 설명             |                  |
+| is_private  | 지도 공개 여부(boolean) | 지도 공개 여부를 변환합니다. |
+
+
+
+### Success Response
+
+* Code:
+* Content:
+
+```json
 {
     "pk": "1",
     "map_name": "카페지도",
@@ -93,8 +126,56 @@ PATCH
 }
 ```
 
-## Map 삭제
 
-### method
 
-DELETE
+### Error Response
+
+* Code:
+* Reason:
+* Content:
+
+```json
+{
+  
+}
+```
+
+
+
+___
+
+
+
+# Map Delete
+
+> 특정 pk값의 지도객체를 삭제합니다.
+
+
+
+### Method
+
+`DELETE`
+
+
+
+### Success Response
+
+* Code: 204 No Content
+* Content:
+
+```json
+
+```
+
+
+
+### Error Response
+
+* Code: 
+* Reason:
+* Content:
+
+```json
+
+```
+

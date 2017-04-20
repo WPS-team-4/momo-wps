@@ -1,22 +1,32 @@
-### 요청 주소
+# Pin List view
 
-```
-/api/pin/
-```
+>
+
+
+
+### URL
+
+`/api/pin/`
+
+
+
 ### Headers
-```
-Authorization : token [token_value]
-```
+`Authorization : token [token_value]`
 
-## Pin 리스트 조회
 
-### method
 
-GET
+### Method
 
-### 반환
+`GET`
 
-```
+
+
+### Success Response
+
+* Code: 200 OK
+* Content:
+
+```json
 [
   {
     "pk": 1,
@@ -29,25 +39,48 @@ GET
   },
   ...
 ]
+```
+
+
+
+### Error Response
+
+* Code:
+* Reason:
+* Content:
+
+```json
 
 ```
 
-## Pin 생성
 
-### method
 
-POST
+---
 
-### body
-	
+
+
+# Pin Create
+
+>
+
+
+
+### Method
+
+`POST`
+
+
+
+### Body
+
 #### A. 지도에서 장소를 선택해서 핀을 만드는 경우
 - pin  
-	- pin_name
-	- map
-	- pin_color
+ - pin_name
+ - map
+ - pin_color
 - place  
-	- lat
-	- lng
+ - lat
+ - lng
 
 
 ```
@@ -66,15 +99,15 @@ POST
 
 #### B. 장소 검색결과에서 장소를 선택하여 핀을 만드는 경우
 - pin  
-	- pin_name
-	- map
-	- pin_color
+ - pin_name
+ - map
+ - pin_color
 - place  
-	- place_id
-	- name
-	- address
-	- lat
-	- lng
+ - place_id
+ - name
+ - address
+ - lat
+ - lng
 
 
 ```

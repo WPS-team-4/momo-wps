@@ -1,23 +1,33 @@
-### 요청 주소
+# Pin Detail view
 
-```
-/api/pin/{pinId}
-```
+>
+
+
+
+### URL
+
+`/api/pin/{pin_pk}`
+
+
+
 ### Headers
-```
-Authorization : token [token_value]
-```
+
+`Authorization : token [token_value]`
 
 
-## Pin 세부정보 조회
+
+### Method
+
+`GET`
 
 
-### method
-GET
 
-### 반환
+### Success Response
 
-```
+* Code:200 OK
+* Content:
+
+```json
 {
   "pk": 1,
   "author": "anohk",
@@ -39,30 +49,54 @@ GET
 }
 ```
 
-## Pin 세부정보 수정
 
 
-### method
+### Error Response
 
-PATCH
+* Code:
+* Reason:
+* Content:
 
-### body
-
-다음 중 하나 이상의 값을 받습니다  
-
-- name
-- map(map의 pk값)
-- pin_color
-
-```
+```json
 {
-    "pin_name": "스터디카페",
-
+  
+}
 ```
 
-### 반환
 
-```
+
+___
+
+
+
+# Pin Detail update(partial)
+
+>
+
+
+
+### Method
+
+`PATCH`
+
+
+
+### Body
+
+| name      | value       | process |
+| --------- | ----------- | ------- |
+| name      | 핀 이름        |         |
+| map       | map_pk      |         |
+| pin_label | 핀 라벨 값[0-4] |         |
+
+
+
+### Success Response
+
+* Code:
+* Content:
+
+```json
 {
   "pk": 1,
   "author": "anohk",
@@ -83,8 +117,52 @@ PATCH
 }
 ```
 
-## Pin 삭제
 
-### method
 
-DELETE
+### Error Response
+
+* Code:
+* Reason:
+* Content:
+
+```json
+{
+  
+}
+```
+
+
+
+___
+
+
+
+# Pin Delete
+
+### Method
+
+`DELETE`
+
+
+
+### Success Response
+
+* Code:
+* Content:
+
+```json
+
+```
+
+
+
+### Error Response
+
+* Code:
+* Reason:
+* Content:
+
+```json
+
+```
+
