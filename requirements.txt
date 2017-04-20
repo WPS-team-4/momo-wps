@@ -11,6 +11,7 @@ Django==1.10.6
 django-cors-headers==2.0.2
 django-extensions==1.7.8
 django-storages==1.5.2
+django-versatileimagefield==1.7.0
 djangorestframework==3.6.2
 docker-py==1.7.2
 dockerpty==0.4.1
