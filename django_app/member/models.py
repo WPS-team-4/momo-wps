@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from versatileimagefield.fields import VersatileImageField
 
 
 class MomoUserManager(BaseUserManager):
@@ -31,7 +32,11 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(blank=True)
     password = models.CharField(max_length=100)
-    profile_img = models.ImageField(blank=True, upload_to='member')
+    # profile_img = models.ImageField(blank=True, upload_to='member')
+    profile_img = VersatileImageField(
+        'user_headshot',
+        upload_to='headshot/',
+    )
     is_facebook = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     relation = models.ManyToManyField(

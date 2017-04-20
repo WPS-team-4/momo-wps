@@ -1,4 +1,5 @@
 from django.db import models
+from versatileimagefield.fields import VersatileImageField
 
 from member.models import MomoUser
 from pin.models import Pin
@@ -6,7 +7,11 @@ from pin.models import Pin
 
 class Post(models.Model):
     pin = models.ForeignKey(Pin)
-    photo = models.ImageField(upload_to='post', blank=True)
+    # photo = models.ImageField(upload_to='post', blank=True)
+    photo = VersatileImageField(
+        'post',
+        upload_to='post/',
+    )
     description = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_visible = models.BooleanField(default=True)
