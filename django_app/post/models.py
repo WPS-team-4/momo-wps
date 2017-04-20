@@ -11,6 +11,7 @@ class Post(models.Model):
     photo = VersatileImageField(
         'post',
         upload_to='post/',
+        blank=True,
     )
     description = models.TextField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
