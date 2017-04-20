@@ -111,7 +111,7 @@ class FacebookLoginAPI(APIView):
                 username=facebook_id,
             )
             user.is_facebook = True
-            user.email = request.data.get("email", "")
+            user.email = request.data.get("email","")
             user.save()
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
@@ -180,4 +180,3 @@ class UserAuthMailAPI(APIView):
             raise Http404(detail="user가 존재하지 않습니다.")
         except ValueError:
             raise ValidationError(detail="user pk가 올바른 형식이 아닙니다.")
-
