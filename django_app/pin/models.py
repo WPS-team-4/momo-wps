@@ -3,12 +3,21 @@ from django.db import models
 from map.models import Map
 from place.models import Place
 
+PIN_LABEL_CHOICE = (
+    ('0', 'place'),
+    ('1', 'food'),
+    ('2', 'cafe'),
+    ('3', 'shop'),
+    ('4', 'etc'),
+)
+
 
 class Pin(models.Model):
     place = models.ForeignKey(Place)
     map = models.ForeignKey(Map)
     pin_name = models.CharField(max_length=100)
-    pin_color = models.CharField(max_length=11, default='0,0,0', blank=True)
+    pin_label = models.CharField(choices=PIN_LABEL_CHOICE, max_length=1, default=0)
+    # label = models.CharField(choices=LABEL_CHOICE, max_length=1)
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
