@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -25,6 +26,7 @@ __all__ = (
     'LogoutAPI',
     'FacebookLoginAPI',
     'UserActivateAPI',
+    'UserAuthMailAPI',
 )
 
 
@@ -110,6 +112,7 @@ class FacebookLoginAPI(APIView):
             )
             user.is_facebook = True
             user.email = request.data.get("email", "")
+            user.save()
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
                                 status=status.HTTP_200_OK)
@@ -142,6 +145,7 @@ class FacebookLoginAPI(APIView):
 class UserActivateAPI(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
+    renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, *args, **kwargs):
         try:
@@ -158,13 +162,22 @@ class UserActivateAPI(APIView):
 
         return Response({"user_pk": user.pk,
                          "detail": "user가 활성화되었습니다.",
-                         "url": reverse('index', request=request)}, status=status.HTTP_200_OK)
+                         "url": reverse('index', request=request)}, status=status.HTTP_200_OK,
+                        template_name='member/activate.html')
+
+
+class UserAuthMailAPI(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        pk = request.data['pk']
         try:
+            pk = request.data['pk']
             user = MomoUser.objects.get(pk=pk)
             send_auth_mail(user=user)
             return Response({"detail": "인증메일이 발송되었습니다"}, status=status.HTTP_200_OK)
         except MomoUser.DoesNotExist:
-            raise Http404
+            raise Http404(detail="user가 존재하지 않습니다.")
+        except ValueError:
+            raise ValidationError(detail="user pk가 올바른 형식이 아닙니다.")
+
