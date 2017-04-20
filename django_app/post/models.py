@@ -1,13 +1,13 @@
 from django.db import models
+from django.dispatch import receiver
 from versatileimagefield.fields import VersatileImageField
+from versatileimagefield.image_warmer import VersatileImageFieldWarmer
 
-from member.models import MomoUser
 from pin.models import Pin
 
 
 class Post(models.Model):
     pin = models.ForeignKey(Pin)
-    # photo = models.ImageField(upload_to='post', blank=True)
     photo = VersatileImageField(
         'post',
         upload_to='post/',
@@ -28,6 +28,16 @@ class Post(models.Model):
             'photo': self.photo.url,
         }
         return ret
+
+
+@receiver(models.signals.post_save, sender=Post)
+def warm_post_headshot_images(sender, instance, **kwargs):
+    post_img_warmer = VersatileImageFieldWarmer(
+        instance_or_queryset=instance,
+        rendition_key_set='post',
+        image_attr='post'
+    )
+    num_created, failed_to_create = post_img_warmer.warm()
 
 #
 # class PostComment(models.Model):

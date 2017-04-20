@@ -1,7 +1,9 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.dispatch import receiver
 from versatileimagefield.fields import VersatileImageField
+from versatileimagefield.image_warmer import VersatileImageFieldWarmer
 
 
 class MomoUserManager(BaseUserManager):
@@ -32,7 +34,6 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(blank=True)
     password = models.CharField(max_length=100)
-    # profile_img = models.ImageField(blank=True, upload_to='member')
     profile_img = VersatileImageField(
         'Headshot',
         upload_to='headshot/',
@@ -82,6 +83,16 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     def followers(self):
         relations = self.relation_to_user.all()
         return MomoUser.objects.filter(id__in=relations.values('from_user_id'))
+
+
+@receiver(models.signals.post_save, sender=MomoUser)
+def warm_User_headshot_images(sender, instance, **kwargs):
+    user_img_warmer = VersatileImageFieldWarmer(
+        instance_or_queryset=instance,
+        rendition_key_set='headshot',
+        image_attr='headshot'
+    )
+    num_created, failed_to_create = user_img_warmer.warm()
 
 
 class RelationShip(models.Model):
