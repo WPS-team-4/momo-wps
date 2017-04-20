@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.exceptions import NotAcceptable
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -23,7 +23,7 @@ class FollowAPI(UpdateAPIView):
         print(to_user)
         from_user = self.request.user
         if to_user == from_user:
-            raise NotAcceptable(detail="자기 자신은 follow할 수 없습니다")
+            raise ValidationError(detail="자기 자신은 follow할 수 없습니다")
         else:
             is_following = to_user in list(from_user.following)
 
