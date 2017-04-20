@@ -39,10 +39,6 @@ class MapSerializer(serializers.ModelSerializer):
 
 
 class MapDetailSerializer(serializers.ModelSerializer):
-    # author = serializers.SlugRelatedField(
-    #     slug_field='username',
-    #     read_only=True
-    # )
     author = MapUserSerializer(read_only=True)
     pin_list = PinViewSerializer(read_only=True, many=True, source='pin_set')
 

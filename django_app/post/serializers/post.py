@@ -14,8 +14,6 @@ class PostSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    # comment_list = PostCommentSerializer(read_only=True, many=True, source='postcomment_set')
-
     class Meta:
         model = Post
         fields = (
