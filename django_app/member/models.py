@@ -36,6 +36,7 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     profile_img = VersatileImageField(
         'Headshot',
         upload_to='headshot/',
+        blank=True,
     )
     is_facebook = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
