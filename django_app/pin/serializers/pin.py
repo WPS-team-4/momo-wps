@@ -16,7 +16,7 @@ class PinSerializer(serializers.ModelSerializer):
         read_only=True
     )
     post_list = PostSerializer(read_only=True, many=True, source='post_set')
-    place = PlaceSerializer(read_only=True)
+    # place = PlaceSerializer(read_only=True)
 
     class Meta:
         model = Pin
