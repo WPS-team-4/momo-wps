@@ -1,6 +1,8 @@
 import requests
 from django.contrib.auth import authenticate
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import Http404
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -8,6 +10,7 @@ from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from config import settings
@@ -141,15 +144,21 @@ class UserActivateAPI(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
-        key = request.query_params['key']
         try:
+            key = request.query_params['key']
             user = MomoUser.objects.get(hash_username=key)
             user.is_active = True
             user.save()
         except MomoUser.DoesNotExist:
             raise Http404
+        except MultipleObjectsReturned:
+            raise ValidationError(detail="인증 요청 url이 잘못 되었습니다.")
+        except MultiValueDictKeyError:
+            raise ValidationError(detail="인증 요청 url이 잘못 되었습니다.")
+
         return Response({"user_pk": user.pk,
-                         "detail": "user가 활성화되었습니다."}, status=status.HTTP_200_OK)
+                         "detail": "user가 활성화되었습니다.",
+                         "url": reverse('index', request=request)}, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         pk = request.data['pk']
