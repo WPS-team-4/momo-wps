@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from pin.models import Pin
+from place.serializers import PlaceSerializer
 from post.serializers import PostSerializer
 
 __all__ = (
@@ -15,6 +16,7 @@ class PinSerializer(serializers.ModelSerializer):
         read_only=True
     )
     post_list = PostSerializer(read_only=True, many=True, source='post_set')
+    place = PlaceSerializer(read_only=True)
 
     class Meta:
         model = Pin
