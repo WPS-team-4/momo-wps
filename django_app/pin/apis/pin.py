@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from config.settings import config
 from pin.models import Pin
-from pin.serializers.pin import PinSerializer
+from pin.serializers.pin import PinSerializer, PinViewSerializer
 from place.models import Place
 from place.serializers import PlaceSerializer
 
@@ -22,6 +22,17 @@ class PinList(generics.ListCreateAPIView):
     serializer_class = PinSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = PinViewSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = PinViewSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
         data = request.data
@@ -77,7 +88,7 @@ class PinList(generics.ListCreateAPIView):
             'lng': lng,
         }
         place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
-        print('****************{}'.format(place.id))
+        # print('****************{}'.format(place.id))
         return place
 
 
