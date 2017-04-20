@@ -22,6 +22,7 @@ class MapUserSerializer(serializers.ModelSerializer):
 
 class MapSerializer(serializers.ModelSerializer):
     author = MapUserSerializer(read_only=True)
+    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
@@ -32,6 +33,7 @@ class MapSerializer(serializers.ModelSerializer):
             'description',
             'created_date',
             'is_private',
+            'pin_list'
         )
 
 
