@@ -47,10 +47,9 @@ class PinList(generics.ListCreateAPIView):
             place = self.latlng_to_object(data=place_data)
 
         data = {
-            'place': place.id,
+            'place': str(place.id),
         }
         data.update(pin_data)
-
         serializer = PinSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -78,6 +77,7 @@ class PinList(generics.ListCreateAPIView):
             'lng': lng,
         }
         place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
+        print('****************{}'.format(place.id))
         return place
 
 
