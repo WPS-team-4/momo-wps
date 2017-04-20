@@ -2,6 +2,7 @@ from rest_framework import serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from post.models import Post
+from utils import AuthorSerializer
 
 __all__ = (
     'PostSerializer',
@@ -9,11 +10,7 @@ __all__ = (
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        source='pin.map.author',
-        slug_field='username',
-        read_only=True
-    )
+    author = AuthorSerializer(read_only=True, source='pin.map.author')
 
     photo = VersatileImageFieldSerializer(sizes='post')
 
