@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.http import Http404
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -55,6 +56,8 @@ class UserAPI(RetrieveAPIView):
                     '-count_follower')
             elif 'most_maps' in options:
                 queryset = MomoUser.objects.annotate(count_maps=Count('map')).order_by('-count_maps')
+            else:
+                raise ValidationError(detail="opt 값을 정확히 입력해 주세요.")
         else:
             queryset = self.get_queryset()
 
