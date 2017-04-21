@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from pin.models import Pin
 from place.serializers import PlaceInfoSerializer
+from place.serializers import PlaceSerializer
 from post.serializers import PostSerializer
 from utils import AuthorSerializer
 
@@ -13,7 +14,7 @@ __all__ = (
 
 class PinSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True, source='map.author')
-    place = PlaceInfoSerializer()
+
     class Meta:
         model = Pin
         fields = (
@@ -50,8 +51,6 @@ class PinViewSerializer(serializers.ModelSerializer):
         read_only_fields = (
             'pk',
             'map',
-            'pin_name',
-            'pin_label',
             'created_date',
             'author',
             'place',

@@ -58,14 +58,16 @@ class PinList(generics.ListCreateAPIView):
             place = self.latlng_to_object(data=place_data)
 
         data = {
-            'place': str(place.id),
+            "place": str(place.pk)
         }
         data.update(pin_data)
         serializer = PinSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        pin = serializer.save()
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        result = PinViewSerializer(pin)
+        return Response(result.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def latlng_to_object(self, data):
         # data에 latlng만 있는 경우
