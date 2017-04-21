@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
@@ -29,6 +30,8 @@ class MapList(generics.ListCreateAPIView):
                 queryset = Map.objects.all().order_by('-created_date')
             elif 'most_pins' in options:
                 queryset = Map.objects.annotate(num_items=Count('pin')).order_by('-num_items')
+            else:
+                raise ValidationError(detail="opt 값을 정확히 입력해 주세요.")
         else:
             queryset = Map.objects.all().order_by('-updated_date')
 
