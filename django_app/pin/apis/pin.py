@@ -91,7 +91,6 @@ class PinList(generics.ListCreateAPIView):
             'lng': lng,
         }
         place, _ = Place.objects.get_or_create(googlepid=place_id, defaults=defaults)
-        # print('****************{}'.format(place.id))
         return place
 
 
@@ -100,3 +99,21 @@ class PinDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PinSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     authentication_classes = (TokenAuthentication,)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = PinViewSerializer(instance)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        pin = serializer.save()
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        result = PinViewSerializer(pin)
+        return Response(result.data)
