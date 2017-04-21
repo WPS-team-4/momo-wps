@@ -13,7 +13,7 @@ __all__ = (
 
 class PinSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True, source='map.author')
-
+    place = PlaceInfoSerializer()
     class Meta:
         model = Pin
         fields = (
