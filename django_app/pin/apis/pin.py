@@ -69,11 +69,12 @@ class PinList(generics.ListCreateAPIView):
 
     def latlng_to_object(self, data):
         # data에 latlng만 있는 경우
+        API_KEY = config['google_geocoding_api']['key']
         lat = data['lat']
         lng = data['lng']
         url = 'https://maps.googleapis.com/maps/api/geocode/json?'
         params = {
-            'key': config['google_geocoding_api']['key'],
+            'key': API_KEY,
             'latlng': '{},{}'.format(lat, lng)
         }
         search_result = requests.get(url, params=params).json()

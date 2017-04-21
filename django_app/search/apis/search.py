@@ -75,11 +75,15 @@ class SearchPlaceAPI(APIView):
 
         if keyword != '':
             keyword = keyword.strip()
+            API_KEY = config['google_place_api']['key']
             params = {
-                'key': config['google_place_api']['key'],
+                'key': API_KEY,
                 'query': keyword
             }
             search_result = requests.get(url, params=params).json()
             data = self.parseGoogleJsonToMomoJson(search_result)
+            response = Response(data)
+        else:
+            response = Response(status=status.HTTP_400_BAD_REQUEST)
 
-            return Response(data)
+        return response
