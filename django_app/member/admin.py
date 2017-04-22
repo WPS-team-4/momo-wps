@@ -5,14 +5,16 @@ from member.models import MomoUser, RelationShip
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'password', 'email', 'profile_img', 'date_joined', 'last_login', 'followers',
+    list_display = ['id', 'userid', 'username', 'password', 'email', 'profile_img', 'date_joined', 'last_login',
+                    'followers',
                     'following', 'is_facebook', 'is_staff', 'is_superuser', 'is_active']
-    list_filter = ['id', 'username', 'email', 'date_joined', 'last_login', 'is_facebook', 'is_superuser', 'is_active']
+    list_filter = ['id', 'userid', 'username', 'email', 'date_joined', 'last_login', 'is_facebook', 'is_superuser',
+                   'is_active']
     list_select_related = True
     list_per_page = 100
     list_max_show_all = 200
     # list_editable = ()
-    search_fields = ['username', 'email']
+    search_fields = ['userid', 'username', 'email']
 
 
 class RelationAdmin(admin.ModelAdmin):
