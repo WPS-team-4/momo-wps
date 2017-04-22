@@ -11,15 +11,18 @@ class MomoUserManager(BaseUserManager):
     암호화 부분 구현할 것
     """
 
-    def create_user(self, username, profile_img=None, password=None):
-        user = MomoUser(username=username, password=password)
+    def create_user(self, userid, password=None, email=None):
+        user = MomoUser(userid=userid, password=password)
+        user.email = email
+        user.username = userid
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, username, email, password):
-        user = MomoUser(username=username, password=password)
+    def create_superuser(self, userid, email, password):
+        user = MomoUser(userid=userid, password=password)
+        user.email = email
         user.set_password(password)
         user.is_staff = True
         user.is_superuser = True
