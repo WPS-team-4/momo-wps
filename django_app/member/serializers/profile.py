@@ -88,15 +88,6 @@ class UserSerializer(DynamicFieldsModelSerializer):
             ret.append(following.to_user_id)
         return ret
 
-    # def create(self, validated_data):
-    #     user = MomoUser.objects.create(
-    #         email=validated_data['email'],
-    #         username=validated_data['username']
-    #     )
-    #     user.set_password(validated_data['password'])
-    #     user.save()
-    #     return user
-
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)
         info = model_meta.get_field_info(instance)
@@ -165,3 +156,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
             'is_active',
             'is_staff',
         )
+
+    def create(self, validated_data):
+        user = MomoUser.objects.create_user(
+            email=validated_data['email'],
+            userid=validated_data['userid']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
