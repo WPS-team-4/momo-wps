@@ -12,6 +12,7 @@ __all__ = (
     'UserSerializer',
     'UserProfileSerializer',
     'RelationShipSerializer',
+    'UserCreateSerializer',
 )
 
 
@@ -35,6 +36,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
         model = MomoUser
         fields = (
             'pk',
+            'userid',
             'username',
             'password',
             'auth_token',
@@ -55,11 +57,17 @@ class UserSerializer(DynamicFieldsModelSerializer):
 
         read_only_fields = (
             'pk',
+            'userid',
             'following',
             'followers',
             'map_list',
             'auth_token',
-            'profile_img',
+            'date_joined',
+            'last_login',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+            'is_superuser',
         )
 
     @staticmethod
@@ -79,15 +87,6 @@ class UserSerializer(DynamicFieldsModelSerializer):
         for following in following_list:
             ret.append(following.to_user_id)
         return ret
-
-    def create(self, validated_data):
-        user = MomoUser.objects.create(
-            email=validated_data['email'],
-            username=validated_data['username']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
 
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)
@@ -128,3 +127,41 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_staff',
             'map_list',
         )
+
+
+class UserCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MomoUser
+        fields = (
+            'pk',
+            'auth_token',
+            'username',
+            'userid',
+            'password',
+            'email',
+            'profile_img',
+            'description',
+            'date_joined',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+        )
+        read_only_fields = (
+            'pk',
+            'auth_token',
+            'profile_img',
+            'description',
+            'date_joined',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+        )
+
+    def create(self, validated_data):
+        user = MomoUser.objects.create_user(
+            email=validated_data['email'],
+            userid=validated_data['userid']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user

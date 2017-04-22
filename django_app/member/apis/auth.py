@@ -17,6 +17,7 @@ from rest_framework.views import APIView
 from config import settings
 from member.models import MomoUser
 from member.serializers import LoginSerializer
+from member.serializers import UserCreateSerializer
 from member.serializers import UserSerializer
 from member.views import send_auth_mail
 
@@ -33,9 +34,11 @@ __all__ = (
 class SignUpAPI(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
 
     def create(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        request.data['userid'] = username
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
@@ -49,22 +52,24 @@ class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        username = request.data.pop('username')[0]
+        request.data["userid"] = username
         serializer = LoginSerializer(request.data)
-        user = authenticate(username=serializer.data['username'],
-                            password=serializer.data['password'])
-        user_not_activate = MomoUser.objects.get(username=serializer.data['username'])
-        if user is not None:
-            token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"token": token.key,
-                                 "user_pk": token.user_id,
-                                 "created": token.created}, status=status.HTTP_200_OK)
-            return response
-        elif user_not_activate is not None:
-            detail = "인증 메일을 확인해주세요."
-            raise PermissionDenied(detail=detail)
+        user = authenticate(userid=serializer.data['userid'], password=serializer.data['password'])
+        if user:
+            is_active = user.is_active
+            if is_active:
+                token, _ = Token.objects.get_or_create(user=user)
+                response = Response({"token": token.key,
+                                     "user_pk": token.user_id,
+                                     "created": token.created}, status=status.HTTP_200_OK)
+                return response
+            else:
+                detail = "인증 메일을 확인해주세요."
+                raise PermissionDenied(detail=detail)
         else:
             detail = "사용자를 찾을 수 없습니다. username과 password를 다시 확인해주세요."
-            raise ValidationError(detail=detail)
+        raise ValidationError(detail=detail)
 
 
 class LogoutAPI(APIView):
@@ -86,6 +91,7 @@ class FacebookLoginAPI(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+
         APP_ID = settings.config['facebook']['app_id']
         SECRET_CODE = settings.config['facebook']['secret_code']
         APP_ACCESS_TOKEN = '{app_id}|{secret_code}'.format(
@@ -105,46 +111,49 @@ class FacebookLoginAPI(APIView):
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
-
+            fb_user_photo = self.get_fb_user_photo(facebook_id, USER_ACCESS_TOKEN)
             # fb_user_info로 default username을 생성
-            fb_username = '{} {}'.format(fb_user_info['first_name'], fb_user_info['last_name'])
+            fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
+            fb_email = fb_user_info['email']
 
             # fb_user_info에서 profile img 가져오기
-            fb_profile_img = fb_user_info['picture']
+            fb_profile_img = fb_user_photo['data']['url']
 
-            user, is_created = MomoUser.objects.get_or_create(
-                password=facebook_id,
-                userid=facebook_id,
-                username=fb_username,
-            )
-            user.is_facebook = True
-            user.email = request.data.get("email", "")
+            user, is_created = MomoUser.objects.get_or_create(userid=facebook_id)
+            if is_created:
+                user.username = fb_username
+                user.set_password(facebook_id)
+                user.profile_img = fb_profile_img
+                user.is_facebook = True
+                user.email = fb_email
+
+            else:
+                if user.profile_img is None:
+                    user.profile_img = fb_profile_img
+                if user.email is None:
+                    user.email = fb_email
+
             user.save()
+
             token, _ = Token.objects.get_or_create(user=user)
 
-            # 반환값에 username, profile img 포함
-            response = Response({
-                "pk": user.pk,
-                "token": token.key,
-                "username": fb_username,
-                "profile_img": fb_profile_img,
-                "is_created": is_created,
-            }, status=status.HTTP_200_OK)
+            serializer = UserSerializer(user)
+            result = serializer.data
+            result["is_created"] = is_created
+            response = Response(result, status=status.HTTP_200_OK)
             return response
         else:
             return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)
 
     def get_fb_user_info(self, facebook_id, access_token):
         USER_ID = facebook_id
-        url_api_user = 'https://graph.facebook.com/{user_id}'.format(
+        url_api_user = 'https://graph.facebook.com/v2.9/{user_id}?fields='.format(
             user_id=USER_ID
         )
         fields = [
             'id',
             'first_name',
             'last_name',
-            'gender',
-            'picture',
             'email',
         ]
         params = {
@@ -153,7 +162,16 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
+
         return dict_user_info
+
+    def get_fb_user_photo(self, facebook_id, access_token):
+        USER_ID = facebook_id
+        url_api_user_photo = 'https://graph.facebook.com/v2.9/{user_id}/picture?type=large&redirect=0'.format(
+            user_id=USER_ID)
+        r = requests.get(url_api_user_photo)
+        dict_user_photo = r.json()
+        return dict_user_photo
 
 
 class UserActivateAPI(APIView):

@@ -11,15 +11,18 @@ class MomoUserManager(BaseUserManager):
     암호화 부분 구현할 것
     """
 
-    def create_user(self, username, profile_img=None, password=None):
-        user = MomoUser(username=username, password=password)
+    def create_user(self, userid, password=None, email=None):
+        user = MomoUser(userid=userid, password=password)
+        user.email = email
+        user.username = userid
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, username, email, password):
-        user = MomoUser(username=username, password=password)
+    def create_superuser(self, userid, email, password):
+        user = MomoUser(userid=userid, password=password)
+        user.email = email
         user.set_password(password)
         user.is_staff = True
         user.is_superuser = True
@@ -31,8 +34,8 @@ class MomoUserManager(BaseUserManager):
 
 
 class MomoUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=100, unique=True)
-    userid = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    userid = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=140, blank=True, null=True)
     email = models.EmailField(blank=True)
     password = models.CharField(max_length=100)
@@ -55,7 +58,7 @@ class MomoUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     hash_username = models.CharField(blank=True, max_length=100)
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'userid'
     REQUIRED_FIELDS = ['email']
 
     objects = MomoUserManager()
