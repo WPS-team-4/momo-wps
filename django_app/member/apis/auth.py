@@ -53,20 +53,19 @@ class LoginAPI(APIView):
     def post(self, request, *args, **kwargs):
         username = request.data.pop('username')[0]
         request.data["userid"] = username
-        print(request.data)
         serializer = LoginSerializer(request.data)
-        user = authenticate(userid=serializer.data['userid'],
-                            password=serializer.data['password'])
-        user_not_activate = MomoUser.objects.get(userid=serializer.data['userid'])
-        if user is not None:
-            token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"token": token.key,
-                                 "user_pk": token.user_id,
-                                 "created": token.created}, status=status.HTTP_200_OK)
-            return response
-        elif user_not_activate is not None:
-            detail = "인증 메일을 확인해주세요."
-            raise PermissionDenied(detail=detail)
+        user = authenticate(userid=serializer.data['userid'], password=serializer.data['password'])
+        if user:
+            is_active = user.is_active
+            if is_active:
+                token, _ = Token.objects.get_or_create(user=user)
+                response = Response({"token": token.key,
+                                     "user_pk": token.user_id,
+                                     "created": token.created}, status=status.HTTP_200_OK)
+                return response
+            else:
+                detail = "인증 메일을 확인해주세요."
+                raise PermissionDenied(detail=detail)
         else:
             detail = "사용자를 찾을 수 없습니다. username과 password를 다시 확인해주세요."
         raise ValidationError(detail=detail)
