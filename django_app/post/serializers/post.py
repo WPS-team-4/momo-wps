@@ -11,8 +11,7 @@ __all__ = (
 
 class PostSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True, source='pin.map.author')
-
-    photo = VersatileImageFieldSerializer(sizes='post')
+    photo = VersatileImageFieldSerializer(sizes='post', required=False)
 
     class Meta:
         model = Post
@@ -23,7 +22,4 @@ class PostSerializer(serializers.ModelSerializer):
             'photo',
             'description',
             'created_date',
-        )
-        read_only_fields = (
-            'author',
         )
