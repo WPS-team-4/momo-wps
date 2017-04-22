@@ -29,9 +29,7 @@ class FollowAPI(UpdateAPIView):
 
             if is_following:
                 from_user.unfollow(to_user)
-                response = Response({"from_user": from_user.pk,
-                                     "to_user": to_user.pk,
-                                     "status": "unfollow"},
+                response = Response({"status": "unfollow"},
                                     status=status.HTTP_204_NO_CONTENT)
 
             else:
