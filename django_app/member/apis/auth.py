@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 from config import settings
 from member.models import MomoUser
 from member.serializers import LoginSerializer
-from member.serializers import UserSerializer
+from member.serializers import UserCreateSerializer
 from member.views import send_auth_mail
 
 __all__ = (
@@ -33,10 +33,10 @@ __all__ = (
 class SignUpAPI(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
 
     def create(self, request, *args, **kwargs):
-        username = request.data.pop('username')
+        username = request.data.get('username')
         userid = {"userid": username}
         request.data.update(userid)
         serializer = self.get_serializer(data=request.data)
