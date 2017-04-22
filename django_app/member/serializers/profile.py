@@ -36,6 +36,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
         model = MomoUser
         fields = (
             'pk',
+            'userid',
             'username',
             'password',
             'auth_token',
@@ -56,11 +57,18 @@ class UserSerializer(DynamicFieldsModelSerializer):
 
         read_only_fields = (
             'pk',
+            'userid',
             'following',
             'followers',
             'map_list',
             'auth_token',
             'profile_img',
+            'date_joined',
+            'last_login',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+            'is_superuser',
         )
 
     @staticmethod
@@ -81,14 +89,14 @@ class UserSerializer(DynamicFieldsModelSerializer):
             ret.append(following.to_user_id)
         return ret
 
-    def create(self, validated_data):
-        user = MomoUser.objects.create(
-            email=validated_data['email'],
-            username=validated_data['username']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
+    # def create(self, validated_data):
+    #     user = MomoUser.objects.create(
+    #         email=validated_data['email'],
+    #         username=validated_data['username']
+    #     )
+    #     user.set_password(validated_data['password'])
+    #     user.save()
+    #     return user
 
     def update(self, instance, validated_data):
         raise_errors_on_nested_writes('update', self, validated_data)
