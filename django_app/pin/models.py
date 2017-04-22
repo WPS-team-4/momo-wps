@@ -17,6 +17,7 @@ class Pin(models.Model):
     map = models.ForeignKey(Map)
     pin_name = models.CharField(max_length=100)
     pin_label = models.CharField(choices=PIN_LABEL_CHOICE, max_length=1, default=0)
+    description = models.CharField(max_length=100, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
