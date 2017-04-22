@@ -12,7 +12,7 @@ class LoginSerializer(serializers.ModelSerializer):
         model = MomoUser
         fields = (
             'pk',
-            'username',
+            'userid',
             'password',
         )
 
