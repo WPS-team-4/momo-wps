@@ -12,12 +12,12 @@ from place.models import Place
 from place.serializers import PlaceSerializer
 
 __all__ = (
-    'PinList',
-    'PinDetail',
+    'PinListAPI',
+    'PinDetailAPI',
 )
 
 
-class PinList(generics.ListCreateAPIView):
+class PinListAPI(generics.ListCreateAPIView):
     queryset = Pin.objects.all()
     serializer_class = PinSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -94,7 +94,7 @@ class PinList(generics.ListCreateAPIView):
         return place
 
 
-class PinDetail(generics.RetrieveUpdateDestroyAPIView):
+class PinDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pin.objects.all()
     serializer_class = PinSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
