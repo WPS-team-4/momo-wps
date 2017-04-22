@@ -53,9 +53,9 @@ class LoginAPI(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(request.data)
-        user = authenticate(username=serializer.data['username'],
+        user = authenticate(userid=serializer.data['username'],
                             password=serializer.data['password'])
-        user_not_activate = MomoUser.objects.get(username=serializer.data['username'])
+        user_not_activate = MomoUser.objects.get(userid=serializer.data['username'])
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({"token": token.key,
