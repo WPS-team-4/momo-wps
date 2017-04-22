@@ -31,7 +31,7 @@ class MomoUserManager(BaseUserManager):
 
 
 class MomoUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100)
     userid = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=140, blank=True, null=True)
     email = models.EmailField(blank=True)
