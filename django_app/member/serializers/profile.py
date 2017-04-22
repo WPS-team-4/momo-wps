@@ -30,7 +30,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
     following = serializers.SerializerMethodField(read_only=True)
     followers = serializers.SerializerMethodField(read_only=True)
     map_list = MapDetailSerializer(read_only=True, many=True, source='map_set')
-    profile_img = VersatileImageFieldSerializer(sizes='headshot')
+    profile_img = VersatileImageFieldSerializer(sizes='headshot', required=False)
 
     class Meta:
         model = MomoUser
@@ -62,7 +62,6 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'followers',
             'map_list',
             'auth_token',
-            'profile_img',
             'date_joined',
             'last_login',
             'is_facebook',
