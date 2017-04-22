@@ -12,6 +12,7 @@ __all__ = (
     'UserSerializer',
     'UserProfileSerializer',
     'RelationShipSerializer',
+    'UserCreateSerializer',
 )
 
 
@@ -127,4 +128,33 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_active',
             'is_staff',
             'map_list',
+        )
+
+
+class UserCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MomoUser
+        fields = (
+            'pk',
+            'auth_token',
+            'username',
+            'userid',
+            'password',
+            'email',
+            'profile_img',
+            'description',
+            'date_joined',
+            'is_facebook',
+            'is_active',
+            'is_staff',
+        )
+        read_only_fields = (
+            'pk',
+            'auth_token',
+            'profile_img',
+            'description',
+            'date_joined',
+            'is_facebook',
+            'is_active',
+            'is_staff',
         )
