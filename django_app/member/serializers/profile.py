@@ -40,6 +40,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'auth_token',
             'email',
             'profile_img',
+            'description',
             'following',
             'followers',
             'date_joined',
@@ -59,6 +60,7 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'map_list',
             'auth_token',
             'profile_img',
+            'description',
         )
 
     @staticmethod
@@ -117,6 +119,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'profile_img',
+            'description',
             'relation',
             'follower',
             'following',
