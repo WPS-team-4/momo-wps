@@ -106,16 +106,30 @@ class FacebookLoginAPI(APIView):
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
 
+            # fb_user_info로 default username을 생성
+            fb_username = '{} {}'.format(fb_user_info['first_name'], fb_user_info['last_name'])
+
+            # fb_user_info에서 profile img 가져오기
+            fb_profile_img = fb_user_info['picture']
+
             user, is_created = MomoUser.objects.get_or_create(
                 password=facebook_id,
-                username=facebook_id,
+                userid=facebook_id,
+                username=fb_username,
             )
             user.is_facebook = True
-            user.email = request.data.get("email","")
+            user.email = request.data.get("email", "")
             user.save()
             token, _ = Token.objects.get_or_create(user=user)
-            response = Response({"pk": user.pk, "token": token.key, "is_created": is_created},
-                                status=status.HTTP_200_OK)
+
+            # 반환값에 username, profile img 포함
+            response = Response({
+                "pk": user.pk,
+                "token": token.key,
+                "username": fb_username,
+                "profile_img": fb_profile_img,
+                "is_created": is_created,
+            }, status=status.HTTP_200_OK)
             return response
         else:
             return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)

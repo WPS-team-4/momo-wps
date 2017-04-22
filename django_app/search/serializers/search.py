@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from map.serializers import MapSerializer
-from member.serializers import UserSerializer
+from utils import AuthorSerializer
 
 __all__ = (
     'SearchResultSerializer',
@@ -10,4 +10,4 @@ __all__ = (
 
 class SearchResultSerializer(serializers.Serializer):
     maps = serializers.ListField(child=MapSerializer())
-    users = serializers.ListField(child=UserSerializer())
+    users = serializers.ListField(child=AuthorSerializer())
