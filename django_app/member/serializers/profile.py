@@ -60,7 +60,6 @@ class UserSerializer(DynamicFieldsModelSerializer):
             'map_list',
             'auth_token',
             'profile_img',
-            'description',
         )
 
     @staticmethod
