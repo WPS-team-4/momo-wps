@@ -18,6 +18,7 @@ from config import settings
 from member.models import MomoUser
 from member.serializers import LoginSerializer
 from member.serializers import UserCreateSerializer
+from member.serializers import UserSerializer
 from member.views import send_auth_mail
 
 __all__ = (
@@ -109,31 +110,25 @@ class FacebookLoginAPI(APIView):
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
-
+            print(fb_user_info)
             # fb_user_info로 default username을 생성
-            fb_username = '{} {}'.format(fb_user_info['first_name'], fb_user_info['last_name'])
+            fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
 
             # fb_user_info에서 profile img 가져오기
-            fb_profile_img = fb_user_info['picture']
+            fb_profile_img = fb_user_info['picture']['data']['url']
 
-            user, is_created = MomoUser.objects.get_or_create(
-                password=facebook_id,
-                userid=facebook_id,
-                username=fb_username,
-            )
-            user.is_facebook = True
-            user.email = request.data.get("email", "")
-            user.save()
+            user, is_created = MomoUser.objects.get_or_create(userid=facebook_id)
+            if is_created:
+                user.username = fb_username
+                user.set_password(facebook_id)
+                user.is_facebook = True
+                user.email = request.data.get("email", "")
+                user.save()
+
             token, _ = Token.objects.get_or_create(user=user)
 
-            # 반환값에 username, profile img 포함
-            response = Response({
-                "pk": user.pk,
-                "token": token.key,
-                "username": fb_username,
-                "profile_img": fb_profile_img,
-                "is_created": is_created,
-            }, status=status.HTTP_200_OK)
+            serializer = UserSerializer(user)
+            response = Response(serializer.data, status=status.HTTP_200_OK)
             return response
         else:
             return Response({'error': dict_debug_token['data']['error']['message']}, status=status.HTTP_400_BAD_REQUEST)
