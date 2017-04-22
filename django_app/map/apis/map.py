@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.http import Http404
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -42,3 +43,11 @@ class MapList(generics.ListCreateAPIView):
 class MapDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Map.objects.all()
     serializer_class = MapDetailSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            map = Map.objects.get(pk=kwargs['pk'])
+            serializer = MapDetailSerializer(map)
+            return Response(serializer.data)
+        except Map.DoesNotExist:
+            raise Http404("해당 pk의 지도가 존재하지 않습니다")
