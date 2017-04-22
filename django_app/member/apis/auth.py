@@ -110,20 +110,29 @@ class FacebookLoginAPI(APIView):
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
+            # fb_user_photo = self.get_fb_user_photo(facebook_id, USER_ACCESS_TOKEN)
             print(fb_user_info)
+            #print(fb_user_photo)
             # fb_user_info로 default username을 생성
-            fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
+            # fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
 
             # fb_user_info에서 profile img 가져오기
-            fb_profile_img = fb_user_info['picture']['data']['url']
+            # fb_profile_img = fb_user_info['picture']['data']['url']
 
             user, is_created = MomoUser.objects.get_or_create(userid=facebook_id)
             if is_created:
-                user.username = fb_username
+                # user.username = fb_username
                 user.set_password(facebook_id)
+                # user.profile_img = fb_profile_img
                 user.is_facebook = True
                 user.email = request.data.get("email", "")
-                user.save()
+
+            else:
+                if user.profile_img is None:
+                    # user.profile_img = fb_profile_img
+                    pass
+
+            user.save()
 
             token, _ = Token.objects.get_or_create(user=user)
 
@@ -135,15 +144,13 @@ class FacebookLoginAPI(APIView):
 
     def get_fb_user_info(self, facebook_id, access_token):
         USER_ID = facebook_id
-        url_api_user = 'https://graph.facebook.com/{user_id}'.format(
+        url_api_user = 'https://graph.facebook.com/v2.9/me?fields='.format(
             user_id=USER_ID
         )
         fields = [
             'id',
             'first_name',
             'last_name',
-            'gender',
-            'picture',
             'email',
         ]
         params = {
@@ -152,7 +159,16 @@ class FacebookLoginAPI(APIView):
         }
         r = requests.get(url_api_user, params)
         dict_user_info = r.json()
+
         return dict_user_info
+
+    # def get_fb_user_photo(self, facebook_id, access_token):
+    #     USER_ID = facebook_id
+    #     url_api_user_photo = 'https://graph.facebook.com/{user_id}/picture?type=large&width=200&height=200'.format(
+    #         user_id=USER_ID)
+    #     r = requests.get(url_api_user_photo)
+    #     dict_user_photo = r.json()
+    #     return dict_user_photo
 
 
 class UserActivateAPI(APIView):
