@@ -30,9 +30,3 @@ class PlaceInfoSerializer(serializers.ModelSerializer):
             'lat',
             'lng',
         )
-        read_only_fields = (
-            'pk',
-            'address',
-            'lat',
-            'lng',
-        )
