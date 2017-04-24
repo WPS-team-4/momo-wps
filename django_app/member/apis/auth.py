@@ -16,7 +16,6 @@ from rest_framework.views import APIView
 
 from config import settings
 from member.models import MomoUser
-from member.serializers import LoginSerializer
 from member.serializers import UserCreateSerializer
 from member.serializers import UserSerializer
 from member.views import send_auth_mail
@@ -52,10 +51,7 @@ class LoginAPI(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        username = request.data.pop('username')[0]
-        request.data["userid"] = username
-        serializer = LoginSerializer(request.data)
-        user = authenticate(userid=serializer.data['userid'], password=serializer.data['password'])
+        user = authenticate(userid=request.data['username'], password=request.data['password'])
         if user:
             is_active = user.is_active
             if is_active:
@@ -112,9 +108,10 @@ class FacebookLoginAPI(APIView):
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
             fb_user_photo = self.get_fb_user_photo(facebook_id, USER_ACCESS_TOKEN)
+
             # fb_user_info로 default username을 생성
             fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
-            fb_email = fb_user_info['email']
+            fb_email = fb_user_info.get('email') or None
 
             # fb_user_info에서 profile img 가져오기
             fb_profile_img = fb_user_photo['data']['url']
@@ -123,14 +120,13 @@ class FacebookLoginAPI(APIView):
             if is_created:
                 user.username = fb_username
                 user.set_password(facebook_id)
-                user.profile_img = fb_profile_img
                 user.is_facebook = True
                 user.email = fb_email
-
+                user.profile_img = fb_profile_img
             else:
-                if user.profile_img is None:
+                if user.profile_img is None or "":
                     user.profile_img = fb_profile_img
-                if user.email is None:
+                if user.email is None or "":
                     user.email = fb_email
 
             user.save()
@@ -171,6 +167,7 @@ class FacebookLoginAPI(APIView):
             user_id=USER_ID)
         r = requests.get(url_api_user_photo)
         dict_user_photo = r.json()
+
         return dict_user_photo
 
 
