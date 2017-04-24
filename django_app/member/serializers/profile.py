@@ -148,6 +148,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'pk',
+            'username',
             'auth_token',
             'profile_img',
             'description',
@@ -162,6 +163,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             userid=validated_data['userid']
         )
+        user.username = validated_data['userid']
         user.set_password(validated_data['password'])
         user.save()
         return user

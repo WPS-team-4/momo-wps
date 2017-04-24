@@ -36,9 +36,9 @@ class SignUpAPI(CreateAPIView):
     serializer_class = UserCreateSerializer
 
     def create(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        request.data['userid'] = username
-        serializer = self.get_serializer(data=request.data)
+        data = request.data
+        data['userid'] = request.data['username']
+        serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             headers = self.get_success_headers(serializer.data)
