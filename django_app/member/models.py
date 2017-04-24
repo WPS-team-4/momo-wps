@@ -97,8 +97,7 @@ def warm_User_headshot_images(sender, instance, **kwargs):
         rendition_key_set='headshot',
         image_attr='profile_img',
     )
-    num_created, failed_to_create = user_img_warmer.warm()
-    print('created: {}, failed: {}'.format(num_created, failed_to_create))
+    user_img_warmer.warm()
 
 
 class RelationShip(models.Model):
