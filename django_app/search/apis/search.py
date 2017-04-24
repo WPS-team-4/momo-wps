@@ -78,7 +78,8 @@ class SearchPlaceAPI(APIView):
             API_KEY = config['google_place_api']['key']
             params = {
                 'key': API_KEY,
-                'query': keyword
+                'query': keyword,
+                'language': 'ko'
             }
             search_result = requests.get(url, params=params).json()
             data = self.parseGoogleJsonToMomoJson(search_result)
