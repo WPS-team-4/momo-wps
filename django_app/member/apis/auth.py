@@ -107,14 +107,14 @@ class FacebookLoginAPI(APIView):
         if dict_debug_token['data']['is_valid']:
             facebook_id = dict_debug_token['data']['user_id']
             fb_user_info = self.get_fb_user_info(facebook_id, USER_ACCESS_TOKEN)
-            fb_user_photo = self.get_fb_user_photo(facebook_id, USER_ACCESS_TOKEN)
+            # fb_user_photo = self.get_fb_user_photo(facebook_id, USER_ACCESS_TOKEN)
 
             # fb_user_info로 default username을 생성
             fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
-            fb_email = fb_user_info.get('email') or None
+            fb_email = fb_user_info.get('email','')
 
             # fb_user_info에서 profile img 가져오기
-            fb_profile_img = fb_user_photo['data']['url']
+            # fb_profile_img = fb_user_photo['data']['url']
 
             user, is_created = MomoUser.objects.get_or_create(userid=facebook_id)
             if is_created:
@@ -122,10 +122,10 @@ class FacebookLoginAPI(APIView):
                 user.set_password(facebook_id)
                 user.is_facebook = True
                 user.email = fb_email
-                user.profile_img = fb_profile_img
+                # user.profile_img = fb_profile_img
             else:
-                if user.profile_img is None or "":
-                    user.profile_img = fb_profile_img
+                # if user.profile_img is None or "":
+                #     user.profile_img = fb_profile_img
                 if user.email is None or "":
                     user.email = fb_email
 
