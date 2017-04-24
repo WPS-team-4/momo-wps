@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from map.models import Map
-from pin.serializers import PinSerializer
+from pin.serializers.pin import PinViewSerializer
+from utils import AuthorSerializer
 
 __all__ = (
     'MapSerializer',
@@ -10,33 +11,34 @@ __all__ = (
 
 
 class MapSerializer(serializers.ModelSerializer):
-    # author = UserSerializer(read_only=True)
+    author = AuthorSerializer(read_only=True)
+    pin_list = PinViewSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
         fields = (
             'pk',
-            'name',
+            'author',
+            'map_name',
             'description',
-            'is_private',
-            # 'author',
             'created_date',
+            'is_private',
+            'pin_list'
         )
 
 
 class MapDetailSerializer(serializers.ModelSerializer):
-    pin_list = PinSerializer(read_only=True, many=True, source='pin_set')
-
-    # author = UserSerializer(read_only=True)
+    author = AuthorSerializer(read_only=True)
+    pin_list = PinViewSerializer(read_only=True, many=True, source='pin_set')
 
     class Meta:
         model = Map
         fields = (
             'pk',
-            'name',
+            'author',
+            'map_name',
             'description',
-            # 'author',
-            'pin_list',
             'created_date',
             'is_private',
+            'pin_list'
         )

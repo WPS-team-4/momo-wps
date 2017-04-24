@@ -78,6 +78,22 @@ else:
 # Templates
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+# VersatileImageField
+VERSATILEIMAGEFIELD_SETTINGS = {
+    'create_images_on_demand': False,
+}
+
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'headshot': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__120x120'),
+    ],
+    'post': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__600x600'),
+    ]
+}
+
 # Secret Key
 SECRET_KEY = config['django']['secret_key']
 
@@ -85,16 +101,18 @@ ALLOWED_HOSTS = config['django']['allowed_hosts']
 
 # Application definition
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+    ),
     'EXCEPTION_HANDLER': 'utils.exceptions.handler.custom_exception_handler',
-
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
+
 }
 
 INSTALLED_APPS = [
@@ -109,6 +127,8 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'rest_framework.authtoken',
+    'versatileimagefield',
+
     'django_extensions',
 
     'member',
@@ -116,9 +136,11 @@ INSTALLED_APPS = [
     'map',
     'place',
     'post',
+    'search',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,6 +149,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+)
 
 ROOT_URLCONF = 'config.urls'
 
@@ -156,7 +184,6 @@ if DEBUG and DB_RDS:
     config_db = config['db_rds']
 else:
     config_db = config['db']
-# print(config_db)
 DATABASES = {
     'default': {
         'ENGINE': config_db['engine'],
@@ -203,13 +230,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-
-# REST_USE_JWT = True
-
-# JWT_AUTH = {
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
-#     'JWT_ALLOW_REFRESH': True,
-#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-# }
-
-# DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config['email']['user']
+EMAIL_HOST_PASSWORD = config['email']['password']

@@ -1,29 +1,48 @@
 from rest_framework import serializers
 
 from pin.models import Pin
+from place.serializers import PlaceInfoSerializer
 from post.serializers import PostSerializer
+from utils import AuthorSerializer
 
 __all__ = (
     'PinSerializer',
+    'PinViewSerializer',
 )
 
 
 class PinSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='username'
-    )
+    author = AuthorSerializer(read_only=True, source='map.author')
+
+    class Meta:
+        model = Pin
+        fields = (
+            'pk',
+            'map',
+            'pin_name',
+            'pin_label',
+            'description',
+            'created_date',
+            'author',
+            'place',
+        )
+
+
+class PinViewSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True, source='map.author')
+    place = PlaceInfoSerializer(read_only=True)
     post_list = PostSerializer(read_only=True, many=True, source='post_set')
 
     class Meta:
         model = Pin
         fields = (
             'pk',
-            'author',
-            'name',
-            'place',
             'map',
-            'pin_color',
+            'pin_name',
+            'pin_label',
+            'description',
             'created_date',
+            'author',
+            'place',
             'post_list',
         )
