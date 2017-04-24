@@ -111,7 +111,7 @@ class FacebookLoginAPI(APIView):
 
             # fb_user_info로 default username을 생성
             fb_username = '{} {}'.format(fb_user_info['last_name'], fb_user_info['first_name'])
-            fb_email = fb_user_info.get('email','')
+            fb_email = fb_user_info.get('email', '')
 
             # fb_user_info에서 profile img 가져오기
             # fb_profile_img = fb_user_photo['data']['url']
@@ -126,7 +126,7 @@ class FacebookLoginAPI(APIView):
             else:
                 # if user.profile_img is None or "":
                 #     user.profile_img = fb_profile_img
-                if user.email is None or "":
+                if user.email is "" or None:
                     user.email = fb_email
 
             user.save()
