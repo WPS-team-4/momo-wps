@@ -77,7 +77,8 @@ class PinListAPI(generics.ListCreateAPIView):
         url = 'https://maps.googleapis.com/maps/api/geocode/json?'
         params = {
             'key': API_KEY,
-            'latlng': '{},{}'.format(lat, lng)
+            'latlng': '{},{}'.format(lat, lng),
+            'language': 'ko'
         }
         search_result = requests.get(url, params=params).json()
         reverse_geo_data = search_result['results'][0]
