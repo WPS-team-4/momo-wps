@@ -28,6 +28,8 @@ class PostList(generics.ListCreateAPIView):
             if photo:
                 file = request.FILES['photo']
                 data['photo'] = file
+            else:
+                pass
             serializer = PostSerializer(data=data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)

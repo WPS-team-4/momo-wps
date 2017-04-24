@@ -22,6 +22,6 @@ COPY        .conf/nginx-app.conf           /etc/nginx/sites-available/app.conf
 COPY        .conf/supervisor-app.conf      /etc/supervisor/conf.d/
 RUN         ln -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/app.conf
 
-EXPOSE      4040
+EXPOSE      80
 CMD         supervisord -n
 
