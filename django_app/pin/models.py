@@ -1,39 +1,32 @@
 from django.db import models
 
 from map.models import Map
-from member.models import MomoUser
 from place.models import Place
+
+PIN_LABEL_CHOICE = (
+    ('0', 'place'),
+    ('1', 'food'),
+    ('2', 'cafe'),
+    ('3', 'shop'),
+    ('4', 'etc'),
+)
 
 
 class Pin(models.Model):
-    author = models.ForeignKey(MomoUser)
     place = models.ForeignKey(Place)
     map = models.ForeignKey(Map)
-    name = models.CharField(max_length=100)
-    pin_color = models.CharField(max_length=10, default='0,0,0', blank=True)
+    pin_name = models.CharField(max_length=100)
+    pin_label = models.CharField(choices=PIN_LABEL_CHOICE, max_length=1, default=0)
+    description = models.CharField(max_length=100, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     is_private = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
 
-    # def add_comment(self, user, content):
-    #     return self.postcomment_set.create(
-    #         author=user,
-    #         contnet=content
-    #     )
-    #
-    # def add_photo(self, user, photo):
-    #     return self.postphoto_set.create(
-    #         author=user,
-    #         photo=photo
-    #     )
-
-    # def __str__(self):
-    #     return 'user({}) place({}) map({}) pin_name({})'.format(
-    #         self.author_id, self.place_id, self.map_id, self.name)
     def __str__(self):
-        return 'pin: {}'.format(
-            self.pk
-        )
+        name = self.pin_name
+        pk = self.pk
+
+        return '{} : {}'.format(name, pk)
 
 
 class HashTag(models.Model):

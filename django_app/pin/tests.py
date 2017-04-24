@@ -3,8 +3,9 @@ import random
 from django.test import TestCase
 
 from member.models import MomoUser
-from utils.tests import make_dummy_users
-from utils.tests.testcase import TEST_NAME, make_dummy_hash_tags, TEST_PLACE_NAME
+from utils import make_dummy_hash_tags
+from utils import make_dummy_users
+from utils.tests.testcase import TEST_NAME, TEST_PLACE_NAME
 from .models import Map, Pin, Place, PinHashTag
 
 
@@ -14,14 +15,15 @@ class PinModelTest(TestCase):
         place = Place.objects.create(
             name='test bucks',
             address='Seoul',
-            location='123.123',
-            google_place_id='111'
+            lat='123',
+            lng='456',
+            place_id='125'
         )
         maps = []
         for i in range(5):
             map = Map.objects.create(
                 author=users[i],
-                name='test_map{}'.format(i + 1),
+                map_name='test_map{}'.format(i + 1),
                 description='I_am_test_map{}, Hello world!'.format(i + 1)
             )
             maps.append(map)
@@ -29,10 +31,9 @@ class PinModelTest(TestCase):
         pins = []
         for i in range(5):
             pin = Pin.objects.create(
-                author=users[1],
                 place=place,
                 map=maps[i],
-                name='test 0331'
+                pin_name='test 0331'
             )
             pins.append(pin)
 
@@ -51,7 +52,8 @@ class HashTagModelTest(TestCase):
         cls.place = Place.objects.create(
             name='{}{}'.format(random.choice(TEST_NAME), random.choice(TEST_PLACE_NAME)),
             address='{}나라 {}번지'.format(random.choice(TEST_NAME), 111),
-            location='{}.{}'.format(random.randrange(111, 999), random.randrange(111, 999)),
+            lat='lat: {}'.format(random.randrange(100, 120)),
+            lng='lng: {}'.format(random.randrange(100, 120)),
         )
 
         cls.map = Map.objects.create(
@@ -62,7 +64,7 @@ class HashTagModelTest(TestCase):
 
     def test_add_different_hash_tags_with_same_pin(self):
         tags = make_dummy_hash_tags(10)
-        # places = make_dummy_plces(1)
+        # places = make_dummy_places(1)
         # maps = make_dummy_maps(1)
         # users = make_dummy_users(1)
 
