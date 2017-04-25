@@ -22,12 +22,19 @@ from member.views import send_auth_mail
 
 __all__ = (
     'SignUpAPI',
+    'SignUpIosAPI',
     'LoginAPI',
     'LogoutAPI',
     'FacebookLoginAPI',
     'UserActivateAPI',
     'UserAuthMailAPI',
 )
+
+
+class SignUpIosAPI(CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+    serializer_class = UserCreateSerializer
 
 
 class SignUpAPI(CreateAPIView):
