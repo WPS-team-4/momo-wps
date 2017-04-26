@@ -1,5 +1,8 @@
 reated by https://www.gitignore.io/api/macos,pycharm,python,linux
 
+# front-end setting
+front/
+
 ### Linux ###
 *~
 
