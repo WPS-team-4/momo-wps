@@ -40,7 +40,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^search/', include(place_views_urls)),
-    url(r'^api/', include(api_urlpatterns, namespace='api'))
+    url(r'^api/', include(api_urlpatterns, namespace='api')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,

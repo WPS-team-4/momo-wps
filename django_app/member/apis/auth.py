@@ -77,7 +77,7 @@ class LoginAPI(APIView):
 
 class LogoutAPI(APIView):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
 
     def post(self, request, *args, **kwargs):
         user = request.user

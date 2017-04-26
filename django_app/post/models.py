@@ -38,4 +38,5 @@ def warm_post_headshot_images(sender, instance, **kwargs):
         image_attr='photo',
         verbose=True
     )
-    post_img_warmer.warm()
+    num_created, failed_to_create = post_img_warmer.warm()
+    print('{}, {}'.format(num_created, failed_to_create))

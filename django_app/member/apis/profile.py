@@ -19,7 +19,7 @@ __all__ = (
 class UserDetailAPI(RetrieveUpdateAPIView):
     queryset = MomoUser.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
