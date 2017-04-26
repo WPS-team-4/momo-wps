@@ -1,5 +1,7 @@
 reated by https://www.gitignore.io/api/macos,pycharm,python,linux
 
+Dockerfile.*
+
 # front-end setting
 front/
 
