@@ -10,5 +10,5 @@ COPY        .conf/supervisor-app.conf   /etc/supervisor/conf.d/
 RUN         ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
 WORKDIR     /srv/app/django_app
-EXPOSE      4567
+EXPOSE      4040
 CMD         ["supervisord", "-n"]
