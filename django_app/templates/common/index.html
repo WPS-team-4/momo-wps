@@ -1,0 +1,60 @@
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="container">
+  <header class="index-header">
+      PROJET INDEX
+  </header>
+  <div class="block-container">
+    <div class="block">
+      <div class="function">
+        <h2 class="title"><a href="">회원가입</a></h2>
+        <p class="content">email 가입</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">로그인</a></h2>
+        <p class="content">이메일 인증 후 로그인</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">페이스북 로그인</a></h2>
+        <p class="content">페이스북에서 유저 토큰을 받아 로그인</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">팔로우</a></h2>
+        <p class="content">사용자 팔로우 기능</p>
+      </div>
+    </div>
+    <div class="block">
+      <div class="function">
+        <h2 class="title"><a href="">지도 및 사용자 검색</a></h2>
+        <p class="content">지도 테이블과 유저 테이블에서 데이터 검색</p>
+
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">장소 검색</a></h2>
+        <p class="content">요청받은 키워드로 GoogleAPI에 검색 요청</p>
+      </div>
+    </div>
+    <div class="block">
+      <div class="function">
+        <h2 class="title"><a href="">지도 리스트</a></h2>
+        <p class="content">최신 업데이트, 생성일, 장소 핀이 많은 순으로 정렬</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">지도</a></h2>
+        <p class="content">이름, 설명, 공개여부 설정하여 지도를 생성</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">장소 핀</a></h2>
+        <p class="content">1. 장소 검색결과에서 장소를 선택하여 핀 생성</p>
+        <p class="content">2. Google geocodingAPI 사용하여 핀 생성</p>
+      </div>
+      <div class="function">
+        <h2 class="title"><a href="">포스팅</a></h2>
+        <p class="content">장소 핀에 사진 또는 글을 포스팅</p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
