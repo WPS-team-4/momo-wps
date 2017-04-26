@@ -1,0 +1,9 @@
+FROM {from_image}
+MAINTAINER {maintainer}
+
+{base}
+{extra}
+
+
+
+
